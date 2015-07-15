@@ -1,0 +1,185 @@
+<%= form_for(@space) do |f| %>
+  <% if @space.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:</h2>
+
+      <ul>
+      <% @space.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :access_id %><br>
+    <%= f.collection_select(:access_id, Access.all, :id, :title) %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_area :address %>
+  </div>
+  <div class="field">
+    <%= f.label :floor %><br>
+    <%= f.text_field :floor %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br>
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lng %><br>
+    <%= f.text_field :lng %>
+  </div>
+  <div class="field">
+    <%= f.label :opening_hours %><br>
+    <%= f.text_area :opening_hours %>
+  </div>
+  <div class="field">
+    <%= f.label :restricted %><br>
+    <%= f.check_box :restricted %>
+  </div>
+  <div class="field">
+    <%= f.label :restriction %><br>
+    <%= f.text_field :restriction %>
+  </div>
+  <div class="field">
+    <%= f.label :disabled_access %><br>
+    <%= f.check_box :disabled_access %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :twitter_screen_name %><br>
+    <%= f.text_field :twitter_screen_name %>
+  </div>
+  <div class="field">
+    <%= f.label :facebook_url %><br>
+    <%= f.text_field :facebook_url %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_disciplined %><br>
+    <%= f.check_box :atmosphere_disciplined %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_relaxed %><br>
+    <%= f.check_box :atmosphere_relaxed %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_historic %><br>
+    <%= f.check_box :atmosphere_historic %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_modern %><br>
+    <%= f.check_box :atmosphere_modern %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_inspiring %><br>
+    <%= f.check_box :atmosphere_inspiring %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_cosy %><br>
+    <%= f.check_box :atmosphere_cosy %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_social %><br>
+    <%= f.check_box :atmosphere_social %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_friendly %><br>
+    <%= f.check_box :atmosphere_friendly %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_food_drink %><br>
+    <%= f.check_box :facility_food_drink %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_daylight %><br>
+    <%= f.check_box :facility_daylight %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_views %><br>
+    <%= f.check_box :facility_views %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_large_desks %><br>
+    <%= f.check_box :facility_large_desks %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_free_wifi %><br>
+    <%= f.check_box :facility_free_wifi %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_no_wifi %><br>
+    <%= f.check_box :facility_no_wifi %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_computers %><br>
+    <%= f.check_box :facility_computers %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_laptops_allowed %><br>
+    <%= f.check_box :facility_laptops_allowed %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_sockets %><br>
+    <%= f.check_box :facility_sockets %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_signal %><br>
+    <%= f.check_box :facility_signal %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_printers_copiers %><br>
+    <%= f.check_box :facility_printers_copiers %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_whiteboards %><br>
+    <%= f.check_box :facility_whiteboards %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_projector %><br>
+    <%= f.check_box :facility_projector %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_outdoor_seating %><br>
+    <%= f.check_box :facility_outdoor_seating %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_bookable %><br>
+    <%= f.check_box :facility_bookable %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_toilets %><br>
+    <%= f.check_box :facility_toilets %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_refreshments %><br>
+    <%= f.check_box :facility_refreshments %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_break %><br>
+    <%= f.check_box :facility_break %>
+  </div>
+  <div class="field">
+    <%= f.label :expensive %><br>
+    <%= f.number_field :expensive %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
