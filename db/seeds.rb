@@ -32,6 +32,6 @@ noise_list = [
   "Music playing"
 ]
 
-noise_list.each do |noise|
+noise_list.each do |title|
   Noise.create( title: title )
 end
