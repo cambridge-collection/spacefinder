@@ -114,6 +114,10 @@
     <%= f.check_box :atmosphere_friendly %>
   </div>
   <div class="field">
+    <%= f.label :noise_id %><br>
+    <%= f.collection_select(:noise_id, Noise.all, :id, :title) %>
+  </div>
+  <div class="field">
     <%= f.label :facility_food_drink %><br>
     <%= f.check_box :facility_food_drink %>
   </div>

@@ -23,3 +23,15 @@ space_type_list = [
 space_type_list.each do |title|
   SpaceType.create( title: title )
 end
+
+noise_list = [ 
+  "Strictly silent",
+  "Whispers",
+  "Background chatter",
+  "Animated discussion",
+  "Music playing"
+]
+
+noise_list.each do |noise|
+  Noise.create( title: title )
+end
