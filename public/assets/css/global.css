@@ -1,0 +1,239 @@
+@charset "UTF-8";
+#top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: #106470;
+  z-index: 1;
+  display: -webkit-flex;
+  display: flex;
+  border-bottom: 2px solid black;
+  padding: 8px 4px 0; }
+  #top-bar a {
+    border-radius: 4px 4px 0 0;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    color: white;
+    text-decoration: none;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    text-align: center;
+    align-self: center;
+    -webkit-align-self: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center; }
+    #top-bar a#search-btn {
+      -webkit-flex-grow: 0;
+      flex-grow: 0;
+      border-radius: 100%;
+      padding: 5px;
+      background-color: rgba(0, 0, 0, 0.2);
+      height: 36px;
+      width: 36px;
+      margin-right: 8px; }
+      #top-bar a#search-btn [class^="icon-"]:before {
+        font-size: 1.2rem; }
+    #top-bar a[class^="icon-"]:before, #top-bar a [class^="icon-"]:before {
+      font-size: 1.4rem; }
+    #top-bar a.active {
+      background-color: rgba(0, 0, 0, 0.2); }
+
+.map-info-bubble {
+  color: #FFF;
+  font-size: 0.8rem;
+  font-weight: normal; }
+  .map-info-bubble h1 {
+    font-weight: normal;
+    padding: 0 36px 4px 0;
+    margin: 0;
+    font-size: 24px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.2); }
+    .map-info-bubble h1 small {
+      float: right;
+      color: #9d9d9d;
+      font-size: 14px;
+      margin-top: 10px; }
+
+#list {
+  background: #f3f3f3; }
+  #list .facility {
+    display: inline-block;
+    padding: 0 10px; }
+
+.space-container {
+  min-height: 100vh; }
+
+.space {
+  background: #f3f3f3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 10; }
+  .space .title {
+    background: #106470;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    padding: 5px 0;
+    text-align: center;
+    color: #FFF; }
+    .space .title h1 {
+      font-family: 'myriad pro', verdana, sans-serif;
+      font-size: 1.5rem;
+      font-weight: normal;
+      line-height: 1;
+      margin: 0;
+      padding: 0; }
+  .space .sticky-wrapper {
+    z-index: 10; }
+  .space .gallery-container {
+    height: 50vh;
+    position: relative; }
+  .space .gallery {
+    height: 100%;
+    overflow: auto;
+    width: 100%; }
+    .space .gallery .gallery-images {
+      height: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row; }
+    .space .gallery .image {
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center; }
+  .space .tags {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFF; }
+    .space .tags .tag {
+      margin: 0 10px;
+      background: rgba(0, 0, 0, 0.5); }
+  .space .tabs .ui-tabs-nav {
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    z-index: 1;
+    background-color: grey;
+    padding: 5px 5px 0;
+    margin: 0; }
+  .space .tabs .ui-tabs-nav.sticky {
+    width: 100%;
+    position: fixed; }
+  .space .tabs .ui-tabs-nav > li {
+    display: -webkit-flex;
+    display: flex;
+    color: white;
+    text-decoration: none;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    text-align: center;
+    height: 100%; }
+  .space .tabs .ui-tabs-nav > li > a {
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0; }
+  .space .tabs .ui-tabs-nav > li.ui-tabs-active {
+    text-decoration: underline;
+    background-color: black; }
+  .space .tabs .map {
+    height: 800px; }
+
+@font-face {
+  font-family: 'spacefinder';
+  src: url("../fonts/spacefinder.eot?58569688");
+  src: url("../fonts/spacefinder.eot?58569688#iefix") format("embedded-opentype"), url("../fonts/spacefinder.woff?58569688") format("woff"), url("../fonts/spacefinder.ttf?58569688") format("truetype"), url("../fonts/spacefinder.svg?58569688#spacefinder") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'spacefinder';
+    src: url('../font/spacefinder.svg?58569688#spacefinder') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "spacefinder";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
+
+.icon-search:before {
+  content: '\e800'; }
+
+/* '' */
+.icon-list:before {
+  content: '\e801'; }
+
+/* '' */
+.icon-marker:before {
+  content: '\e802'; }
+
+/* '' */
+.icon-wifi:before {
+  content: '\e803'; }
+
+/* '' */
+body, html {
+  padding: 0;
+  margin: 0;
+  background: #2e2e2e;
+  font-size: 16px;
+  min-height: 100vh;
+  font-family: 'Myriad Pro', verdana, sans-serif; }
+
+* {
+  box-sizing: border-box; }
+
+.view-container {
+  display: flex;
+  height: calc(100% - 50px);
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  overflow: auto; }
+
+.hidden {
+  display: none; }

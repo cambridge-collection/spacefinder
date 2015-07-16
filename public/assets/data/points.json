@@ -1,0 +1,146 @@
+[
+    {
+        "id":1,
+        "name":"The Snug",
+        "type":"bar",
+        "library":"",
+        "floor":"",
+        "address":"67 Lensfield Road, Cambridge, CB2 1EN",
+        "latitude":52.197949,
+        "longitude":0.122951,
+        "hours":"Monday to Wednesday 10am - 11pm | Thursday to Saturday 10am - Midnight | Sunday 10am - 10pm",
+        "restrictions":"no",
+        "access":"no",
+        "url":"http://www.thesnugbar.co.uk/cambridge-snug-bar/",
+        "phone":"01223367684",
+        "twitter":"TheSnugTrumps",
+        "facebook":"https://www.facebook.com/thesnugbar",
+        "description":"We are everything that's great about your local pub; friendly and welcoming, with a few modern twists thrown in.",
+        "images":[
+            "/assets/data/images/1.jpg",
+            "/assets/data/images/2.jpg"
+        ],
+        "atmosphere":[
+            "relaxed",
+            "informal",
+            "cosy",
+            "social",
+            "friendly",
+            "welcoming",
+            "music playing"
+        ],
+        "facilities":[
+            "food and drink allowed",
+            "free wifi",
+            "laptops allowed",
+            "phone signal",
+            "toilets nearby",
+            "close to refreshments",
+            "close to a place to take a break"
+        ],
+        "tags":[
+            "water allowed",
+            "no bags",
+            "hot",
+            "close to computing facilities",
+            "close to printing facilities",
+            "bookshelves"
+        ]
+    },
+    {
+        "id":2,
+        "name":"Reading room",
+        "type":"Library space",
+        "library":"Trinity College Library",
+        "floor":"1",
+        "address":"Trinity Street, Cambridge, CB2 1TQ",
+        "latitude":52.2070182,
+        "longitude":0.1148951,
+        "hours":"[This varies between term time and vacation]",
+        "restrictions":"yes",
+        "access":"no",
+        "url":"http://www.trin.cam.ac.uk/library/",
+        "phone":"01223338488",
+        "twitter":"TrinCollLibCam",
+        "facebook":"www.facebook.com/trin.coll.cam.lib",
+        "description":"This is the reading room description.",
+        "images":[
+            "/assets/data/images/1.jpg",
+            "/assets/data/images/2.jpg"
+        ],
+        "atmosphere":[
+            "relaxed",
+            "informal",
+            "cosy",
+            "social",
+            "friendly",
+            "welcoming",
+            "music playing"
+        ],
+        "facilities":[
+            "food and drink allowed",
+            "free wifi",
+            "laptops allowed",
+            "phone signal",
+            "toilets nearby",
+            "close to refreshments",
+            "close to a place to take a break"
+        ],
+        "tags":[
+            "water allowed",
+            "no bags",
+            "hot",
+            "close to computing facilities",
+            "close to printing facilities",
+            "bookshelves"
+        ]
+    },
+    {
+        "id":3,
+        "name":"Lower Library",
+        "type":"Library space",
+        "library":"Trinity College Library",
+        "floor":"0",
+        "address":"Trinity Street, Cambridge, CB2 1TQ",
+        "latitude":52.2070182,
+        "longitude":0.1148951,
+        "hours":"[This varies between term time and vacation]",
+        "restrictions":"yes",
+        "access":"yes",
+        "url":"http://www.trin.cam.ac.uk/library/",
+        "phone":"01223338488",
+        "twitter":"TrinCollLibCam",
+        "facebook":"www.facebook.com/trin.coll.cam.lib",
+        "description":"This is the lower library description. Its on the ground floor",
+        "images":[
+            "/assets/data/images/1.jpg",
+            "/assets/data/images/2.jpg"
+        ],
+        "atmosphere":[
+            "relaxed",
+            "informal",
+            "cosy",
+            "social",
+            "friendly",
+            "welcoming",
+            "music playing"
+        ],
+        "facilities":[
+            "food and drink allowed",
+            "free wifi",
+            "laptops allowed",
+            "phone signal",
+            "toilets nearby",
+            "close to refreshments",
+            "close to a place to take a break"
+        ],
+        "tags":[
+            "water allowed",
+            "no bags",
+            "hot",
+            "close to computing facilities",
+            "close to printing facilities",
+            "bookshelves"
+        ]
+    }
+]

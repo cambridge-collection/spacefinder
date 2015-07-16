@@ -1,0 +1,111 @@
+.space-container {
+    min-height: 100vh;
+}
+.space {
+    background: $lightBackgroundColor;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 10;
+
+    .title {
+        background:$barColor;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        padding: 5px 0;
+        text-align: center;
+        color: #FFF;
+        h1 {
+            font-family: 'myriad pro', verdana, sans-serif;
+            font-size: 1.5rem;
+            font-weight: normal;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .sticky-wrapper {
+        z-index: 10;
+    }
+
+    .gallery-container {
+        height: 50vh;
+        position: relative;
+    }
+    .gallery {
+        height: 100%;
+        overflow: auto;
+        width: 100%;
+        .gallery-images {
+            height: 100%;
+
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+        }
+        .image {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+
+        }
+    }
+    .tags {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+        background-color: rgba(0,0,0,0.6);
+        color: #FFF;
+        .tag {
+            margin: 0 10px;
+            background: rgba(0,0,0,0.5);
+        }
+    }
+    .tabs {
+        .ui-tabs-nav {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+            z-index: 1;
+            background-color: grey;
+            padding: 5px 5px 0;
+            margin: 0;
+        }
+        .ui-tabs-nav.sticky {
+            width: 100%;
+            position: fixed;
+        }
+        .ui-tabs-nav>li {
+            display: -webkit-flex;
+            display: flex;
+            color:white;
+            text-decoration: none;
+            -webkit-flex-grow:1;
+            flex-grow: 1;
+            text-align: center;
+            height: 100%;
+
+        }
+        .ui-tabs-nav>li>a {
+            text-decoration: none;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .ui-tabs-nav>li.ui-tabs-active {
+            text-decoration: underline;
+            background-color: black;
+        }
+        .map {
+            height: 800px;
+        }
+    }
+}
