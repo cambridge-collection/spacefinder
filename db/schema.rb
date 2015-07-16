@@ -11,13 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716135434) do
+ActiveRecord::Schema.define(version: 20150716141310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accesses", force: :cascade do |t|
     t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "libraries", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -74,11 +80,14 @@ ActiveRecord::Schema.define(version: 20150716135434) do
     t.datetime "updated_at",                                         null: false
     t.integer  "access_id"
     t.integer  "space_type_id"
+    t.integer  "library_id"
   end
 
   add_index "spaces", ["access_id"], name: "index_spaces_on_access_id", using: :btree
+  add_index "spaces", ["library_id"], name: "index_spaces_on_library_id", using: :btree
   add_index "spaces", ["space_type_id"], name: "index_spaces_on_space_type_id", using: :btree
 
   add_foreign_key "spaces", "accesses"
+  add_foreign_key "spaces", "libraries"
   add_foreign_key "spaces", "space_types"
 end

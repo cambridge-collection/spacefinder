@@ -28,6 +28,12 @@
     <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title) %>
   </div>
   <div class="field">
+    <%= f.label :library_id %><br>
+    <%= f.collection_select(:library_id, Library.all, :id, :name) %>
+    or add new library:
+    <%= f.text_field :new_library_name %>
+  </div>
+  <div class="field">
     <%= f.label :address %><br>
     <%= f.text_area :address %>
   </div>
