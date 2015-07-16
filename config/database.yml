@@ -83,7 +83,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: spacefinder_production
-  username: spacefinder
-  password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
