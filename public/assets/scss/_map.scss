@@ -1,0 +1,21 @@
+.map-info-bubble {
+    //background-color: $backgroundColor;
+    color: #FFF;
+    font-size: 0.8rem;
+    font-weight: normal;
+    h1 {
+        font-weight: normal;
+        padding:0 36px 4px 0;
+        margin: 0;
+        font-size: 24px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid rgba(221,221,221,0.2);
+
+        small {
+            float: right;
+            color: #9d9d9d;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    }
+}

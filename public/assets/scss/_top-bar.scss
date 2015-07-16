@@ -1,0 +1,56 @@
+#top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $navHeight;
+    background: $barColor;
+    z-index: 1;
+    display: -webkit-flex;
+    display: flex;
+    border-bottom: 2px solid black;
+    padding: 8px 4px 0;
+    a {
+        border-radius: 4px 4px 0 0;
+        height: 100%;
+        display: -webkit-flex;
+        display: flex;
+        color:white;
+        text-decoration: none;
+        -webkit-flex-grow:1;
+        flex-grow: 1;
+        text-align: center;
+        align-self: center;
+        -webkit-align-self:center;
+        justify-content: center;
+        -webkit-justify-content:center;
+        flex-direction: row;
+        -webkit-flex-direction:row;
+        -webkit-align-items:center;
+        align-items: center;
+
+        &#search-btn {
+            -webkit-flex-grow:0;
+            flex-grow: 0;
+            border-radius: 100%;
+            padding: 5px;
+            background-color: rgba(0,0,0,0.2);
+            height: 36px;
+            width: 36px;
+            margin-right: 8px;
+            & [class^="icon-"]:before {
+                font-size: 1.2rem;
+            }
+        }
+
+        &[class^="icon-"]:before, & [class^="icon-"]:before {
+            font-size: 1.4rem;
+        }
+
+        &.active {
+            background-color: rgba(0,0,0,0.2);
+            //border-bottom: 2px solid black;
+        }
+
+    }
+}
