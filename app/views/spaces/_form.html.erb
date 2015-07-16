@@ -24,6 +24,10 @@
     <%= f.collection_select(:access_id, Access.all, :id, :title) %>
   </div>
   <div class="field">
+    <%= f.label :space_type_id %><br>
+    <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title) %>
+  </div>
+  <div class="field">
     <%= f.label :address %><br>
     <%= f.text_area :address %>
   </div>
