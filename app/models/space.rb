@@ -1,5 +1,5 @@
 class Space < ActiveRecord::Base
-   validates_inclusion_of :expensive, :in => 1..5
+   validates_inclusion_of :expensive, :in => 1..5, :allow_blank => true
    
    belongs_to :access
    belongs_to :space_type
@@ -11,7 +11,9 @@ class Space < ActiveRecord::Base
    before_save :create_library_from_name
 
    def create_library_from_name
-     create_library(:name => new_library_name) unless new_library_name.blank?
+     unless new_library_name.blank? then
+       self.library = Library.find_or_create_by(:name => new_library_name)
+     end
    end
  
 end

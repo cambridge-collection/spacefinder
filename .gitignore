@@ -13,3 +13,6 @@
 /tmp
 
 /.env
+/db/spacefinder.csv
+
+**/.DS_Store
