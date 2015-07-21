@@ -7,3 +7,6 @@ json.access @space.try(:access).try(:title)
 json.space_type @space.try(:space_type).try(:title)
 json.library @space.try(:library).try(:name)
 json.noise @space.try(:noise).try(:title)
+
+json.facilities @space.attribute_names.select{|s| s[0, 8] == "facility" }.collect{|fk| if @space.send(fk) == true then fk else nil end}.compact
+json.atmosphere @space.attribute_names.select{|s| s[0, 10] == "atmosphere" }.collect{|ak| if @space.send(ak) == true then ak else nil end}.compact
