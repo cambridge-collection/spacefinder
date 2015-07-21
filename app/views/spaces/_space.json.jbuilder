@@ -1,4 +1,4 @@
-if defined?(@space) != "instance-variable"
+if defined?(space) == "local-variable" # because the partial in index wont let us 'as: @space'
   @space = space
 end
 
