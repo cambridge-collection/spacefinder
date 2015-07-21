@@ -11,6 +11,21 @@
 </p>
 
 <p>
+  <strong>Access:</strong>
+  <%= @space.try(:access).try(:title) %>
+</p>
+
+<p>
+  <strong>Space type:</strong>
+  <%= @space.try(:space_type).try(:title) %>
+</p>
+
+<p>
+  <strong>In Library:</strong>
+  <%= @space.try(:library).try(:name) %>
+</p>
+
+<p>
   <strong>Address:</strong>
   <%= @space.address %>
 </p>
@@ -108,6 +123,11 @@
 <p>
   <strong>Atmosphere friendly:</strong>
   <%= @space.atmosphere_friendly %>
+</p>
+
+<p>
+  <strong>Noise:</strong>
+  <%= @space.try(:noise).try(:title) %>
 </p>
 
 <p>
