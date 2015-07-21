@@ -113,10 +113,12 @@
     <%= f.label :atmosphere_friendly %><br>
     <%= f.check_box :atmosphere_friendly %>
   </div>
+  
   <div class="field">
     <%= f.label :noise_id %><br>
     <%= f.collection_select(:noise_id, Noise.all, :id, :title) %>
   </div>
+  
   <div class="field">
     <%= f.label :facility_food_drink %><br>
     <%= f.check_box :facility_food_drink %>
@@ -189,6 +191,24 @@
     <%= f.label :facility_break %><br>
     <%= f.check_box :facility_break %>
   </div>
+  
+  <div class="field">
+    <%= f.label :work_private %><br>
+    <%= f.check_box :work_private %>
+  </div>
+  <div class="field">
+    <%= f.label :work_close %><br>
+    <%= f.check_box :work_close %>
+  </div>
+  <div class="field">
+    <%= f.label :work_friends %><br>
+    <%= f.check_box :work_friends %>
+  </div>
+  <div class="field">
+    <%= f.label :work_group %><br>
+    <%= f.check_box :work_group %>
+  </div>
+  
   <div class="field">
     <%= f.label :expensive %><br>
     <%= f.number_field :expensive %>
