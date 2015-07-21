@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716153704) do
+ActiveRecord::Schema.define(version: 20150721135959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,10 @@ ActiveRecord::Schema.define(version: 20150716153704) do
     t.integer  "space_type_id"
     t.integer  "library_id"
     t.integer  "noise_id"
+    t.boolean  "work_private"
+    t.boolean  "work_close"
+    t.boolean  "work_friends"
+    t.boolean  "work_group"
   end
 
   add_index "spaces", ["access_id"], name: "index_spaces_on_access_id", using: :btree
