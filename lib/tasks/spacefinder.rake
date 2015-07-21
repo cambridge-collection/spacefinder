@@ -22,7 +22,7 @@ namespace :spacefinder do
       space.new_library_name = space_csv[:in_library]
       
       space.description = space_csv[:text_description_of_space]
-      space.address = space_csv[:who_can_use_the_space]
+      space.address = space_csv[:street_address]
       space.floor = space_csv[:floor]
       space.lat = space_csv[:"decimal_gps_coordinates_(longitude)_eg_0.122951"]
       space.lng = space_csv[:"decimal_gps_coordinates_(lattitude)_eg_52.197949"]
@@ -79,7 +79,7 @@ namespace :spacefinder do
       space.facility_refreshments = !(space_csv[:close_to_refreshments].nil? or space_csv[:close_to_refreshments].empty?) ? true : false
       space.facility_break = !(space_csv[:close_to_a_place_to_take_a_break].nil? or space_csv[:close_to_a_place_to_take_a_break].empty?) ? true : false
       
-      space.expensive = space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?_(1_=_cheap,_5_=_expensive)"].nil? ? nil : space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?_(1_=_cheap,_5_=_expensive)"][0]
+      space.expensive = space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"].nil? ? nil : space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"]
       
       if space.save then
         puts "Saved: #{space_csv[:basic_info]}"
