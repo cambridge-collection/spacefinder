@@ -213,6 +213,12 @@
     <%= f.label :expensive %><br>
     <%= f.number_field :expensive %>
   </div>
+  
+  <div class="field">
+    <%= f.label :tags %><br>
+    <%= f.text_field :tag_list, value: @space.tag_list.to_s %>
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -81,6 +81,8 @@ namespace :spacefinder do
       
       space.expensive = space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"].nil? ? nil : space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"]
       
+      space.tag_list = space_csv[:tags]
+      
       if space.save then
         puts "Saved: #{space_csv[:basic_info]}"
       else
