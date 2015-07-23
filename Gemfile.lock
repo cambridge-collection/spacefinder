@@ -59,6 +59,8 @@ GEM
       railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.5.2)
+    filterrific (2.0.5)
+      rails (>= 3.1.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -164,6 +166,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   dotenv-rails
+  filterrific
   jbuilder (~> 2.0)
   jquery-rails
   pg

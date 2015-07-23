@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'puma'
 gem 'smarter_csv'
 gem 'acts-as-taggable-on'
+gem 'filterrific'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

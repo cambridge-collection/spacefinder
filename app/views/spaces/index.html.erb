@@ -2,6 +2,20 @@
 
 <h1>Listing Spaces</h1>
 
+<%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' }  do |f| %>
+<div>
+    Noise level
+    
+    <% @filterrific.select_options[:with_noise_ids].each do |c| %>
+    <div>
+      <%= check_box_tag("filters[with_noise_ids][]",c[1]) %>
+      <%=h c.to_yaml %>
+    </div>
+<% end %>
+  </div>
+  <%= f.submit 'Filter' %>
+<% end %>
+
 <table>
   <thead>
     <tr>

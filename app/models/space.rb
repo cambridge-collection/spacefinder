@@ -11,6 +11,16 @@ class Space < ActiveRecord::Base
   attr_accessor :new_library_name
 
   before_save :create_library_from_name
+  
+  filterrific(
+    available_filters: [
+      :with_noise_ids
+    ]
+  )
+  
+  scope :with_noise_ids, lambda { |noise_ids|
+    where(:noise_id => [*noise_ids])
+  }
 
   def create_library_from_name
     unless new_library_name.blank? then

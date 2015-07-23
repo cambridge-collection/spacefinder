@@ -5,7 +5,17 @@ class SpacesController < ApplicationController
   # GET /spaces
   # GET /spaces.json
   def index
-    @spaces = Space.all
+    @filterrific = initialize_filterrific(
+      Space,
+      params[:filters],
+      :select_options => {
+        with_noise_ids: Noise.options_for_select
+      }
+    )
+    puts params.to_yaml
+    @spaces = @filterrific.find
+
+#    @spaces = Space.all
   end
 
   # GET /spaces/1
