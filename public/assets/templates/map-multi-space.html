@@ -1,9 +1,11 @@
-<div class="multipoint">
+<div id="bubble-#{id}" class="multipoint">
     <h1>#{library} <small>#{distance}</small></h1>
     <ul>
         #{spaces[<li><a href="#{link}" title="#{name}">#{name}</a></li>]}
     </ul>
 </div>
 <script type="text/javascript">
-    alert("here");
+    $bubble = $('#bubble-#{id}');
+    console.log('loaded bubble');
+    console.log($bubble);
 </script>

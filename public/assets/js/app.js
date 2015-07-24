@@ -29,6 +29,10 @@ templates = {
     spaceDetail : {
         url : '/assets/templates/space-detail.html',
         template : ''
+    },
+    search : {
+        url : '/assets/templates/search.html',
+        template : ''
     }
 },
 inactiveColor = 'rgba(0,0,0,0.6)',
@@ -51,7 +55,6 @@ var multiMarkerSymbol = {
     strokeWeight: 0
 };
 $().ready(function() {
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
     var startView = initialView;
     $(window).on('hashchange', function(Event) {
         oldView = Event.originalEvent.oldURL.split('#')[1];
@@ -221,14 +224,27 @@ function closeSpaces() {
     });
 }
 
+function resetViews() {
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    $('#list').html('');
+}
+
 function loadSpaces(options) {
     var defaults = {
-
+        queryString:'',
+        reset:false
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
     console.log('load spaces');
-    $.getJSON('https://uoc-spacefinder.herokuapp.com/spaces.json').done(function(data) {
+
+    resetViews();
+    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces.json?callback=?', {
+        cache:false,
+        dataType:'json',
+        method:'GET',
+        data:defaults.queryString
+    }).done(function(data) {
     //$.getJSON('/assets/data/points.json').done(function(data) {
         points = data,
         distCount = 0;
@@ -240,7 +256,10 @@ function loadSpaces(options) {
                         points[key].distance = dist;
                         distCount++;
                         if (distCount == points.length) {
-                            loadSearch();
+                            if(!defaults.reset) {
+                                loadSearch();
+
+                            }
                             loadMap();
                             loadList();
 
@@ -252,10 +271,12 @@ function loadSpaces(options) {
                 } else {
                     distCount++;
                     if (distCount == points.length) {
-                        loadSearch();
+                        if(!defaults.reset) {
+                            loadSearch();
+
+                        }
                         loadMap();
                         loadList();
-
                         if(typeof(defaults.callback) == 'function') {
                             defaults.callback();
                         }
@@ -264,7 +285,10 @@ function loadSpaces(options) {
 
             });
         } else {
-            loadSearch();
+            if(!defaults.reset) {
+                loadSearch();
+
+            }
             loadMap();
             loadList();
             if(typeof(defaults.callback) == 'function') {
@@ -281,7 +305,7 @@ function loadSearch() {
     //$.getJSON('https://uoc-spacefinder.herokuapp.com/spaces.json')
     $.getJSON('/assets/data/search.json')
         .done(function(data) {
-            
+            $('#search').append(parseTemplate('search', data));
         })
 }
 
@@ -413,6 +437,7 @@ function loadMap(options) {
         google.maps.event.addListener(infowindow,'closeclick',function(){
             marker.icon.fillColor = defaults.inactiveColor;
             marker.setMap(map);
+            openPoints = [];
         });
     });
     if(typeof(defaults.callback) == 'function') {
@@ -473,7 +498,10 @@ function parseTemplate(t, data, partial) {
     var r = new RegExp('(#{.*\\[.*\\].*})', "g"),
     arrays,
     template,
-    matches;
+    matches,
+    limit = null,
+    icon = null,
+    attr = null;
 
     if(partial == true) {
         template = t;
@@ -488,7 +516,6 @@ function parseTemplate(t, data, partial) {
         for (var i = 0; i < arrays.length; i++) {
             var r = new RegExp('(#{(.*)\\[(.*)\\](.*?)})', "g");
             var match = r.exec(arrays[i]);
-            var limit = null;
 
             if (match !== null && match !== match[4] !== undefined) {
                 limit = match[4].match(/.*limit="(.*)".*/);
@@ -500,7 +527,8 @@ function parseTemplate(t, data, partial) {
             }
 
             if(match !== null && match[2] !== undefined) {
-                var str = convertToValue(match[3], data[match[2]], limit);
+                var str = convertToValue(match[3], data[match[2]], {"limit":limit, "icon":icon, "attr":attr});
+                console.log(match[3], data[match[2]]);
                 template = template.replace(match[1], str);
             }
 
@@ -511,18 +539,24 @@ function parseTemplate(t, data, partial) {
     if (matches !== null) {
         for (var i = 0; i < matches.length; i++) {
             limit = matches[i].match(/.*\(.*limit="(.*)".*/);
+            attr = matches[i].match(/.*\(.*attr="(.*)".*/);
+            icon = matches[i].match(/.*\(.*icon.*/);
+            if(icon !== null) {
+                icon = true;
+            }
             if(limit !== null) {
                 limit = Number(limit[1]);
-            } else {
-                limit = null;
+            }
+            if(attr !== null) {
+                attr = attr[1];
             }
             var key = ''
-            if (limit !== null) {
+            if (limit !== null || icon !== null || attr !== null) {
                 key = matches[i].match(/#{(.*)\(.*}/);
             } else {
                 key = matches[i].match(/#{(.*)}/);
             }
-            var str = convertToValue(matches[i], data[key[1]], limit);
+            var str = convertToValue(matches[i], data[key[1]], {"limit":limit, "icon":icon, "attr":attr});
             template = template.replace(matches[i],str);
 
         }
@@ -533,27 +567,27 @@ function parseTemplate(t, data, partial) {
 }
 
 
-function convertToValue(t, data, limit) {
+function convertToValue(t, data, options) {
     if($.type(data) == 'array') {
         var temp = '';
         for (var i = 0; i < data.length; i++) {
             var str = t;
             if($.type(data[i]) == 'object' || $.type(data[i]) == 'array') {
-                //console.log(t, data[i]);
-                temp = parseTemplate(t, data[i], true);
+                console.log(t, data[i]);
+                str = parseTemplate(t, data[i], true);
             } else {
                 var searchIconMap = searchArray(iconMap, data[i]);
                 if(searchIconMap !== -1) {
-                    str = str.replace('#{value}', iconMap[searchIconMap][1]);
-                    str = str.replace('#{attr}', iconMap[searchIconMap][1].replace(/ /g, '-'));
-                    str = str.replace('#{icon}', iconMap[searchIconMap][2]);
+                    str = str.replace(/#{value}/g, iconMap[searchIconMap][1]);
+                    str = str.replace(/#{attr}/g, iconMap[searchIconMap][0].replace(/ /g, '-'));
+                    str = str.replace(/#{icon}/g, iconMap[searchIconMap][2]);
                 } else {
-                    str = str.replace('#{value}', data[i].replace(/(.*?)_/, ''));
-                    str = str.replace('#{attr}', data[i].replace(/(.*?)_/, '').replace(/ /g, '-'));
+                    str = str.replace(/#{value}/g, data[i].replace(/(.*?)_/, ''));
+                    str = str.replace(/#{attr}/g, data[i]);
                 }
             }
             temp += str;
-            if (limit !== null && i >= (limit - 1) ) {
+            if (options.limit !== null && i >= (options.limit - 1) ) {
                 break;
             }
         }
@@ -563,9 +597,9 @@ function convertToValue(t, data, limit) {
     } else if($.type(data) == 'object') {
         var temp = t;
         $.each(data, function(key, value) {
-            if (limit !== null) {
+            if (options.limit !== null) {
                 //console.log(limit, value);
-                temp = temp.replace('/#{' + key +'}/g', String(value).substr(0, limit));
+                temp = temp.replace('/#{' + key +'}/g', String(value).substr(0, options.limit));
             } else {
                 temp = temp.replace('/#{' + key +'}/g', value);
             }
@@ -574,11 +608,19 @@ function convertToValue(t, data, limit) {
         return temp;
     } else {
         if (data !== undefined && data !== null && data !== 'null') {
-            if (limit !== null) {
-                return String(data).substr(0, limit)
-            } else {
-                return data;
+            if (options.limit !== null) {
+                data = String(data).substr(0, options.limit)
             }
+            if (options.attr !== null) {
+                data = String(data).replace(' ', options.attr)
+            }
+            if (!!options.icon) {
+                var searchIconMap = searchArray(iconMap, data);
+                if(searchIconMap !== -1) {
+                    data = iconMap[searchIconMap][2];
+                }
+            }
+            return data;
         }
         return '';
     }

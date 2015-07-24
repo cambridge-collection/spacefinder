@@ -1,0 +1,77 @@
+<div class="search-text">
+    <input type="text" placeholder="Search for a space, keyword or tag" />
+</div>
+<ul>
+    <li><div class="header">I want to work...</div>
+        <ul id="search-work">
+            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
+        </ul>
+    </li>
+    <li><div class="header">Atmosphere</div>
+        <ul id="search-atmosphere">
+            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
+        </ul>
+    </li>
+    <li><div class="header">Noise levels</div>
+        <ul  id="search-noise">
+            #{noise[<li class="filter-option noise-level  #{name(attr="_")}" data-id="#{id}"><i class="#{name(icon)}"></i><span>#{name}</span></li>]}
+        </ul>
+    </li>
+    <li><div class="header">Facilities</div>
+        <ul id="search-facilities">
+            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><i class="#{icon}"></i><span>#{value}</span></li>]}
+        </ul>
+    </li>
+    <li><div class="header">Tags</div>
+        <ul id="search-tags">
+            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><i class="icon-tick"></i><span>#{name}</span></li>]}
+        </ul>
+    </li>
+</ul>
+<a class="search-button"><i class="icon-search"></i>Search</a>
+
+<script type="text/javascript">
+    $('.filter-option').on('click', function(event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        /* Act on the event */
+    });
+
+    $('.search-button').on('click', function(event) {
+        event.preventDefault();
+        console.log('prep search');
+        var searchString = prepSearch();
+        loadSpaces({
+            "queryString": searchString,
+            "reset": true,
+            "callback": function() {
+                if(oldView !== undefined) {
+                    window.location.hash = oldView;
+                } else {
+                    window.location.hash = '/';
+                }
+            }
+        })
+    });
+
+    function prepSearch() {
+        var query = '';
+        $('#search-work .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-atmosphere .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-facilities .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-tags .active').each(function(index, el) {
+            query += '&filters[with_tag_ids][]=' + $(this).data('id');
+        });
+        $('#search-noise .active').each(function(index, el) {
+            query += '&filters[with_noise_ids][]=' + $(this).data('id');
+        });
+        console.log(query.substr(1));
+        return query.substr(1);
+    }
+</script>
