@@ -31,7 +31,8 @@ class Space < ActiveRecord::Base
   
   filterrific(
     available_filters: [
-      :with_noise_ids
+      :with_noise_ids,
+      :with_tag_names
     ].concat(atmospheres.collect{ |atmosphere| 
       atmosphere.to_sym
     }).concat(facilities.collect{ |facility| 
@@ -39,8 +40,12 @@ class Space < ActiveRecord::Base
     })
   )
   
-  scope :with_noise_ids, lambda { |noise_ids|
+  scope :with_noise_ids, ->(noise_ids) {
     where(:noise_id => [*noise_ids])
+  }
+  
+  scope :with_tag_names, ->(tag_names) {
+    tagged_with(tag_names)
   }
   
   atmospheres.each do |atmosphere|
