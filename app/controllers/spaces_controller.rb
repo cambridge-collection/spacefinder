@@ -9,13 +9,12 @@ class SpacesController < ApplicationController
       Space,
       params[:filters],
       :select_options => {
-        with_noise_ids: Noise.options_for_select
+        with_noise_ids: Noise.options_for_select,
+        with_atmosphere: Space.atmospheres
       }
     )
-    puts params.to_yaml
+    
     @spaces = @filterrific.find
-
-#    @spaces = Space.all
   end
 
   # GET /spaces/1
