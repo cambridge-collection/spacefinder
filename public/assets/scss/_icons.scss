@@ -26,6 +26,10 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+
+.icon-tick:before {
+	content: "\e61b";
+}
 .icon-views:before {
 	content: "\e600";
 }

@@ -1,0 +1,52 @@
+{
+    "work": [
+        "work_private",
+        "work_close",
+        "work_friends",
+        "work_group"
+    ],
+    "atmosphere": [
+        "atmosphere_disciplined",
+        "atmosphere_relaxed",
+        "atmosphere_historic",
+        "atmosphere_modern",
+        "atmosphere_inspiring",
+        "atmosphere_cosy",
+        "atmosphere_social",
+        "atmosphere_friendly"
+    ],
+    "noise": [
+        {"id": 1, "name":"Silent"},
+        {"id": 2, "name":"Whispers"},
+        {"id": 3, "name":"Background chatter"},
+        {"id": 4, "name":"Animated discussion"},
+        {"id": 5, "name":"Music playing"}
+    ],
+    "facilities": [
+        "facility_food_drink",
+        "facility_daylight",
+        "facility_views",
+        "facility_large_desks",
+        "facility_free_wifi",
+        "facility_no_wifi",
+        "facility_computers",
+        "facility_laptops_allowed",
+        "facility_sockets",
+        "facility_signal",
+        "facility_printers_copiers",
+        "facility_whiteboards",
+        "facility_projector",
+        "facility_outdoor_seating",
+        "facility_bookable",
+        "facility_toilets",
+        "facility_refreshments",
+        "facility_break"
+    ],
+    "tags":[
+        {"id": 1, "name":"tag 1"},
+        {"id": 2, "name":"tag 2"},
+        {"id": 3, "name":"tag 3"},
+        {"id": 4, "name":"tag 4"},
+        {"id": 5, "name":"tag 5"}
+    ]
+}

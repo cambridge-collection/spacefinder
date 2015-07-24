@@ -1,5 +1,5 @@
 #top-bar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -324,6 +324,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.icon-tick:before {
+  content: "\e61b"; }
+
 .icon-views:before {
   content: "\e600"; }
 
@@ -405,6 +408,74 @@
 .icon-wifi:before {
   content: "\e61a"; }
 
+#search {
+  background: #F3F3F3;
+  padding-bottom: 60px; }
+  #search .search-text {
+    background-color: #F3F3F3;
+    border-bottom: 1px solid #d0d1d1;
+    padding: 12px; }
+    #search .search-text input {
+      -webkit-appearance: none;
+      border-radius: 0;
+      border: none;
+      background-color: #bdbdbd;
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem; }
+      #search .search-text input::-webkit-input-placeholder {
+        color: #212121; }
+      #search .search-text input:-moz-placeholder {
+        /* Firefox 18- */
+        color: #212121; }
+      #search .search-text input::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #212121; }
+      #search .search-text input:-ms-input-placeholder {
+        color: #212121; }
+  #search .header {
+    background-color: #F3F3F3;
+    text-transform: uppercase;
+    padding: 12px 12px;
+    line-height: 1rem; }
+  #search ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    #search ul ul li {
+      padding: 12px 0 12px 18px;
+      margin: 0 4px;
+      border-bottom: 1px solid #d0d1d1;
+      background-color: #FFF; }
+      #search ul ul li:last-child {
+        border-bottom: none; }
+      #search ul ul li [class^="icon-"] {
+        font-size: 1rem;
+        width: 1.8rem;
+        text-align: center;
+        margin-right: 6px;
+        color: #d0d1d1; }
+  #search .filter-option {
+    cursor: pointer; }
+    #search .filter-option.active {
+      color: #E37222; }
+      #search .filter-option.active [class^="icon-"] {
+        color: #E37222; }
+  #search .search-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background: #642c73;
+    color: #FFF;
+    padding: 18px;
+    text-transform: uppercase;
+    font-size: 1.4rem; }
+    #search .search-button [class^="icon-"] {
+      font-size: 1.2rem;
+      margin-right: 6px; }
+
 @font-face {
   font-family: 'MyriadPro-Light';
   src: url("/assets/fonts/MyriadPro-Light.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/MyriadPro-Light.otf") format("opentype"), url("/assets/fonts/MyriadPro-Light.woff") format("woff"), url("/assets/fonts/MyriadPro-Light.ttf") format("truetype"), url("/assets/fonts/MyriadPro-Light.svg#MyriadPro-Light") format("svg");
@@ -415,7 +486,7 @@ body, html {
   margin: 0;
   background: #2e2e2e;
   font-size: 14px;
-  min-height: 100vh;
+  height: 100vh;
   font-family: 'MyriadPro-Light', verdana, sans-serif;
   font-weight: lighter; }
 
@@ -424,12 +495,10 @@ body, html {
 
 .view-container {
   display: flex;
-  height: calc(100% - 50px);
+  min-height: calc(100% - 50px);
   width: 100%;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  overflow: auto; }
+  margin-top: 50px;
+  left: 0; }
 
 .hidden {
   display: none; }

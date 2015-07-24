@@ -4,6 +4,7 @@
 @import '_list-view';
 @import '_space';
 @import '_icons';
+@import '_search';
 
 @font-face {
   font-family: 'MyriadPro-Light';
@@ -18,7 +19,7 @@ body, html {
     margin: 0;
     background: $backgroundColor;
     font-size: 14px;
-    min-height: 100vh;
+    height: 100vh;
     font-family: 'MyriadPro-Light', verdana, sans-serif;
     font-weight: lighter;
 }
@@ -27,12 +28,10 @@ body, html {
 }
 .view-container {
     display: flex;
-    height: calc(100% - #{$navHeight});
+    min-height: calc(100% - #{$navHeight});
     width: 100%;
-    position: absolute;
-    top: $navHeight;
+    margin-top: $navHeight;
     left: 0;
-    overflow: auto;
 }
 
 .hidden {

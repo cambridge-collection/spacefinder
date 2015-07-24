@@ -17,4 +17,14 @@ var iconMap = [
     ["facility_toilets", 'Toilets nearby', 'icon-toilet'],
     ["facility_refreshments", 'Close to refreshments', 'icon-coffee'],
     ["facility_break", 'Close to a place to take a break', 'icon-marker'],
+    ["noise_silent", 'Silent', 'icon-sound-0'],
+    ["noise_whispers", 'Whispers', 'icon-sound-1'],
+    ["noise_background_chatter", 'Background chatter', 'icon-sound-2'],
+    ["noise_animated_discussion", 'Animated discussion', 'icon-sound-3'],
+    ["noise_music", 'Music playing', 'icon-music'],
+
+    ["work_close", 'Where others are working', ''],
+    ["work_private", 'Alone, in private', ''],
+    ["work_friends", 'With friends', ''],
+    ["work_group", 'On a group project', ''],
 ];
