@@ -11,7 +11,8 @@ class SpacesController < ApplicationController
       :select_options => {
         with_noise_ids: Noise.options_for_select,
         with_atmosphere: Space.atmospheres
-      }
+      },
+      :persistence_id => false
     )
     
     @spaces = @filterrific.find
