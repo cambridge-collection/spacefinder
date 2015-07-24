@@ -1,6 +1,6 @@
 <div class="space">
     <div class="title">
-        <a href="#" class="close-view">Close</a>
+        <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
         <h1>#{name}</h1>
         <small>#{distance}les away</small>
     </div>
@@ -11,9 +11,6 @@
             </div>
 
         </div>
-        <div class="tags">
-            #{tags[<span class="tag #{attr}">#{value}</span>]}
-        </div>
     </div>
 
     <div class="tabs">
@@ -22,40 +19,42 @@
             <li><a href="#tips">Tips</a></li>
             <li><a href="#map-#{id}">Map</a></li>
         </ul>
-        <div id="info">
-            <p>#{description}</p>
-            <ul>
-                <li>#{address}</li>
-                <li>#{hours}</li>
-            </ul>
-            <ul>
-                #{facilities[<li class="facility #{attr}">#{value}</li>]}
-            </ul>
-            <ul>
-                #{atmosphere[<li class="atmosphere #{attr}">#{value}</li>]}
-            </ul>
-            <ul>
-                #{tags[<li class="#{attr}">#{value}</li>]}
-            </ul>
-            <p>#{description}</p>
-            <ul>
-                <li>#{address}</li>
-                <li>#{hours}</li>
-            </ul>
-            <ul>
-                #{facilities[<li class="facility #{attr}">#{value}</li>]}
-            </ul>
-            <ul>
-                #{atmosphere[<li class="atmosphere #{attr}">#{value}</li>]}
-            </ul>
-            <ul>
-                #{tags[<li class="#{attr}">#{value}</li>]}
-            </ul>
+        <div class="tab-panel" id="info">
+
+                <p>#{description}</p>
+            <section class="section-facts">
+                <h2>Key facts</h2>
+                <ul>
+                    <li><i class="icon-marker"></i><span>#{address}</span></li>
+                    <li class="opening-times"><i class="icon-time-short"></i><span>#{opening_hours}</span></li>
+                </ul>
+            </section>
+            <section class="lowlight section-facilities">
+                <h2>Facilities</h2>
+                <ul>
+                    #{facilities[<li class="facility #{attr}"><i class="#{icon}"></i>#{value}</li>]}
+                </ul>
+            </section>
+            <section class=" section-tags">
+                <h2>Tags</h2>
+                <ul>
+                    #{tags[<li class="tag #{attr}">#{value}</li>]}
+                </ul>
+            </section>
+            <section class="lowlight section-contact">
+                <h2>Contact</h2>
+                <dl>
+                    <dt>Website:</dt><dd><a href="#{url}" title="#{name}">#{url}</a></dd>
+                    <dt>Phone:</dt><dd><a href="tel:#{phone_number}" title="call now">#{phone_number}</a></dd>
+                    <dt>Twitter:</dt><dd><a href="https://twitter.com/#{twitter_screen_name}" title="#{twitter_screen_name}">#{twitter_screen_name}</a></dd>
+                    <dt>Facebook:</dt><dd><a href="https://facebook.com/#{facebook_url}" title="#{facebook_url}">#{facebook_url}</a></dd>
+                </dl>
+            </section>
         </div>
-        <div id="tips">
+        <div class="tab-panel" id="tips">
             tips screen
         </div>
-        <div class="map" id="map-#{id}"></div>
+        <div class="map tab-panel" id="map-#{id}"></div>
     </div>
 </div>
 <script type="text/javascript">
@@ -82,33 +81,44 @@ $space.find('.tabs').tabs({
     activate: function(e, ui) {
         console.log($(ui.newPanel).attr('id'));
         if($(ui.newPanel).attr('id') == "map-#{id}") {
+            $(ui.newPanel).height($(window).height() - ($space.find('.ui-tabs-nav').outerHeight(true) + $space.find('.title').outerHeight(true)))
             google.maps.event.trigger(localMap, 'resize');
             localMap.setCenter(m.getPosition());
+            $(document).scrollTop($space.find('.tabs').position(true).top - $space.find('.ui-tabs-nav').outerHeight(true));
         }
     }
 });
 
-//set up map
+var lat = Number(#{lat}),
+    lng = Number(#{lng});
 
-spaceMapOptions = {
-    center: {'lat':#{latitude}, 'lng':#{longitude}},
-    zoom: 18,
-    disableDefaultUI: true
+//set up map
+if(lat !== null && lng !== null) {
+    spaceMapOptions = {
+        center: {'lat':lat, 'lng':lng},
+        zoom: 18,
+        disableDefaultUI: true
+    }
+
+    localMap = new google.maps.Map(document.getElementById('map-#{id}'), spaceMapOptions);
+
+    var m;
+    google.maps.event.trigger(localMap, 'resize');
+    console.log(localMap);
+    m = new google.maps.Marker({
+        position: {'lat':lat, 'lng':lng},
+        map:localMap,
+        icon:markerSymbol
+    });
+    m.icon.fillColor = activeColor;
+    m.icon.fillOpacity = 1;
+    localMap.setCenter(m.getPosition());
+} else {
+    $space.find('a[href="#map-#{id}]"').remove();
 }
 
-localMap = new google.maps.Map(document.getElementById('map-#{id}'), spaceMapOptions);
-
-var m;
-google.maps.event.trigger(localMap, 'resize');
-console.log(localMap);
-m = new google.maps.Marker({
-    position: {'lat':#{latitude}, 'lng':#{longitude}},
-    title:'#{name}',
-    map:localMap,
-    icon:markerSymbol
-});
-m.icon.fillColor = '#d6083b';
-m.icon.fillOpacity = 1;
-localMap.setCenter(m.getPosition());
+if ($space.find(".section-tags li").length == 0) {
+    $space.find(".section-tags").remove();
+}
 
 </script>

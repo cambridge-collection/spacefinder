@@ -2,13 +2,22 @@
     min-height: 100vh;
 }
 .space {
-    background: $lightBackgroundColor;
+    background: #FFF;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     min-height: 100vh;
     z-index: 10;
+
+    .close-view {
+        position: absolute;
+        left: 12px;
+        top: 16px;
+        color: #FFF;
+        text-decoration: none;
+        font-size: 1.4rem;
+    }
 
     .title {
         background:$barColor;
@@ -70,13 +79,111 @@
         }
     }
     .tabs {
+        .tab-panel {
+            padding: 24px;
+        }
+        section {
+            margin-bottom: 24px;
+            &.section-facts {
+                ul {
+                    list-style: none;
+                    padding-left: 0;
+                }
+                li {
+                    margin-bottom: 12px;
+                    span {
+                        display: block;
+                        margin-left: 1.8rem;
+                    }
+                }
+                [class^="icon-"] {
+                    width: 1.6rem;
+                    text-align: center;
+                    font-size: 1.4rem;
+                    margin-top: -0.1rem;
+                    float: left;
+                    color: #3F3F3F;
+                }
+            }
+            &.section-contact {
+                dl {
+                    display: -ms-flex;
+                    display: -webkit-flex;
+                    display: flex;
+                    -webkit-flex-flow: row wrap;
+                    flex-flow: row wrap;
+                    -webkit-align-content: stretch;
+                    align-content: stretch;
+                }
+                dt {
+                    font-style: normal;
+                    color: $barColor;
+                    text-align: right;
+                    width: 55px;
+                    margin-right: 6px;
+
+                }
+                dd {
+                    -webkit-flex-grow:1;
+                    flex-grow: 1;
+                    margin-left: 0;
+                    width: calc(100% - 61px);
+                    margin-bottom: 6px;
+                    word-wrap: break-word;
+                }
+            }
+            &.section-tags {
+                ul {
+                    list-style: none;
+                    margin:0;
+                    padding: 0;
+                }
+                .tag {
+                    display: inline-block;
+                    background: $lowlight;
+                    margin: 0 12px 6px 0;
+                    padding: 3px 12px;
+
+                }
+            }
+            &.section-facilities {
+                ul {
+                    display: -ms-flex;
+                    display: -webkit-flex;
+                    display: flex;
+                    -webkit-flex-flow: row wrap;
+                    flex-flow: row wrap;
+                    -webkit-align-content: stretch;
+                    align-content: stretch;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+                i {
+                    display: block;
+                    font-size: 1.6em;
+                    margin-bottom: 6px;
+                }
+                li {
+                    width: 50%;
+                    text-align: center;
+                    padding: 20px;
+                }
+            }
+        }
+        .lowlight {
+            background:$lightBackgroundColor;
+            padding: 12px;
+            margin-left: -12px;
+            margin-right: -12px;
+        }
         .ui-tabs-nav {
             display: -webkit-flex;
             display: flex;
             width: 100%;
             z-index: 1;
-            background-color: grey;
-            padding: 5px 5px 0;
+            background-color: #3f3f3f;
+            padding: 0;
             margin: 0;
         }
         .ui-tabs-nav.sticky {
@@ -99,10 +206,20 @@
             width: 100%;
             text-align: center;
             padding: 10px 0;
+            color: $lightBackgroundColor;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            outline:none;
         }
         .ui-tabs-nav>li.ui-tabs-active {
-            text-decoration: underline;
-            background-color: black;
+            background-color: #FFF;
+            border-top: 4px solid $highlightI;
+            a {
+                color: $fontColor;
+            }
+        }
+        .ui-tabs-nav.sticky {
+            box-shadow: 1px 0 0 1px rgba(0, 0, 0, 0.2);
         }
         .map {
             height: 800px;

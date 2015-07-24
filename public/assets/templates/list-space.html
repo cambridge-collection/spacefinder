@@ -1,8 +1,15 @@
-<div>
+<div class="list-space">
     <h1>#{name}</h1>
-    <p>#{description}</p>
-    <div>
-        #{facilities[<span class="facility #{attr}">#{value}</span>]}
-        <a href="#{link}" title="#{name}">View details</a>
+
+
+    <div class="space-details">
+        #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+        <div>
+            <p class="description">#{description(limit="100")}</p>
+
+            #{facilities[<span class="facility #{attr}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>]}
+            <a href="#{link}" title="#{name}">View details</a>
+        </div>
+
     </div>
 </div>

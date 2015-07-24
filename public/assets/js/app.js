@@ -6,6 +6,7 @@ userLoc = {'lat':0, 'lng':0}
 getLocation = true,
 centerOnLocation = false,
 points = [],
+listScroll = 0,
 mapOptions = {
     center: loc,
     zoom: 14,
@@ -37,7 +38,7 @@ mapViewed = false;
 var markerSymbol = {
     path: 'M0-30.5c-5.7,0-10.2,4.6-10.2,10.2C-10.2-14.6,0,0,0,0s10.2-14.6,10.2-20.2C10.2-25.9,5.7-30.5,0-30.5z M0-17.7c-1.6,0-3-1.3-3-3s1.3-3,3-3s3,1.3,3,3S1.6-17.7,0-17.7z',
     fillColor: inactiveColor,
-    fillOpacity: 0.8,
+    fillOpacity: 1,
     scale: 1,
     strokeWeight: 0
 };
@@ -45,7 +46,7 @@ var markerSymbol = {
 var multiMarkerSymbol = {
     path: 'M0-28.5c-5.7,0-10.2,4.6-10.2,10.2C-10.2-12.6,0,0,0,0s10.2-12.6,10.2-18.2C10.2-23.9,5.7-28.5,0-28.5z M5.2-17.8h-4v4h-2.4v-4h-4v-2.4h4v-4h2.4v4h4V-17.8z',
     fillColor: inactiveColor,
-    fillOpacity: 0.8,
+    fillOpacity: 1,
     scale: 1,
     strokeWeight: 0
 };
@@ -111,18 +112,25 @@ $().ready(function() {
 
 
 function switchView(newView, modal) {
-    //console.log('switchView', newView);
+    if(oldView == '/list') {
+        listScroll = Number($(window).scrollTop());
+        console.log(listScroll);
+    }
     if(newView == undefined) newView = initialView;
     closeSpaces();
     if(newView.indexOf('/') == -1 && $('#' + newView).length > 0) {
         $('.view-container').css('display', 'none');
         $('a').removeClass('active');
         $('a[href="#/' + newView + '"]').addClass('active');
+
         $('#' + newView).fadeIn({
             duration: 300,
             start:function () {
+
                 if (newView == 'map') {
                     google.maps.event.trigger(map, 'resize');
+                    $(window).scrollTop(0);
+
                 }
                 if(!mapViewed) {
                     mapViewed == true;
@@ -133,12 +141,23 @@ function switchView(newView, modal) {
                     }
 
                 }
+            },
+            progress : function() {
+                if (newView == 'list') {
+                    console.log('scroll to ', listScroll);
+                    $(window).scrollTop(listScroll);
+                }
+                if (newView == 'map') {
+                    if(openPoints.length > 0) {
+                        new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
+                    }
+                }
             }
         });
     } else {
         if(newView.indexOf('space') !== -1) {
+            $('.view-container').css('display', 'none');
             var parts = newView.split('/');
-            //console.log(parts);
             loadSpace({
                 'id': parts[1],
                 'name': parts[2].replace('-', ' ')
@@ -153,14 +172,16 @@ function loadSpace(options) {
     },
     space;
     $.extend(defaults, options);
-    //console.log(defaults);
     //see if we've already have it loaded
     space = findMarkers(points, {'id':defaults.id}).spaces;
+
+
+
     if(space.length == 1) {
         //we've got the space so show it
         showSpace(space[0]);
     } else if(space.length == 0){
-        $.$.ajax({
+        $.ajax({
             url: '/assets/data/unloaded-space.json',
             dataType: 'json',
             data: {id: defaults.id}
@@ -182,22 +203,15 @@ function loadSpace(options) {
 }
 
 function showSpace(data) {
-    if(!!getLocation && data.distance == undefined) {
-        getDistance(userLoc, {'lat':data.latitude, 'lng':data.longitude}, function(dist) {
-            data.distance = dist;
-            showSpace(data);
-        })
-        return;
-    }
     var space = $('<div />')
-                    .css('display', 'none')
-                    .attr('id', 'space-' + data.id)
-                    .addClass('space-container')
-                    .append(parseTemplate('spaceDetail', data))
-                    .appendTo('body')
-                    .fadeIn(300, function() {
+    .css('display', 'none')
+    .attr('id', 'space-' + data.id)
+    .addClass('space-container')
+    .append(parseTemplate('spaceDetail', data))
+    .appendTo('body')
+    .fadeIn(300, function() {
 
-                    });
+    });
 
 }
 
@@ -213,19 +227,66 @@ function loadSpaces(options) {
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
-    //console.log('load spaces');
-    $.getJSON('/assets/data/points.json').done(function(data) {
-        points = data;
-        loadMap();
-        loadList();
-        if(typeof(defaults.callback) == 'function') {
-            defaults.callback();
+    console.log('load spaces');
+    $.getJSON('https://uoc-spacefinder.herokuapp.com/spaces.json').done(function(data) {
+    //$.getJSON('/assets/data/points.json').done(function(data) {
+        points = data,
+        distCount = 0;
+        if(!!getLocation) {
+            $.each(points, function(key, value) {
+                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+                if(points[key].lat !== null && points[key].lng !== null) {
+                    getDistance(userLoc, {lat:Number(points[key].lat),lng:Number(points[key].lng)}, function(dist) {
+                        points[key].distance = dist;
+                        distCount++;
+                        if (distCount == points.length) {
+                            loadSearch();
+                            loadMap();
+                            loadList();
+
+                            if(typeof(defaults.callback) == 'function') {
+                                defaults.callback();
+                            }
+                        }
+                    });
+                } else {
+                    distCount++;
+                    if (distCount == points.length) {
+                        loadSearch();
+                        loadMap();
+                        loadList();
+
+                        if(typeof(defaults.callback) == 'function') {
+                            defaults.callback();
+                        }
+                    }
+                }
+
+            });
+        } else {
+            loadSearch();
+            loadMap();
+            loadList();
+            if(typeof(defaults.callback) == 'function') {
+                defaults.callback();
+            }
         }
+
+
     });
 }
+
+function loadSearch() {
+    console.log('load spaces');
+    //$.getJSON('https://uoc-spacefinder.herokuapp.com/spaces.json')
+    $.getJSON('/assets/data/search.json')
+        .done(function(data) {
+            
+        })
+}
+
 function checkMarker(data, checks) {
     var match = true;
-    //console.log(data, checks);
     $.each(checks, function(key, val) {
         if(data[key] != val) {
             match = false;
@@ -243,14 +304,11 @@ function findMarkers(data, checks) {
             if(!getLocation) {
                 data[key].distance = markers.distance = '';
             }
-
-            //build link to space before parsing template
-            data[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
         }
     });
     if(ret.spaces.length > 1) {
-        ret.latitude = ret.spaces[0].latitude;
-        ret.longitude = ret.spaces[0].longitude;
+        ret.lat = ret.spaces[0].lat;
+        ret.lng = ret.spaces[0].lng;
         if(ret.spaces[0].library !== "") {
             ret.name = ret.spaces[0].library;
         } else {
@@ -263,22 +321,30 @@ function findMarkers(data, checks) {
 /*---------- map --------------*/
 function loadMap(options) {
     var defaults = {
-        inactiveColor:'rgba(0,0,0,0.6)',
+        inactiveColor:inactiveColor,
         activeColor:activeColor
     };
     $.extend(defaults, options);
-    //console.log('load map');
 
 
     $.each( points, function( key ) {
         if(points[key].marker !== undefined) return true;
 
-        var markers = findMarkers(points, {'latitude':points[key].latitude, 'longitude':points[key].longitude}),
+        if(points[key].lat == null || points[key].lng == null) {
+            return true;
+        }
+
+        if($.type(points[key].lat) == 'string') {
+            points[key].lat = Number(points[key].lat);
+        }
+        if($.type(points[key].lng) == 'string') {
+            points[key].lng = Number(points[key].lng);
+        }
+        var markers = findMarkers(points, {'lat':points[key].lat, 'lng':points[key].lng}),
         isMultiMarker = markers.spaces.length > 1 ? true : false;
 
         var marker = new google.maps.Marker({
-            position: {lat:points[key].latitude,lng:points[key].longitude},
-            title:points[key].name,
+            position: {'lat':Number(points[key].lat),'lng':Number(points[key].lng)},
             icon: (isMultiMarker ? multiMarkerSymbol : markerSymbol)
         });
         for (var i = 0; i < markers.spaces.length; i++) {
@@ -288,14 +354,13 @@ function loadMap(options) {
         var contentString;
 
         if(isMultiMarker) {
+            points[key].spaces = markers.spaces;
             points[key].template = 'mapMulti';
-            contentString = parseTemplate('mapMulti', markers);
+            contentString = parseTemplate('mapMulti', points[key]);
         } else {
             points[key].template = 'mapSingle';
             contentString = parseTemplate('mapSingle', points[key]);
         }
-
-        //console.log(contentString);
 
         var infowindow = new InfoBubble({
             content: contentString,
@@ -309,7 +374,8 @@ function loadMap(options) {
             padding: 10,
             disableAutoPan: false,
             hideCloseButton: false,
-            maxWidth:300,
+            maxWidth:($(window).width() * 0.9),
+            maxHeight:($(window).height() * 0.6),
             //arrowPosition: 50,
             backgroundClassName: 'map-info-bubble',
             disableAnimation: true,
@@ -318,23 +384,27 @@ function loadMap(options) {
         points[key].mapSummary = infowindow;
         marker.setMap(map);
 
-        if(!!getLocation) {
-            getDistance(userLoc, {lat:points[key].latitude,lng:points[key].longitude}, function(dist) {
-                points[key].distance = dist;
-                points[key].mapSummary.content = parseTemplate(points[key].mapSummary.content, points[key], true);
-            });
-        }
+
 
 
         google.maps.event.addListener(marker, 'click', function() {
             if(openPoints.length > 0) {
                 for (var i = 0; i < openPoints.length; i++) {
                     points[openPoints[i]].mapSummary.close();
-                    points[openPoints[i]].marker.icon.fillColor = '#797979';
+                    points[openPoints[i]].marker.icon.fillColor = inactiveColor;
                     points[openPoints[i]].marker.setMap(map);
                     openPoints.splice(i, 1);
                 }
             }
+            if($('#bubble-' + points[key].id).length == 0) {
+                setTimeout(function() {
+                    $('#bubble-' + points[key].id).html('');
+                    $('#bubble-' + points[key].id).append(parseTemplate(points[key].template, points[key]));
+                }, 100);
+            }
+
+
+
             infowindow.open(map,marker);
             this.icon.fillColor = defaults.activeColor;
             this.setMap(map);
@@ -342,7 +412,6 @@ function loadMap(options) {
         });
         google.maps.event.addListener(infowindow,'closeclick',function(){
             marker.icon.fillColor = defaults.inactiveColor;
-            marker.icon.fillOpacity = 1;
             marker.setMap(map);
         });
     });
@@ -357,9 +426,7 @@ function loadList(options) {
         activeColor:'#e2637c'
     };
     $.extend(defaults, options);
-    //console.log(points)
     $.each( points, function( key ) {
-        //console.log('list space', points[key]);
         var space = parseTemplate('list', points[key]);
 
         $list.append(space);
@@ -399,63 +466,148 @@ function loadTemplates(options) {
 }
 
 function parseTemplate(t, data, partial) {
-    var template = t;
-    if(!partial) {
+    if(t == undefined) {
+        return false;
+    }
+
+    var r = new RegExp('(#{.*\\[.*\\].*})', "g"),
+    arrays,
+    template,
+    matches;
+
+    if(partial == true) {
+        template = t;
+    } else {
         template = templates[t].template;
     }
 
-    $.each(data, function(key, value) {
-        if($.type(value) !== 'array') {
-            var re = new RegExp('(#{' + key + '})', "g");
-            template = template.replace(re, value);
-            var re = new RegExp('(#{' + key + '-attr})', "g");
-            value = String(value).replace(/ /g, '-');
-            template = template.replace(re, value);
-        } else {
-            var re = new RegExp('#{' + key + '\\[(.*)\\]}', "g");
-            var matches = template.match(re);
-            //console.log('#{' + key + '\\[(.*)\\]}');
-            //console.log(matches);
+    //if(template == undefined) console.log(t, data, partial);
+    //console.log('template', templates, template);
+    arrays = template.match(r);
+    if(arrays !== null) {
+        for (var i = 0; i < arrays.length; i++) {
+            var r = new RegExp('(#{(.*)\\[(.*)\\](.*?)})', "g");
+            var match = r.exec(arrays[i]);
+            var limit = null;
 
-            //if(key == 'tags') console.log(matches);
-            if(matches !== null) {
-                for (var i = 0; i < matches.length; i++) {
-                    var newStr = "";
-                    //console.log(matches[i]);
-                    var r = new RegExp('#{.*\\[(.*)\\]}', "g");
-                    var str = r.exec(matches[i]);
-                    console.log(matches[i], str, '#{' + key + '\\[(.*)\\]}');
-                    if(str == null || str[1] == undefined) continue;
-                    str = str[1];
-                    //console.log(matches[i])
-                    //console.log($.type(str));
-                    if(str !== null) {
-                        for (var j = 0; j < data[key].length; j++) {
-                            var temp = '';
-                            if($.type(data[key][i]) == 'object') {
-                                temp = parseTemplate(str, data[key][j], true);
-                            } else {
-                                temp = str.replace('#{value}', data[key][j]);
-                                temp = temp.replace('#{attr}', data[key][j].replace(/ /g, '-'));
-                            }
-                            newStr += temp;
-                        }
-                        template = template.replace(matches[i], newStr);
-                    }
+            if (match !== null && match !== match[4] !== undefined) {
+                limit = match[4].match(/.*limit="(.*)".*/);
+                if(limit !== null) {
+                    limit = Number(limit[1]);
+                } else {
+                    limit = null;
                 }
+            }
 
-
+            if(match !== null && match[2] !== undefined) {
+                var str = convertToValue(match[3], data[match[2]], limit);
+                template = template.replace(match[1], str);
             }
 
         }
-    });
-    return template;
+    }
+    r = new RegExp('(#{(.*?)})', "g")
+    matches = template.match(r);
+    if (matches !== null) {
+        for (var i = 0; i < matches.length; i++) {
+            limit = matches[i].match(/.*\(.*limit="(.*)".*/);
+            if(limit !== null) {
+                limit = Number(limit[1]);
+            } else {
+                limit = null;
+            }
+            var key = ''
+            if (limit !== null) {
+                key = matches[i].match(/#{(.*)\(.*}/);
+            } else {
+                key = matches[i].match(/#{(.*)}/);
+            }
+            var str = convertToValue(matches[i], data[key[1]], limit);
+            template = template.replace(matches[i],str);
 
+        }
+    }
+
+
+    return template;
+}
+
+
+function convertToValue(t, data, limit) {
+    if($.type(data) == 'array') {
+        var temp = '';
+        for (var i = 0; i < data.length; i++) {
+            var str = t;
+            if($.type(data[i]) == 'object' || $.type(data[i]) == 'array') {
+                //console.log(t, data[i]);
+                temp = parseTemplate(t, data[i], true);
+            } else {
+                var searchIconMap = searchArray(iconMap, data[i]);
+                if(searchIconMap !== -1) {
+                    str = str.replace('#{value}', iconMap[searchIconMap][1]);
+                    str = str.replace('#{attr}', iconMap[searchIconMap][1].replace(/ /g, '-'));
+                    str = str.replace('#{icon}', iconMap[searchIconMap][2]);
+                } else {
+                    str = str.replace('#{value}', data[i].replace(/(.*?)_/, ''));
+                    str = str.replace('#{attr}', data[i].replace(/(.*?)_/, '').replace(/ /g, '-'));
+                }
+            }
+            temp += str;
+            if (limit !== null && i >= (limit - 1) ) {
+                break;
+            }
+        }
+
+        return temp;
+
+    } else if($.type(data) == 'object') {
+        var temp = t;
+        $.each(data, function(key, value) {
+            if (limit !== null) {
+                //console.log(limit, value);
+                temp = temp.replace('/#{' + key +'}/g', String(value).substr(0, limit));
+            } else {
+                temp = temp.replace('/#{' + key +'}/g', value);
+            }
+
+        });
+        return temp;
+    } else {
+        if (data !== undefined && data !== null && data !== 'null') {
+            if (limit !== null) {
+                return String(data).substr(0, limit)
+            } else {
+                return data;
+            }
+        }
+        return '';
+    }
+
+}
+
+function searchArray(haystack, needle) {
+    var ret = -1;
+    for (var i = 0; i < haystack.length; i++) {
+        if($.type(haystack[i]) == 'array') {
+            for (var j = 0; j < haystack[i].length; j++) {
+                if(haystack[i][j] == needle) {
+                    ret = i;
+                    break;
+                }
+            }
+            if(ret !== -1) break;
+        } else {
+            if(haystack[i] == needle) {
+                ret = i;
+                break;
+            }
+        }
+    }
+    return ret;
 }
 
 function getDistance(origin, dest, callback) {
     var service = new google.maps.DistanceMatrixService();
-    //console.log(arguments);
     if($.type(origin) !== 'array') {
         var temp = [];
         temp.push(origin);
@@ -474,7 +626,12 @@ function getDistance(origin, dest, callback) {
     }, function (response, status) {
         if(status == "OK") {
             if($.type(callback) == 'function') {
-                callback(response.rows[0].elements[0].distance.text);
+                if (response.rows[0].elements[0].distance !== undefined) {
+                    callback(response.rows[0].elements[0].distance.text);
+                } else {
+                    callback();
+                }
+
             }
         } else {
             return '';

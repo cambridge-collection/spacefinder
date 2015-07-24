@@ -1,5 +1,37 @@
 #list {
     background: $lightBackgroundColor;
+    h1 {
+        font-size: 2rem;
+        color: $barColor;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .list-space {
+        padding: 12px;
+        border-bottom: 1px solid $lowlight;
+
+    }
+    .space-details {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .description {
+        margin-top: 0;
+    }
+
+    .space-image {
+        min-width: 100px;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        margin-right: 12px;
+        justify-content: space-around;
+        align-items: stretch;
+    }
 
     .facility {
         display: inline-block;

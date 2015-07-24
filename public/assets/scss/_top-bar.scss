@@ -20,15 +20,14 @@
         -webkit-flex-grow:1;
         flex-grow: 1;
         text-align: center;
-        align-self: center;
-        -webkit-align-self:center;
         justify-content: center;
         -webkit-justify-content:center;
         flex-direction: row;
         -webkit-flex-direction:row;
         -webkit-align-items:center;
         align-items: center;
-
+        font-size: 1.2rem;
+        line-height: 0;
         &#search-btn {
             -webkit-flex-grow:0;
             flex-grow: 0;
@@ -42,9 +41,12 @@
                 font-size: 1.2rem;
             }
         }
-
-        &[class^="icon-"]:before, & [class^="icon-"]:before {
-            font-size: 1.4rem;
+        &[class^="icon-"] {
+            font-size: 1.2rem;
+            padding: 0;
+            margin: -15px 0 0 0;
+            height: 2rem;
+            line-height: 0;
         }
 
         &.active {
