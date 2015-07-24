@@ -22,13 +22,21 @@ class Space < ActiveRecord::Base
   def self.atmospheres
     self.attribute_names.select{|s| s[0, 10] == "atmosphere" }
   end
+
+  def self.facilities
+    self.attribute_names.select{|s| s[0, 8] == "facility" }
+  end
   
   
   
   filterrific(
     available_filters: [
       :with_noise_ids
-    ].concat(atmospheres.collect{|atmosphere| atmosphere.to_sym})
+    ].concat(atmospheres.collect{ |atmosphere| 
+      atmosphere.to_sym
+    }).concat(facilities.collect{ |facility| 
+      facility.to_sym
+    })
   )
   
   scope :with_noise_ids, lambda { |noise_ids|
@@ -37,6 +45,10 @@ class Space < ActiveRecord::Base
   
   atmospheres.each do |atmosphere|
     scope atmosphere.to_sym, ->(check) { if(check) then where(atmosphere => true) end }
+  end
+  
+  facilities.each do |facility|
+    scope facility.to_sym, ->(check) { if(check) then where(facility => true) end }
   end
 
 end

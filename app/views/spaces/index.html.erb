@@ -22,6 +22,15 @@
       <br>
     <% end %>
   </div>
+
+  Facilities
+  <div>
+    <% @filterrific.select_options[:with_facility].each do |facility| %>
+      <%= check_box_tag("filters[#{facility}]", "true") %>
+      <%=h facility %>
+      <br>
+    <% end %>
+  </div>
   
   <%= f.submit 'Filter' %>
 <% end %>

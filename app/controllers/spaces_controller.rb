@@ -10,7 +10,8 @@ class SpacesController < ApplicationController
       params[:filters],
       :select_options => {
         with_noise_ids: Noise.options_for_select,
-        with_atmosphere: Space.atmospheres
+        with_atmosphere: Space.atmospheres, 
+        with_facility: Space.facilities
       },
       :persistence_id => false
     )
