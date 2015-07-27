@@ -8,6 +8,6 @@ json.space_type @space.try(:space_type).try(:title)
 json.library @space.try(:library).try(:name)
 json.noise @space.try(:noise).try(:title)
 
-json.facilities Space.facilities.collect{|fk| if @space.send(fk) == true then fk else nil end}.compact
-json.atmosphere Space.atmospheres.collect{|ak| if @space.send(ak) == true then ak else nil end}.compact
+json.facilities @facilities.collect{|fk| if @space.send(fk) == true then fk else nil end}.compact
+json.atmosphere @atmospheres.collect{|ak| if @space.send(ak) == true then ak else nil end}.compact
 json.tags @space.tag_list

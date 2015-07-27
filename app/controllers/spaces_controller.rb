@@ -5,6 +5,10 @@ class SpacesController < ApplicationController
   # GET /spaces
   # GET /spaces.json
   def index
+    
+    @facilities = Space.facilities
+    @atmospheres = Space.atmospheres
+    
     @filterrific = initialize_filterrific(
       Space,
       params[:filters],
@@ -18,11 +22,14 @@ class SpacesController < ApplicationController
     )
     
     @spaces = @filterrific.find
+    
   end
 
   # GET /spaces/1
   # GET /spaces/1.json
   def show
+    @facilities = Space.facilities
+    @atmospheres = Space.atmospheres
   end
 
   # GET /spaces/new
@@ -72,6 +79,14 @@ class SpacesController < ApplicationController
       format.html { redirect_to spaces_url, notice: 'Space was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  def filters
+    @works = Space.works
+    @atmospheres = Space.atmospheres
+    @noises = Noise.all
+    @facilities = Space.facilities
+    @tags = ActsAsTaggableOn::Tag.all.order(taggings_count: :desc)
   end
 
   private

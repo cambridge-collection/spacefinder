@@ -27,6 +27,10 @@ class Space < ActiveRecord::Base
     self.attribute_names.select{|s| s[0, 8] == "facility" }
   end
   
+  def self.works
+    self.attribute_names.select{|s| s[0, 4] == "work" }
+  end
+  
   
   
   filterrific(
