@@ -1,5 +1,6 @@
 class TipsController < ApplicationController
   protect_from_forgery except: :create
+  after_action :jsonp_callback, only: [:index]
   
   # GET /tips
   # GET /tips.json

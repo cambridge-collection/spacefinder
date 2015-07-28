@@ -101,12 +101,5 @@ class SpacesController < ApplicationController
         :name, :description, :access_id, :space_type_id, :library_id, :new_library_name, :address, :floor, :lat, :lng, :opening_hours, :restricted, :restriction, :disabled_access, :url, :phone_number, :twitter_screen_name, :facebook_url, :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise_id, :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets, :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list
       )
     end
-    
-    def jsonp_callback
-      if params[:callback] && params[:format].to_s == 'json'
-        response['Content-Type'] = 'application/javascript'
-        response.body = "%s(%s)" % [params[:callback], response.body]
-      end
-    end
 end
 
