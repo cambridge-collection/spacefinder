@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Comment</th>
+      <th>Atmosphere disciplined</th>
+      <th>Noise quiet</th>
+      <th>Facility large desks</th>
+      <th>Work friends</th>
+      <th>Atmosphere relaxed</th>
+      <th>Facility views</th>
+      <th>Atmosphere inspiring</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tips.each do |tip| %>
+      <tr>
+        <td><%= tip.comment %></td>
+        <td><%= tip.atmosphere_disciplined %></td>
+        <td><%= tip.noise_quiet %></td>
+        <td><%= tip.facility_large_desks %></td>
+        <td><%= tip.work_friends %></td>
+        <td><%= tip.atmosphere_relaxed %></td>
+        <td><%= tip.facility_views %></td>
+        <td><%= tip.atmosphere_inspiring %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tip', new_space_tip_path %>

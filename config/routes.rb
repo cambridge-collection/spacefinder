@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
   get '/spaces/filters.json', to: 'spaces#filters', format: 'json' 
-  resources :spaces
+  
+  resources :spaces do
+    resources :tips
+  end
 end

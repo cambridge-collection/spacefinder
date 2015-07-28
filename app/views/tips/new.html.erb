@@ -1,0 +1,54 @@
+<h1>New Tip</h1>
+
+<%= form_for([@space, @tip]) do |f| %>
+  <% if @tip.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tip.errors.count, "error") %> prohibited this tip from being saved:</h2>
+
+      <ul>
+      <% @tip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_area :comment %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_disciplined %><br>
+    <%= f.check_box :atmosphere_disciplined %>
+  </div>
+  <div class="field">
+    <%= f.label :noise_quiet %><br>
+    <%= f.check_box :noise_quiet %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_large_desks %><br>
+    <%= f.check_box :facility_large_desks %>
+  </div>
+  <div class="field">
+    <%= f.label :work_friends %><br>
+    <%= f.check_box :work_friends %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_relaxed %><br>
+    <%= f.check_box :atmosphere_relaxed %>
+  </div>
+  <div class="field">
+    <%= f.label :facility_views %><br>
+    <%= f.check_box :facility_views %>
+  </div>
+  <div class="field">
+    <%= f.label :atmosphere_inspiring %><br>
+    <%= f.check_box :atmosphere_inspiring %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', space_tips_path %>

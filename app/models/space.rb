@@ -7,6 +7,8 @@ class Space < ActiveRecord::Base
   belongs_to :space_type
   belongs_to :library
   belongs_to :noise
+  
+  has_many :tips
 
   attr_accessor :new_library_name
 

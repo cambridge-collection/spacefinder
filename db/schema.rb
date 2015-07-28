@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721152317) do
+ActiveRecord::Schema.define(version: 20150727153619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,8 +119,25 @@ ActiveRecord::Schema.define(version: 20150721152317) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "tips", force: :cascade do |t|
+    t.text     "comment"
+    t.boolean  "atmosphere_disciplined"
+    t.boolean  "noise_quiet"
+    t.boolean  "facility_large_desks"
+    t.boolean  "work_friends"
+    t.boolean  "atmosphere_relaxed"
+    t.boolean  "facility_views"
+    t.boolean  "atmosphere_inspiring"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "space_id"
+  end
+
+  add_index "tips", ["space_id"], name: "index_tips_on_space_id", using: :btree
+
   add_foreign_key "spaces", "accesses"
   add_foreign_key "spaces", "libraries"
   add_foreign_key "spaces", "noises"
   add_foreign_key "spaces", "space_types"
+  add_foreign_key "tips", "spaces"
 end
