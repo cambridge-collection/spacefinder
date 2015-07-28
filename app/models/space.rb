@@ -38,7 +38,8 @@ class Space < ActiveRecord::Base
   filterrific(
     available_filters: [
       :with_noise_ids,
-      :with_tag_names
+      :with_tag_names,
+      :search_query
     ].concat(atmospheres.collect{ |atmosphere| 
       atmosphere.to_sym
     }).concat(facilities.collect{ |facility| 
@@ -52,6 +53,12 @@ class Space < ActiveRecord::Base
   
   scope :with_tag_names, ->(tag_names) {
     tagged_with(tag_names)
+  }
+  
+  scope :search_query, ->(query) {
+    return nil if query.blank?
+    
+    where("LOWER(name) LIKE ?", "%#{query.downcase}%")
   }
   
   atmospheres.each do |atmosphere|

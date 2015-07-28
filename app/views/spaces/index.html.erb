@@ -5,6 +5,13 @@
 
 <%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' }  do |f| %>
 
+  Search for a space, keyword or tag
+  <div>
+    
+      <%= text_field_tag("filters[search_query]") %>
+      <br>
+  </div>
+
   Noise levels
   <div>
     <% @filterrific.select_options[:with_noise_ids].each do |noise, id| %>
