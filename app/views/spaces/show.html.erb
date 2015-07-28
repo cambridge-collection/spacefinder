@@ -254,7 +254,8 @@
 <div>
   <%= form_tag(tags_space_path, method: "post") do %>
     <%= label_tag(:tag, "Add tag:") %>
-    <%= text_field_tag(:tag) %>
+    <%= text_field_tag("tags[]") %>
+    <%= text_field_tag("tags[]") %>
     <%= submit_tag("Add tag") %>
   <% end %>
 </div>
