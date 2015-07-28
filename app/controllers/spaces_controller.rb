@@ -1,5 +1,6 @@
 class SpacesController < ApplicationController
-  before_action :set_space, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery except: :add_tag
+  before_action :set_space, only: [:show, :edit, :update, :destroy, :add_tag]
   after_action :jsonp_callback, only: [:index, :show]
 
   # GET /spaces
@@ -87,6 +88,18 @@ class SpacesController < ApplicationController
     @noises = Noise.all
     @facilities = Space.facilities
     @tags = ActsAsTaggableOn::Tag.all.order(taggings_count: :desc)
+  end
+  
+  def add_tag
+    respond_to do |format|
+      @space.tag_list.add(params["tag"])
+      if @space.save
+        format.json { render :json => {status: 'ok'} }
+      else
+        format.json { render json: @space.errors, status: :unprocessable_entity }
+      end
+    end
+    
   end
 
   private

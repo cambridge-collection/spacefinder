@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   
   resources :spaces do
     resources :tips
+    post '/tags', to: :add_tag, format: 'json', on: :member
   end
 end

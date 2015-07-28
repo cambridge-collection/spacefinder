@@ -251,5 +251,15 @@
   <%= @space.expensive %>
 </p>
 
+<div>
+  <%= form_tag(tags_space_path, method: "post") do %>
+    <%= label_tag(:tag, "Add tag:") %>
+    <%= text_field_tag(:tag) %>
+    <%= submit_tag("Add tag") %>
+  <% end %>
+</div>
+
 <%= link_to 'Edit', edit_space_path(@space) %> |
 <%= link_to 'Back', spaces_path %>
+
+
