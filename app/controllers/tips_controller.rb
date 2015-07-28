@@ -1,5 +1,6 @@
 class TipsController < ApplicationController
-
+  protect_from_forgery except: :create
+  
   # GET /tips
   # GET /tips.json
   def index
