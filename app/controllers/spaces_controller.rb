@@ -93,7 +93,7 @@ class SpacesController < ApplicationController
   
   def add_tag
     respond_to do |format|
-      @space.tag_list.add(params["tags"])
+      @space.user_tag_list.add(params["tags"])
       if @space.save
         format.json { render :json => {status: 'ok'} }
       else

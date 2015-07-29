@@ -1,5 +1,6 @@
 class Space < ActiveRecord::Base
   acts_as_taggable
+  acts_as_taggable_on :user_tags
   
   validates_inclusion_of :expensive, :in => 1..5, :allow_blank => true
 
