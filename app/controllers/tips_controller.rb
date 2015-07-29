@@ -1,5 +1,6 @@
 class TipsController < ApplicationController
   protect_from_forgery except: :create
+  before_filter :authenticate_user!, except: :index
   after_action :jsonp_callback, only: [:index]
   
   # GET /tips
@@ -20,6 +21,7 @@ class TipsController < ApplicationController
   def create
     @space = Space.find(params[:space_id])
     @tip = @space.tips.new(tip_params)
+    @tip.user = current_user
     
     respond_to do |format|
       if @tip.save

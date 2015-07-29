@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   devise :registerable,
          :rememberable, :trackable, :omniauthable
   
+  has_many :tips
+  
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
     identity = Identity.find_for_oauth(auth)
@@ -11,7 +13,7 @@ class User < ActiveRecord::Base
     if user.nil?
       user = User.new(
         name: auth.info.name,
-        #profile_image: auth.info.image
+        profile_image: auth.info.image
       )
       user.save!
     end

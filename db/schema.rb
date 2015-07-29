@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729104507) do
+ActiveRecord::Schema.define(version: 20150729163350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,9 +141,11 @@ ActiveRecord::Schema.define(version: 20150729104507) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "space_id"
+    t.integer  "user_id"
   end
 
   add_index "tips", ["space_id"], name: "index_tips_on_space_id", using: :btree
+  add_index "tips", ["user_id"], name: "index_tips_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",               default: "", null: false
@@ -156,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150729104507) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.string   "name"
+    t.string   "profile_image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -166,4 +169,5 @@ ActiveRecord::Schema.define(version: 20150729104507) do
   add_foreign_key "spaces", "noises"
   add_foreign_key "spaces", "space_types"
   add_foreign_key "tips", "spaces"
+  add_foreign_key "tips", "users"
 end
