@@ -27,6 +27,9 @@ gem 'puma'
 gem 'smarter_csv'
 gem 'acts-as-taggable-on'
 gem 'filterrific'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

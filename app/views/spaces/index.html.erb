@@ -1,3 +1,8 @@
+<% if !current_user then %>
+  <%= link_to 'Log in with Facebook', user_omniauth_authorize_path(:facebook) %>
+<% end %>
+
+
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Spaces</h1>
