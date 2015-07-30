@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
     if user.nil?
       user = User.new(
         name: auth.info.name,
-        profile_image: auth.info.image
+        profile_image: auth.info.image,
+        email: auth.info.image
       )
       user.save!
     end
