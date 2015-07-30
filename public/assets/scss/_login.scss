@@ -1,0 +1,43 @@
+.login-screen {
+    position: absolute;
+    top: $navHeight;
+    left: 0;
+    background-color: #FFF;
+    width: 100%;
+    height: 100%;
+    z-index: 30;
+    padding: 12px;
+    .login {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .raven-login {
+        border-bottom: 1px solid $lowlight;
+        margin: 0 0 24px;
+        padding: 24px;
+    }
+
+    .raven-logo {
+        text-align: center;
+    }
+    input {
+        display: block;
+        -webkit-appearance: none;
+        border-radius: 0;
+        &[type=text], &[type=password] {
+            border: 1px solid $lowlight;
+            width: 100%;
+            padding: 6px;
+            margin: 12px 0;
+        }
+
+
+        &[type=submit] {
+            @extend .btn;
+        }
+    }
+}
+
+.fb_iframe_widget {
+    //display: none!important;
+}

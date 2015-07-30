@@ -1,0 +1,65 @@
+.large_view {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    overflow: hidden;
+    height: 100vh;
+    .view-container {
+        display: flex;
+        min-height: calc(100% - #{$navHeight});
+        width: 50%;
+        margin-top: $navHeight;
+        left: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #list, #search, #map {
+        display: block;
+        display: block;
+        max-height: 100vh;
+        overflow: auto;
+    }
+
+    #list {
+        background-color: #FFF;
+    }
+
+    #search {
+        min-width: 300px;
+        max-width: 300px;
+        -webkit-flex-grow:0;
+        flex-grow:0;
+        .search-button {
+            width: 300px;
+        }
+    }
+    .space-container {
+        min-height: 0;
+        margin-top: $navHeight;
+        height: calc(100% - #{$navHeight});
+        overflow: auto;
+        width: 50%;
+        -webkit-overflow-scrolling: touch;
+    }
+    .space {
+        position: relative;
+        min-height: calc(100% - #{$navHeight});
+        width: auto;
+        z-index: 0;
+        .title {
+            position: relative;
+            background: rgba(0,0,0,0.6);
+        }
+        .gallery-container {
+            margin-top: -50px;
+        }
+    }
+    .new-tag-container, .new-tip-container {
+        position: relative;
+        padding: 0;
+        .title {
+            position: relative;
+        }
+    }
+}

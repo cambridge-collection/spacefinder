@@ -1,0 +1,165 @@
+<div class="login">
+    <div class="welcome">
+        Please login to continue. You can either use your University of Cambridge login details or sign in with your facebook details.
+
+    </div>
+    <div class="raven-login">
+        <div class="raven-logo">
+            <img alt="raven logo" src="/assets/img/raven-logo.gif" />
+        </div>
+        <form id="login-form">
+            <input placeholder="Username" type="text" name="username" />
+            <input placeholder="Password" type="password" name="password" />
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+    <div class="facebook-login">
+        <a class="facebook-login-button" href="#">Login</a>
+        <div class="fb-login-button hidden" scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true"></div>
+    </div>
+</div>
+<div class="user-details" style="display:none;">
+    Thanks for logging in. It looks like this is the first time you have logged in so we need a few more details from you before you can continue.
+
+    <form id="update-user-details">
+        <input placeholder="Display name" type="text" name="name" />
+        <input placeholder="Discipline of study" type="text" name="discipline" />
+        <input placeholder="email" type="text" name="email" />
+        <input type="submit" value="Update details" />
+    </form>
+
+</div>
+<script type="text/javascript">
+$login = $('.login-screen');
+$login.find('#login-form').submit(function(event) {
+    event.preventDefault();
+    console.log('submit raven form');
+    $.ajax({
+        url: '/assets/data/login.json',
+        method: 'POST',
+        data: {"username": $(this).find('input[name="username"]').val(), "password":$(this).find('input[name="password"]').val()}
+    })
+    .done(function(data) {
+        if(data.status == "success") {
+            if (!!data.details_needed) {
+                $login.find('.login').fadeOut(300);
+                $login.find('.user-details').data('from-login', 'true').fadeIn(300);
+            } else {
+                userDetails = data;
+                loginSuccess();
+            }
+        }
+    })
+    .fail(function() {
+        console.log("error");
+    });
+});
+
+$login.find('#update-user-details').submit(function(event) {
+    event.preventDefault();
+    console.log('submit details update');
+    $.ajax({
+        url: '/assets/data/login.json',
+        method: 'POST',
+        data: $(this).serialize()
+    })
+    .done(function(data) {
+        if(data.status == "success") {
+            userDetails = data;
+            if($('.user-details').data('from-login') == 'true') {
+                loginSuccess();
+            }
+        }
+    })
+    .fail(function() {
+        console.log("error");
+    });
+});
+
+function loginSuccess() {
+    console.log('loginSuccess()');
+    $(window).trigger('login_success');
+}
+
+$('.facebook-login-button').on('click', function(event) {
+    event.preventDefault();
+    $('.fb-login-button').contents("iframe").find('.pluginLoginButton').trigger('click');
+});
+
+//facebook login scripts
+// This is called with the results from from FB.getLoginStatus().
+function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        testAPI();
+    } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        console.log('Please log into this app.');
+        $('.facebook-login-button').text('Login');
+    } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        console.log('Please log into Facebook.');
+        $('.facebook-login-button').text('Login');
+    }
+
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+        return response;
+    });
+}
+
+window.fbAsyncInit = function() {
+    FB.init({
+        appId      : '550776281737876',
+        xfbml      : true,
+        version    : 'v2.4'
+    });
+
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+
+};
+
+// Load the SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+// Here we run a very simple test of the Graph API after login is
+// successful.  See statusChangeCallback() for when this call is made.
+function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    $('.facebook-login-button').text('logout');
+    FB.api('/me', function(response) {
+        console.log(response);
+        $.ajax({
+            url: '/assets/data/login.json',
+            method: 'POST',
+            data: response
+        })
+        .done(function(data) {
+            /*if(data.status == "success") {
+            if (!!data.details_needed) {
+            $login.find('.login').fadeOut(300);
+            $login.find('.user-details').data('from-login', 'true').fadeIn(300);
+        } else {
+        userDetails = data;
+        loginSuccess();
+    }
+}*/
+})
+.fail(function() {
+    console.log("error");
+});
+});
+}
+</script>

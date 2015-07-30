@@ -40,6 +40,7 @@
                 <ul>
                     #{tags[<li class="tag #{attr}">#{value}</li>]}
                 </ul>
+                <a href="#" class="add-tag btn">Add a tag</a>
             </section>
             <section class="lowlight section-contact">
                 <h2>Contact</h2>
@@ -52,18 +53,27 @@
             </section>
         </div>
         <div class="tab-panel" id="tips">
-            tips screen
+            <a class="btn add-tip">Add a tip</a>
+            <div class="tips-container loading">
+                <div class="loading">
+                    <i class="icon-loading"></i><br />Loading Tips
+                </div>
+
+            </div>
         </div>
         <div class="map tab-panel" id="map-#{id}"></div>
     </div>
 </div>
 <script type="text/javascript">
-
+console.log('#space-#{id}');
 var $space = $('#space-#{id}');
 //stick headers
-setTimeout(function () {
-    $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
-}, 500);
+if(currView == 'small') {
+    setTimeout(function () {
+        $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
+    }, 500);
+}
+
 //close button
 $space.find('.close-view').on('click', function(event) {
     event.preventDefault();
@@ -86,8 +96,14 @@ $space.find('.tabs').tabs({
             localMap.setCenter(m.getPosition());
             $(document).scrollTop($space.find('.tabs').position(true).top - $space.find('.ui-tabs-nav').outerHeight(true));
         }
+        if($(ui.newPanel).attr('id') == "tips") {
+            $space.find('.tips-container').css('min-height', $(window).height() - $space.find('.tips-container').offset().top);
+        }
+
     }
 });
+
+
 
 var lat = Number(#{lat}),
     lng = Number(#{lng});
@@ -114,11 +130,99 @@ if(lat !== null && lng !== null) {
     m.icon.fillOpacity = 1;
     localMap.setCenter(m.getPosition());
 } else {
-    $space.find('a[href="#map-#{id}]"').remove();
+    $space.find('a[href="#map-#{id}]"').parent('li').remove();
 }
 
-if ($space.find(".section-tags li").length == 0) {
-    $space.find(".section-tags").remove();
+if(currView == 'large') {
+    $space.find('a[href=#map-#{id}]').parent('li').hide(0);
+    if(lat !== null && lng !== null) {
+        map.setCenter({'lat':lat, 'lng':lng});
+        map.setZoom(18);
+        new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
+        setTimeout(function() {
+                points[openPoints[0]].mapSummary.close();
+        }, 100)
+
+    }
 }
 
+//load current tips
+function loadTips() {
+    $.ajax({
+        url: 'https://uoc-spacefinder.herokuapp.com/spaces/#{id}/tips.json?callback=?',
+        cache:false,
+        dataType:'json',
+        method:'GET'
+    })
+    .done(function(data) {
+        $space.find('.tips-container').removeClass('loading').empty();
+        if(data.length > 0) {
+            $(data).each(function(index) {
+                var val = parseTemplate('spaceTip', data[index]);
+                $space.find('.tips-container').append(val);
+            });
+            $space.find('.tip').each(function () {
+                $(this).find('.timestamp').html(moment($(this).find('.timestamp').html(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]").fromNow());
+            });
+        }
+
+    })
+}
+loadTips();
+
+
+//tips
+
+$space.find('.add-tip').on('click', function(event) {
+    console.log('load tip screen');
+    event.preventDefault();
+    space = findMarkers(points, {'id':#{id}}).spaces[0];
+    console.log(space);
+    var space = $('<div />')
+    .css('display', 'none')
+    .attr('id', 'tip-#{id}')
+    .data('space-id', '#{id}')
+    .addClass('new-tip-container')
+    .append(parseTemplate('addTip', space))
+    .appendTo($space)
+    .fadeIn(300, function() {
+        $space.find('.space').css('display', 'none');
+    });
+});
+
+//tags
+
+$space.find('.add-tag').on('click', function(event) {
+    console.log('load tag screen');
+    event.preventDefault();
+    space = findMarkers(points, {'id':#{id}}).spaces[0];
+    console.log(space);
+    var space = $('<div />')
+    .css('display', 'none')
+    .attr('id', 'tag-#{id}')
+    .data('space-id', '#{id}')
+    .addClass('new-tag-container')
+    .append(parseTemplate('addTag', space))
+    .appendTo($space)
+    .fadeIn(300, function() {
+        $space.find('.space').css('display', 'none');
+    });
+});
+
+$(window).on('layout', function(event) {
+    event.preventDefault();
+    console.log('change layout');
+    if(currView == 'large') {
+        $space.find('a[href=#map-#{id}]').parent('li').hide(0);
+        if(lat !== null && lng !== null) {
+            map.setCenter({'lat':lat, 'lng':lng});
+            //map.setZoom(18);
+            new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
+        }
+        $space.find('.tabs>ul').unstick();
+    } else {
+        $space.find('a[href=#map-#{id}]').parent('li').show(0);
+        $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
+    }
+});
 </script>

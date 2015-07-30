@@ -5,6 +5,9 @@
 @import '_space';
 @import '_icons';
 @import '_search';
+@import '_tips';
+@import '_tags';
+@import '_login';
 
 @font-face {
   font-family: 'MyriadPro-Light';
@@ -21,14 +24,15 @@ body, html {
     font-size: 14px;
     height: 100vh;
     font-family: 'MyriadPro-Light', verdana, sans-serif;
-    font-weight: lighter;
+    //font-weight: lighter;
 }
 * {
     box-sizing: border-box;
 }
+
 .view-container {
     display: flex;
-    min-height: calc(100% - #{$navHeight});
+    min-height: calc(100vh - #{$navHeight});
     width: 100%;
     margin-top: $navHeight;
     left: 0;
@@ -44,3 +48,29 @@ h2 {
     color: $barColor;
     margin-top: 0;
 }
+
+.btn, .btn-inline {
+    width: 100%;
+    text-align: center;
+    background: #642c73;
+    color: #FFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 6px 4px;
+    font-size: 1.4rem;
+    display: inline-block;
+    font-family: 'MyriadPro-Light';
+    border: none;
+    &.disabled {
+        background: $lowlight;
+    }
+}
+
+.btn-inline {
+    display: inline-block;
+    width: auto;
+    font-size: 1rem;
+    padding: 9px 6px 3px;
+}
+
+@import '_large-view';

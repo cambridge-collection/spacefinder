@@ -46,6 +46,7 @@
     .gallery-container {
         height: 50vh;
         position: relative;
+        background-color: $bodyColor;
     }
     .gallery {
         height: 100%;
@@ -67,17 +68,7 @@
 
         }
     }
-    .tags {
-        position: absolute;
-        width: 100%;
-        bottom: 0px;
-        background-color: rgba(0,0,0,0.6);
-        color: #FFF;
-        .tag {
-            margin: 0 10px;
-            background: rgba(0,0,0,0.5);
-        }
-    }
+
     .tabs {
         .tab-panel {
             padding: 24px;
@@ -223,6 +214,75 @@
         }
         .map {
             height: 800px;
+        }
+    }
+
+    .add-tip {
+        padding: 12px;
+    }
+
+    .tip {
+        padding: 12px 0;
+        border-top: 1px solid $lowlight;
+
+        &:before {
+            border-top: none;
+        }
+        .meta {
+            display: flex;
+            display: -webkit-flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .comment {
+            padding: 6px 0 0;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            background-position: center;
+            background-color: $lowlight;
+            flex-grow: 0;
+            -webkit-flex-grow: 0;
+            margin-right: 6px;
+        }
+        .user, .timestamp {
+            flex-grow: 1;
+            -webkit-flex-grow: 1;
+        }
+        .name {
+            display: block;
+            font-size: 1.2rem;
+        }
+        .discipline, .timestamp {
+            color: darken($lowlight, 30%);
+        }
+        .timestamp {
+            text-align: right;
+            min-width: 30px;
+        }
+    }
+
+    .tips-container {
+        &.loading {
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+        }
+
+        .loading {
+            text-align: center;
+            width: 100%;
+            height: 50px;
+            i {
+                font-size: 2rem;
+            }
         }
     }
 }

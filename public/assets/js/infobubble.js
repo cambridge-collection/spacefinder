@@ -1585,7 +1585,7 @@ InfoBubble.prototype.getElementSize_ = function(element, opt_maxWidth,
 
   // If the width is bigger than the max width then set the width and size again
   if (opt_maxWidth && size.width > opt_maxWidth) {
-    sizer.style['width'] = this.px(opt_maxWidth);
+    //sizer.style['width'] = this.px(opt_maxWidth);
     size = new google.maps.Size(sizer.offsetWidth, sizer.offsetHeight);
   }
 
@@ -1720,10 +1720,10 @@ InfoBubble.prototype.figureOutSize_ = function() {
 
   if (this.tabsContainer_) {
     this.tabHeight_ = tabHeight;
-    this.tabsContainer_.style['width'] = this.px(tabWidth);
+    //this.tabsContainer_.style['width'] = this.px(tabWidth);
   }
 
-  this.contentContainer_.style['width'] = this.px(width);
+  //this.contentContainer_.style['width'] = this.px(width);
   //this.contentContainer_.style['height'] = this.px(height);
 };
 
