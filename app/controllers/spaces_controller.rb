@@ -1,6 +1,7 @@
 class SpacesController < ApplicationController
   protect_from_forgery except: :add_tag
   before_filter :authenticate_user!, except: [:index, :filters]
+  before_filter :check_user_details_set, only: :add_tag
   before_action :set_space, only: [:show, :edit, :update, :destroy, :add_tag]
   after_action :jsonp_callback, only: [:index, :show, :filters]
 

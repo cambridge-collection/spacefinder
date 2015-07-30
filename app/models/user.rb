@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
     end
     user
    end
+   
+   def details_needed?
+     name.blank? or email.blank?
+   end
 end

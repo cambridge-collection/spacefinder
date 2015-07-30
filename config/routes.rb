@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get '/spaces/filters.json', to: 'spaces#filters', format: 'json' 
   
   resources :spaces do
-    resources :tips
+    resources :tips, :except => [:create]
+    resources :tips, :only => [:create], :defaults => { :format => 'json' }
+    resources :categories
     post '/tags', action: :add_tag, format: 'json', on: :member
   end
   

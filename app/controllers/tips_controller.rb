@@ -1,6 +1,7 @@
 class TipsController < ApplicationController
   protect_from_forgery except: :create
-  before_filter :authenticate_user!, except: :index
+  before_filter :authenticate_user!, except: [:index, :new]
+  before_filter :check_user_details_set, only: :create
   after_action :jsonp_callback, only: [:index]
   
   # GET /tips

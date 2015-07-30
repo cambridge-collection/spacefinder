@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
       response.body = "%s(%s)" % [params[:callback], response.body]
     end
   end
+  
+  def check_user_details_set
+    if user_signed_in? and current_user.details_needed? then
+      render :json => {details_needed: 'true'}
+    end
+  end
 end

@@ -4,7 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     sign_in @user, :event => :authentication 
     set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
-    @details_needed = true # TODO, get this from the user model
+    @details_needed = @user.details_needed?
     @status = "success"
     @redirect_url = spaces_url # TODO: Change this when integrated frontend
   end
