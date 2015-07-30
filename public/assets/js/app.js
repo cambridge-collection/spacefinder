@@ -2,11 +2,14 @@ var map,
 $list = $('#list'),
 openPoints = [],
 loc = {'lat':52.205575, 'lng':0.121682},
-userLoc = {'lat':0, 'lng':0}
+userLoc = {'lat':0, 'lng':0},
+userDetails = null,
 getLocation = true,
 centerOnLocation = false,
 points = [],
 listScroll = 0,
+currView = 'small',
+currWidth = 0;
 mapOptions = {
     center: loc,
     zoom: 14,
@@ -33,11 +36,28 @@ templates = {
     search : {
         url : '/assets/templates/search.html',
         template : ''
+    },
+    addTip : {
+        url : '/assets/templates/add-tip.html',
+        template : ''
+    },
+    addTag : {
+        url : '/assets/templates/add-tag.html',
+        template : ''
+    },
+    spaceTip : {
+        url : '/assets/templates/space-tip.html',
+        template : ''
+    },
+    login : {
+        url : '/assets/templates/login.html',
+        template : ''
     }
 },
 inactiveColor = 'rgba(0,0,0,0.6)',
 activeColor = '#E37222',
 initialView = 'map',
+view = '',
 mapViewed = false;
 var markerSymbol = {
     path: 'M0-30.5c-5.7,0-10.2,4.6-10.2,10.2C-10.2-14.6,0,0,0,0s10.2-14.6,10.2-20.2C10.2-25.9,5.7-30.5,0-30.5z M0-17.7c-1.6,0-3-1.3-3-3s1.3-3,3-3s3,1.3,3,3S1.6-17.7,0-17.7z',
@@ -55,10 +75,28 @@ var multiMarkerSymbol = {
     strokeWeight: 0
 };
 $().ready(function() {
+    $('#search-btn').on('click touchstart', function(event) {
+        if(currView == 'large') {
+            event.preventDefault();
+            console.log('search clicked');
+            if($(this).hasClass('active')) {
+                $('#search').hide(0);
+                $(this).removeClass('active')
+            } else {
+                $('#search').show(0);
+                $(this).addClass('active')
+            }
+        }
+    });
+
     var startView = initialView;
     $(window).on('hashchange', function(Event) {
-        oldView = Event.originalEvent.oldURL.split('#')[1];
-        var view = window.location.hash.substr(1);
+
+        if (Event.originalEvent !== undefined) {
+            oldView = Event.originalEvent.oldURL.split('#')[1];
+        }
+
+        view = window.location.hash.substr(1);
         if(view.substr(0,1) != '/') {
             return false;
         } else if (view == '/') {
@@ -69,7 +107,7 @@ $().ready(function() {
     });
 
     if(window.location.hash !== "" && initialView !== window.location.hash) {
-        var view = window.location.hash.substr(1);
+        view = window.location.hash.substr(1);
         if(view.substr(0,1) != '/') {
             return false;
         }
@@ -110,56 +148,151 @@ $().ready(function() {
             }
         }
     })
+    moment.locale('en', {
+        relativeTime : {
+            future: "in %s",
+            past:   "%s",
+            s:  "seconds",
+            m:  "a minute",
+            mm: "%d m",
+            h:  "an hour",
+            hh: "%d h",
+            d:  "a day",
+            dd: "%d d",
+            M:  "a month",
+            MM: "%d m",
+            y:  "a year",
+            yy: "%d y"
+        }
+    });
 
+    $(window).on('resize', function(event) {
+        event.preventDefault();
+        currWidth = $(window).width();
+        if(currWidth < 1000 && currView !== 'small') {
+            resizeForMobile();
+            $(window).trigger('layout');
+        } else if(currWidth > 1000 && currView !== 'large') {
+            resizeForDesktop();
+            $(window).trigger('layout');
+        }
+    });
+
+    $(window).trigger('resize');
+    var iOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g);
+    if(iOS !== null && currView == 'large'){
+        $('body').height($(window).height());
+        //$('body').on('touchmove', function(e){e.preventDefault()}, false);
+        //$('.view-container').on('touchmove', function(e){e.stopPropagation()}, false);
+        //$('.view-container').height($(window).height() - ($('#top-bar').height() + 10));
+    }
+
+    $(window).on('login_success', function(event) {
+        event.preventDefault();
+        console.log('login successful');
+        $('.login-screen').hide(300, function() {
+            $(this).remove();
+        });
+    });
 });
 
+function resizeForMobile() {
+    currView = 'small';
+    $('body').removeClass('large_view')
+    $('#top-bar').find('a[href!="#/search"]').show(0);
+    $(window).trigger('hashchange');
+    $('#search-btn').removeClass('active')
+}
+function resizeForDesktop() {
+    currView = 'large';
+    $('body').addClass('large_view')
+    $('#top-bar').find('a[href!="#/search"]').hide(0);
+    $('#map').show(0);
+    if($('.space-container').length == 0) {
+        $('#list').show(0);
+    } else {
+        $('#list').hide(0);
+    }
+    $('#search-btn').addClass('active');
+    $('#search').show();
+    if(map !== undefined) {
+        map.setZoom(14);
+        if(openPoints.length > 0) {
+            for (var i = 0; i < openPoints.length; i++) {
+                points[openPoints[i]].mapSummary.close();
+                points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+                points[openPoints[i]].marker.setMap(map);
+                openPoints.splice(i, 1);
+            }
+        }
+        if(!!centerOnLocation) {
+            map.setCenter(userLoc);
+        } else {
+            map.setCenter(loc);
+        }
+    }
+
+}
 
 function switchView(newView, modal) {
+
     if(oldView == '/list') {
         listScroll = Number($(window).scrollTop());
-        console.log(listScroll);
     }
     if(newView == undefined) newView = initialView;
     closeSpaces();
     if(newView.indexOf('/') == -1 && $('#' + newView).length > 0) {
-        $('.view-container').css('display', 'none');
-        $('a').removeClass('active');
-        $('a[href="#/' + newView + '"]').addClass('active');
+        if(currView == 'small') {
+            $('.view-container').css('display', 'none');
+            $('a').removeClass('active');
+            $('a[href="#/' + newView + '"]').addClass('active');
 
-        $('#' + newView).fadeIn({
-            duration: 300,
-            start:function () {
+            $('#' + newView).fadeIn({
+                duration: 300,
+                start:function () {
 
-                if (newView == 'map') {
-                    google.maps.event.trigger(map, 'resize');
-                    $(window).scrollTop(0);
+                    if (newView == 'map') {
+                        google.maps.event.trigger(map, 'resize');
+                        $(window).scrollTop(0);
 
-                }
-                if(!mapViewed) {
-                    mapViewed == true;
-                    if(!!centerOnLocation) {
-                        map.setCenter(userLoc);
-                    } else {
-                        map.setCenter(loc);
                     }
+                    if(!mapViewed) {
+                        mapViewed == true;
+                        if(!!centerOnLocation) {
+                            map.setCenter(userLoc);
+                        } else {
+                            map.setCenter(loc);
+                        }
 
-                }
-            },
-            progress : function() {
-                if (newView == 'list') {
-                    console.log('scroll to ', listScroll);
-                    $(window).scrollTop(listScroll);
-                }
-                if (newView == 'map') {
-                    if(openPoints.length > 0) {
-                        new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
                     }
+                },
+                progress : function() {
+                    if (newView == 'list') {
+                        $(window).scrollTop(listScroll);
+                    }
+                    if (newView == 'map') {
+                        if(openPoints.length > 0) {
+                            new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
+                            map.setZoom(14);
+                        }
+                    }
+                }
+            });
+        } else {
+
+            if(!mapViewed) {
+                mapViewed == true;
+                if(!!centerOnLocation) {
+                    map.setCenter(userLoc);
+                } else {
+                    map.setCenter(loc);
                 }
             }
-        });
+        }
     } else {
+
         if(newView.indexOf('space') !== -1) {
-            $('.view-container').css('display', 'none');
+            if(currView == 'small') $('.view-container').css('display', 'none');
             var parts = newView.split('/');
             loadSpace({
                 'id': parts[1],
@@ -211,17 +344,35 @@ function showSpace(data) {
     .attr('id', 'space-' + data.id)
     .addClass('space-container')
     .append(parseTemplate('spaceDetail', data))
-    .appendTo('body')
-    .fadeIn(300, function() {
+    .insertAfter('#list')
+    .fadeIn(300);
 
-    });
-
+    if(currView == 'large') {
+        $('#list').css('display', 'none');
+    }
 }
 
 function closeSpaces() {
     $('div[id^=space-]').fadeOut(300, function() {
         $(this).remove();
     });
+    if(currView == 'large') {
+        $('#list').css('display', 'block');
+        map.setZoom(14);
+        if(openPoints.length > 0) {
+            for (var i = 0; i < openPoints.length; i++) {
+                points[openPoints[i]].mapSummary.close();
+                points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+                points[openPoints[i]].marker.setMap(map);
+                openPoints.splice(i, 1);
+            }
+        }
+        if(!!centerOnLocation) {
+            map.setCenter(userLoc);
+        } else {
+            map.setCenter(loc);
+        }
+    }
 }
 
 function resetViews() {
@@ -236,7 +387,6 @@ function loadSpaces(options) {
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
-    console.log('load spaces');
 
     resetViews();
     $.ajax('https://uoc-spacefinder.herokuapp.com/spaces.json?callback=?', {
@@ -245,7 +395,7 @@ function loadSpaces(options) {
         method:'GET',
         data:defaults.queryString
     }).done(function(data) {
-    //$.getJSON('/assets/data/points.json').done(function(data) {
+        //$.getJSON('/assets/data/points.json').done(function(data) {
         points = data,
         distCount = 0;
         if(!!getLocation) {
@@ -300,13 +450,29 @@ function loadSpaces(options) {
     });
 }
 
+function showLoginScreen(container, data) {
+    var $con = $(container);
+    var tData = {};
+    $.extend(tData, data);
+
+    $('<div />')
+        .addClass('login-screen')
+        .html(parseTemplate('login', tData))
+        .appendTo($con);
+    $($con.parents('div')[$con.parents('div').length - 1]).scrollTop(0);
+
+}
+
 function loadSearch() {
-    console.log('load spaces');
-    //$.getJSON('https://uoc-spacefinder.herokuapp.com/spaces.json')
-    $.getJSON('/assets/data/search.json')
-        .done(function(data) {
-            $('#search').append(parseTemplate('search', data));
-        })
+    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces/filters.json', {
+        cache:false,
+        dataType:'json',
+        method:'GET'
+    })
+    .done(function(data) {
+        console.log('loaded search');
+        $('#search').append(parseTemplate('search', data));
+    })
 }
 
 function checkMarker(data, checks) {
@@ -325,9 +491,6 @@ function findMarkers(data, checks) {
         if(checkMarker(data[key], checks)) {
             data[key]._jsid = key;
             ret.spaces.push(data[key]);
-            if(!getLocation) {
-                data[key].distance = markers.distance = '';
-            }
         }
     });
     if(ret.spaces.length > 1) {
@@ -398,8 +561,8 @@ function loadMap(options) {
             padding: 10,
             disableAutoPan: false,
             hideCloseButton: false,
-            maxWidth:($(window).width() * 0.9),
-            maxHeight:($(window).height() * 0.6),
+            //maxWidth:($(window).width() * 0.9),
+            //maxHeight:($(window).height() * 0.6),
             //arrowPosition: 50,
             backgroundClassName: 'map-info-bubble',
             disableAnimation: true,
@@ -424,6 +587,7 @@ function loadMap(options) {
                 setTimeout(function() {
                     $('#bubble-' + points[key].id).html('');
                     $('#bubble-' + points[key].id).append(parseTemplate(points[key].template, points[key]));
+                    //points[key].mapSummary.maxWidth = $('#map').width() * 0.9;
                 }, 100);
             }
 
@@ -509,8 +673,6 @@ function parseTemplate(t, data, partial) {
         template = templates[t].template;
     }
 
-    //if(template == undefined) console.log(t, data, partial);
-    //console.log('template', templates, template);
     arrays = template.match(r);
     if(arrays !== null) {
         for (var i = 0; i < arrays.length; i++) {
@@ -528,7 +690,6 @@ function parseTemplate(t, data, partial) {
 
             if(match !== null && match[2] !== undefined) {
                 var str = convertToValue(match[3], data[match[2]], {"limit":limit, "icon":icon, "attr":attr});
-                console.log(match[3], data[match[2]]);
                 template = template.replace(match[1], str);
             }
 
@@ -539,6 +700,7 @@ function parseTemplate(t, data, partial) {
     if (matches !== null) {
         for (var i = 0; i < matches.length; i++) {
             limit = matches[i].match(/.*\(.*limit="(.*)".*/);
+            value = matches[i].match(/.*\(.*value="(.*)".*/);
             attr = matches[i].match(/.*\(.*attr="(.*)".*/);
             icon = matches[i].match(/.*\(.*icon.*/);
             if(icon !== null) {
@@ -550,13 +712,16 @@ function parseTemplate(t, data, partial) {
             if(attr !== null) {
                 attr = attr[1];
             }
+            if(value !== null) {
+                value = value[1];
+            }
             var key = ''
-            if (limit !== null || icon !== null || attr !== null) {
+            if (limit !== null || icon !== null || attr !== null || value !== null) {
                 key = matches[i].match(/#{(.*)\(.*}/);
             } else {
                 key = matches[i].match(/#{(.*)}/);
             }
-            var str = convertToValue(matches[i], data[key[1]], {"limit":limit, "icon":icon, "attr":attr});
+            var str = convertToValue(matches[i], data[key[1]], {"limit":limit, "icon":icon, "attr":attr, "value":value});
             template = template.replace(matches[i],str);
 
         }
@@ -573,7 +738,6 @@ function convertToValue(t, data, options) {
         for (var i = 0; i < data.length; i++) {
             var str = t;
             if($.type(data[i]) == 'object' || $.type(data[i]) == 'array') {
-                console.log(t, data[i]);
                 str = parseTemplate(t, data[i], true);
             } else {
                 var searchIconMap = searchArray(iconMap, data[i]);
@@ -596,15 +760,23 @@ function convertToValue(t, data, options) {
 
     } else if($.type(data) == 'object') {
         var temp = t;
-        $.each(data, function(key, value) {
+        if(options.value !== null) {
             if (options.limit !== null) {
-                //console.log(limit, value);
-                temp = temp.replace('/#{' + key +'}/g', String(value).substr(0, options.limit));
+                temp = data[options.value].substr(0, options.limit);
             } else {
-                temp = temp.replace('/#{' + key +'}/g', value);
+                temp = data[options.value];
             }
+        } else {
+            $.each(data, function(key, value) {
+                if (options.limit !== null) {
+                    temp = temp.replace('/#{' + key +'.*}/g', String(value).substr(0, options.limit));
+                } else {
+                    temp = temp.replace('/#{' + key +'.*}/g', value);
+                }
 
-        });
+            });
+        }
+
         return temp;
     } else {
         if (data !== undefined && data !== null && data !== 'null') {

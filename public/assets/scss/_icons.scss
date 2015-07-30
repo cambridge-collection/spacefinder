@@ -26,7 +26,33 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+@-moz-keyframes spin { 0% {-moz-transform: rotate(0deg);} 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin {  0% {-webkit-transform: rotate(0deg);} 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg);} }
+@keyframes spin {  0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+
+.icon-arrow-up:before {
+	content: "\e61e";
+}
+.icon-arrow-right:before {
+	content: "\e61f";
+}
+.icon-arrow-down:before {
+	content: "\e620";
+}
+.icon-arrow-left:before {
+	content: "\e61d";
+}
+
+.icon-loading {
+	-webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+}
+.icon-loading:before {
+	content: "\e61c";
+
+}
 .icon-tick:before {
 	content: "\e61b";
 }

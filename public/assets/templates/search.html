@@ -1,34 +1,34 @@
 <div class="search-text">
-    <input type="text" placeholder="Search for a space, keyword or tag" />
+    <input type="text" id="search_query" name="filters[search_query]" placeholder="Search for a space, keyword or tag" />
 </div>
 <ul>
-    <li><div class="header">I want to work...</div>
+    <li><div class="header"><span class="title">I want to work...</span></div>
         <ul id="search-work">
             #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
         </ul>
     </li>
-    <li><div class="header">Atmosphere</div>
+    <li><div class="header"><span class="title">Atmosphere</span></div>
         <ul id="search-atmosphere">
             #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
         </ul>
     </li>
-    <li><div class="header">Noise levels</div>
+    <li><div class="header"><span class="title">Noise levels</span></div>
         <ul  id="search-noise">
-            #{noise[<li class="filter-option noise-level  #{name(attr="_")}" data-id="#{id}"><i class="#{name(icon)}"></i><span>#{name}</span></li>]}
+            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><i class="#{title(icon)}"></i><span>#{title}</span></li>]}
         </ul>
     </li>
-    <li><div class="header">Facilities</div>
+    <li><div class="header"><span class="title">Facilities</span></div>
         <ul id="search-facilities">
             #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><i class="#{icon}"></i><span>#{value}</span></li>]}
         </ul>
     </li>
-    <li><div class="header">Tags</div>
+    <li><div class="header"><span class="title">Tags</span></div>
         <ul id="search-tags">
             #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><i class="icon-tick"></i><span>#{name}</span></li>]}
         </ul>
     </li>
 </ul>
-<a class="search-button"><i class="icon-search"></i>Search</a>
+<a class="btn search-button"><i class="icon-search"></i>Search</a>
 
 <script type="text/javascript">
     $('.filter-option').on('click', function(event) {
@@ -37,8 +37,37 @@
         /* Act on the event */
     });
 
+    $('.header').append(
+        $('<a />')
+        .append($('<i />').addClass('icon-arrow-down'))
+        .addClass('section-collapse')
+        .addClass('expanded')
+        //.text('collapse')
+        .on('click', function(event) {
+            event.preventDefault();
+            if($(this).hasClass('expanded')) {
+                //collapse
+                //$(this).text('expand');
+                $(this).find('i').removeAttr('class').addClass('icon-arrow-up');
+                $(this).parents('li').find('>ul:first-of-type').slideUp(300);
+            } else {
+                //expand
+                //$(this).text('collapse');
+                $(this).find('i').removeAttr('class').addClass('icon-arrow-down');
+                $(this).parents('li').find('>ul:first-of-type').slideDown(300);
+            }
+            $(this).toggleClass('expanded');
+
+        })
+    );
+
     $('.search-button').on('click', function(event) {
+        var $search = $(this),
+            initText = $search.html();
         event.preventDefault();
+        $search.height($search.height());
+        $search.html('<i class="icon-loading"></i>');
+
         console.log('prep search');
         var searchString = prepSearch();
         loadSpaces({
@@ -50,6 +79,7 @@
                 } else {
                     window.location.hash = '/';
                 }
+                $search.html(initText);
             }
         })
     });
@@ -71,6 +101,7 @@
         $('#search-noise .active').each(function(index, el) {
             query += '&filters[with_noise_ids][]=' + $(this).data('id');
         });
+        query += '&filters[search_query]=' + $('#search_query').val();
         console.log(query.substr(1));
         return query.substr(1);
     }
