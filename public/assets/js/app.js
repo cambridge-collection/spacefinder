@@ -464,7 +464,7 @@ function showLoginScreen(container, data) {
 }
 
 function loadSearch() {
-    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces/filters.json', {
+    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces/filters.json?callback=?', {
         cache:false,
         dataType:'json',
         method:'GET'
