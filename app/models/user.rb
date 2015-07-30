@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
       user = User.new(
         name: auth.info.name,
         profile_image: auth.info.image,
-        email: auth.info.image
+        email: auth.info.email
       )
       user.save!
     end

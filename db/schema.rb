@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729163350) do
+ActiveRecord::Schema.define(version: 20150730140113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20150729163350) do
   add_index "tips", ["user_id"], name: "index_tips_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",               default: ""
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
@@ -160,8 +160,6 @@ ActiveRecord::Schema.define(version: 20150729163350) do
     t.string   "name"
     t.string   "profile_image"
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "identities", "users"
   add_foreign_key "spaces", "accesses"
