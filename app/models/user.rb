@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
       user = User.new(
         name: auth.info.name,
         profile_image: auth.info.image,
-        email: auth.info.email
+        email: auth.info.email,
+        discipline: ""
       )
       user.save!
     end
@@ -27,6 +28,6 @@ class User < ActiveRecord::Base
    end
    
    def details_needed?
-     name.blank? or email.blank?
+     name.blank? or email.blank? or discipline.blank?
    end
 end
