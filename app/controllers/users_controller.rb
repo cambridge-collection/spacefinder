@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   protect_from_forgery
   before_filter :authenticate_user!
-  before_filter :check_user_details_set, only: :add_tag
+  before_filter :check_user_details_set, only: :update
   before_action :set_user
 
   def edit
