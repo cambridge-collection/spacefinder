@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    delete "/users/sign_out" => "devise/sessions#destroy"
+  end
+  resource :user, :defaults => { :format => 'json' }
   
   get '/spaces/filters.json', to: 'spaces#filters', format: 'json' 
   
