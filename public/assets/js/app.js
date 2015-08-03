@@ -4,7 +4,7 @@ openPoints = [],
 loc = {'lat':52.205575, 'lng':0.121682},
 userLoc = {'lat':0, 'lng':0},
 userDetails = null,
-getLocation = true,
+getLocation = false,
 centerOnLocation = false,
 points = [],
 listScroll = 0,
@@ -406,7 +406,7 @@ function loadSpaces(options) {
         distCount = 0;
         if(!!getLocation) {
             $.each(points, function(key, value) {
-                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+
                 if(points[key].lat !== null && points[key].lng !== null) {
                     getDistance(userLoc, {lat:Number(points[key].lat),lng:Number(points[key].lng)}, function(dist) {
                         points[key].distance = dist;
@@ -438,7 +438,7 @@ function loadSpaces(options) {
                         }
                     }
                 }
-
+                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
             });
         } else {
             if(!defaults.reset) {
