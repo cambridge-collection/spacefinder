@@ -73,7 +73,7 @@
   font-size: 0.9rem;
   line-height: 1.3rem;
   font-weight: normal;
-  max-width: 400px; }
+  max-width: 300px; }
   .map-info-bubble h1 {
     font-weight: normal;
     padding: 0 36px 4px 0;
@@ -140,7 +140,9 @@
     align-items: stretch; }
   #list .facility {
     display: inline-block;
-    padding: 0 10px; }
+    padding: 0 0 10px;
+    width: 30px;
+    text-align: center; }
 
 .space-container {
   min-height: 100vh; }
@@ -183,9 +185,23 @@
     height: 50vh;
     position: relative;
     background-color: #b0b0b0; }
+  .space .gallery-control {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    padding-top: calc(50% - 1.5rem); }
+    .space .gallery-control [class^='icon-'] {
+      font-size: 3rem;
+      color: #FFF; }
+    .space .gallery-control.disabled {
+      opacity: 0.4; }
+    .space .gallery-control.forward {
+      text-align: right;
+      right: 0; }
   .space .gallery {
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     width: 100%; }
     .space .gallery .gallery-images {
       height: 100%;
@@ -247,6 +263,9 @@
       background: #d0d1d1;
       margin: 0 12px 6px 0;
       padding: 3px 12px; }
+      .space .tabs section.section-tags .tag.admin {
+        background: #505252;
+        color: #FFF; }
     .space .tabs section.section-facilities ul {
       display: -ms-flex;
       display: -webkit-flex;
@@ -266,6 +285,9 @@
       width: 50%;
       text-align: center;
       padding: 20px; }
+      @media screen and (min-width: 1500px) {
+        .space .tabs section.section-facilities li {
+          width: 33%; } }
   .space .tabs .lowlight {
     background: #F3F3F3;
     padding: 12px;
@@ -311,6 +333,13 @@
     height: 800px; }
   .space .add-tip {
     padding: 12px; }
+  .space .no-tips {
+    background: #F3F3F3;
+    border: 1px solid #d0d1d1;
+    padding: 12px;
+    margin-top: 12px;
+    color: #696c6c;
+    text-align: center; }
   .space .tip {
     padding: 12px 0;
     border-top: 1px solid #d0d1d1; }
@@ -762,8 +791,16 @@
     margin: 0 auto; }
   .login-screen .raven-login {
     border-bottom: 1px solid #d0d1d1;
-    margin: 0 0 24px;
+    margin: 0;
     padding: 24px; }
+  .login-screen .facebook-login {
+    padding: 24px; }
+    .login-screen .facebook-login .facebook-login-button {
+      background-color: #3a5a9b;
+      background-image: url(/assets/img/facebook-logo.png);
+      background-repeat: no-repeat;
+      background-position: left center;
+      background-size: contain; }
   .login-screen .raven-logo {
     text-align: center; }
   .login-screen input {
@@ -775,6 +812,24 @@
       width: 100%;
       padding: 6px;
       margin: 12px 0; }
+
+.user-avatar-container {
+  width: 150px;
+  margin: 24px auto 0; }
+  .user-avatar-container .btn, .user-avatar-container .login-screen input[type=submit], .login-screen .user-avatar-container input[type=submit] {
+    font-size: 1rem;
+    bottom: 0;
+    width: 100%; }
+
+.user-avatar {
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  background-color: #d0d1d1;
+  background-size: cover;
+  background-position: center;
+  position: relative; }
 
 @font-face {
   font-family: 'MyriadPro-Light';

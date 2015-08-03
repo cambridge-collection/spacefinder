@@ -7,25 +7,29 @@
         <div class="raven-logo">
             <img alt="raven logo" src="/assets/img/raven-logo.gif" />
         </div>
-        <form id="login-form">
-            <input placeholder="Username" type="text" name="username" />
-            <input placeholder="Password" type="password" name="password" />
-            <input type="submit" value="Login" />
-        </form>
+        <a href="#" class="raven-login-button btn">Login with raven</a>
     </div>
     <div class="facebook-login">
-        <a class="facebook-login-button" href="#">Login</a>
-        <div class="fb-login-button hidden" scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true"></div>
+        <a class="facebook-login-button btn" href="#">Login with facebook</a>
     </div>
 </div>
 <div class="user-details" style="display:none;">
     Thanks for logging in. It looks like this is the first time you have logged in so we need a few more details from you before you can continue.
 
     <form id="update-user-details">
-        <input placeholder="Display name" type="text" name="name" />
-        <input placeholder="Discipline of study" type="text" name="discipline" />
-        <input placeholder="email" type="text" name="email" />
-        <input type="submit" value="Update details" />
+        <div class="user-avatar-container">
+            <div class="user-avatar"></div>
+            <a href="#" class="avatar-upload-button btn">Change image</a>
+
+        </div>
+        <form>
+            <input type="file" class="avatar-upload" style="visibility:hidden;"/>
+
+            <input placeholder="Display name" type="text" name="name" />
+            <input placeholder="Discipline of study" type="text" name="discipline" />
+            <input placeholder="email" type="text" name="email" />
+            <input type="submit" value="Update details" />
+        </form>
     </form>
 
 </div>
@@ -80,86 +84,68 @@ function loginSuccess() {
     console.log('loginSuccess()');
     $(window).trigger('login_success');
 }
+$login.find('.avatar-upload-button').on('click', function(event) {
+    event.preventDefault();
+    $login.find('.avatar-upload').click();
+});
+$login.find('.avatar-upload').on('change', function(event) {
+    event.preventDefault();
+    var fileList = this.files;
+    for (var i = 0, numFiles = fileList.length; i < numFiles; i++) {
+        var file = fileList[i];
+        var imageType = /^image\//;
 
+        if (!imageType.test(file.type)) {
+            continue;
+        }
+        var preview = $('.user-avatar');
+        var objectURL = window.URL.createObjectURL(file);
+        preview.css('background-image', 'url(' + objectURL + ')');
+
+        console.log(objectURL);
+
+    }
+});
+
+$('.raven-login-button').on('click', function(event) {
+    event.preventDefault();
+    var url = "https://uoc-spacefinder.herokuapp.com/users/auth/raven";
+    //window.open(url, "Raven login", "width=980,height=600");
+    $login.find('.login').fadeOut(300);
+    $login.find('.user-details').data('from-login', 'true').fadeIn(300);
+});
 $('.facebook-login-button').on('click', function(event) {
     event.preventDefault();
-    $('.fb-login-button').contents("iframe").find('.pluginLoginButton').trigger('click');
+    var url = "/assets/data/login-popup.html";
+    loginWindow = window.open(url, "Facebook login", "width=400,height=300");
 });
 
-//facebook login scripts
-// This is called with the results from from FB.getLoginStatus().
-function statusChangeCallback(response) {
-    if (response.status === 'connected') {
-        // Logged into your app and Facebook.
-        testAPI();
-    } else if (response.status === 'not_authorized') {
-        // The person is logged into Facebook, but not your app.
-        console.log('Please log into this app.');
-        $('.facebook-login-button').text('Login');
+$(window).on('login_callback', function(event) {
+    event.preventDefault();
+    if(userDetails.details_needed == true || userDetails.details_needed == "true") {
+        $login.find('.login').fadeOut(300);
+        $login.find('.user-details').data('from-login', 'true').fadeIn(300);
+        if(userDetails.user !== undefined && userDetails.user.profile_image !== undefined) {
+            $login.find('.user-details .user-avatar').css('background-image', 'url(' + userDetails.user.profile_image + ')');
+        }
+        if(userDetails.user !== undefined && userDetails.user.name !== undefined) {
+            $login.find('.user-details input[name=name]').val(userDetails.user.name);
+        }
+        if(userDetails.user !== undefined && userDetails.user.discipline !== undefined) {
+            $login.find('.user-details input[name=discipline]').val(userDetails.user.discipline);
+        }
+        if(userDetails.user !== undefined && userDetails.user.email !== undefined) {
+            $login.find('.user-details input[name=email]').val(userDetails.user.email);
+        }
     } else {
-        // The person is not logged into Facebook, so we're not sure if
-        // they are logged into this app or not.
-        console.log('Please log into Facebook.');
-        $('.facebook-login-button').text('Login');
-    }
-
-}
-
-function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-        return response;
-    });
-}
-
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '550776281737876',
-        xfbml      : true,
-        version    : 'v2.4'
-    });
-
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-    });
-
-};
-
-// Load the SDK asynchronously
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    $('.facebook-login-button').text('logout');
-    FB.api('/me', function(response) {
-        console.log(response);
-        $.ajax({
-            url: '/assets/data/login.json',
-            method: 'POST',
-            data: response
-        })
-        .done(function(data) {
-            /*if(data.status == "success") {
-            if (!!data.details_needed) {
-            $login.find('.login').fadeOut(300);
-            $login.find('.user-details').data('from-login', 'true').fadeIn(300);
-        } else {
-        userDetails = data;
         loginSuccess();
     }
-}*/
-})
-.fail(function() {
-    console.log("error");
 });
-});
+
+if (userDetails !== null && (userDetails.details_needed == true || userDetails.details_needed == "true")) {
+    $(window).trigger('login_callback');
+} else if (userDetails !== null) {
+    loginSuccess();
 }
+
 </script>

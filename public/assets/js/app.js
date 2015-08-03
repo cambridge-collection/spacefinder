@@ -9,13 +9,15 @@ centerOnLocation = false,
 points = [],
 listScroll = 0,
 currView = 'small',
-currWidth = 0;
+currWidth = 0,
+loginWindow,
 mapOptions = {
     center: loc,
     zoom: 14,
     disableDefaultUI: true
 },
 oldView = undefined,
+currViewHash = undefined,
 templates = {
     list : {
         url : '/assets/templates/list-space.html',
@@ -91,12 +93,16 @@ $().ready(function() {
 
     var startView = initialView;
     $(window).on('hashchange', function(Event) {
-
-        if (Event.originalEvent !== undefined) {
+        console.log(Event.originalEvent.oldURL);
+        if (Event.originalEvent.oldURL !== undefined) {
             oldView = Event.originalEvent.oldURL.split('#')[1];
+        } else {
+            if(currViewHash !== undefined) {
+                oldView = currViewHash
+            }
         }
 
-        view = window.location.hash.substr(1);
+        currViewHash = view = window.location.hash.substr(1);
         if(view.substr(0,1) != '/') {
             return false;
         } else if (view == '/') {
@@ -852,4 +858,17 @@ function getDistance(origin, dest, callback) {
         }
 
     });
+}
+
+function loginCallback(response) {
+    console.log('login callback success');
+    console.log(response);
+    if(response.status == 'success') {
+        if($.type(response) == 'object') {
+            userDetails = response;
+        }
+        $(window).trigger('login_callback');
+    }
+
+
 }

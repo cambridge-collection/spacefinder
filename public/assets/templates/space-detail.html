@@ -7,6 +7,8 @@
     <div class="gallery-container">
         <div class="gallery">
             <div class="gallery-images">
+                <div style="background-image:url(/assets/data/images/1.jpg)" class="image"></div>
+                <div style="background-image:url(/assets/data/images/2.jpg)" class="image"></div>
                 #{images[<div style="background-image:url(#{value})" class="image"></div>]}
             </div>
 
@@ -38,7 +40,8 @@
             <section class=" section-tags">
                 <h2>Tags</h2>
                 <ul>
-                    #{tags[<li class="tag #{attr}">#{value}</li>]}
+                    #{admin_tag_list[<li class="tag admin #{attr}">#{value}</li>]}
+                    #{user_tags_list[<li class="tag #{attr}">#{value}</li>]}
                 </ul>
                 <a href="#" class="add-tag btn">Add a tag</a>
             </section>
@@ -55,10 +58,12 @@
         <div class="tab-panel" id="tips">
             <a class="btn add-tip">Add a tip</a>
             <div class="tips-container loading">
-                <div class="loading">
+                <div class="loading-container">
                     <i class="icon-loading"></i><br />Loading Tips
                 </div>
-
+                <div class="no-tips hidden">
+                    There are currently no tips for this space. Be the first to add a tip and inform others about this location.
+                </div>
             </div>
         </div>
         <div class="map tab-panel" id="map-#{id}"></div>
@@ -68,11 +73,11 @@
 console.log('#space-#{id}');
 var $space = $('#space-#{id}');
 //stick headers
-if(currView == 'small') {
+/*if(currView == 'small') {
     setTimeout(function () {
         $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
     }, 500);
-}
+}*/
 
 //close button
 $space.find('.close-view').on('click', function(event) {
@@ -85,7 +90,49 @@ $space.find('.close-view').on('click', function(event) {
 
 });
 //set up gallery
-$space.find('.gallery>.gallery-images').width(($space.find('.gallery .image').length * 100) + '%')
+$space.find('.gallery>.gallery-images').width(($space.find('.gallery .image').length * 100) + '%');
+//set up carousel
+var images = $space.find('.gallery-images .image'),
+    currImage = 0;
+//add controls
+if(images.length > 1) {
+    $space.find('.gallery-container').append(
+        $('<div />')
+            .addClass('gallery-control back disabled')
+            .append('<i class="icon-arrow-left"></i>')
+            .on('click', function(event) {
+                event.preventDefault();
+                if(!$(this).hasClass('disabled')) {
+                    currImage--;
+                    $space.find('.gallery-container .gallery-control.forward').removeClass('disabled')
+                    $space.find('.gallery-container .gallery').animate({scrollLeft:$(images[currImage]).offset().left}, 300);
+                    if(currImage - 1 < 0) {
+                        $(this).addClass('disabled');
+                    }
+                }
+            })
+    ).append(
+        $('<div />')
+            .addClass('gallery-control forward ' + (images.length == 1 ? 'disabled' : ''))
+            .append('<i class="icon-arrow-right"></i>')
+            .on('click', function(event) {
+                event.preventDefault();
+                if(!$(this).hasClass('disabled')) {
+                    currImage++;
+                    $space.find('.gallery-container .gallery-control.back').removeClass('disabled')
+                    $space.find('.gallery-container .gallery').animate({scrollLeft:$(images[currImage]).offset().left}, 300);
+
+                    if(currImage + 1 > images.length - 1) {
+                        $(this).addClass('disabled');
+                    }
+
+
+                }
+            })
+    );
+} else {
+    $space.find('.gallery-container').height(0);
+}
 //set up tabs
 $space.find('.tabs').tabs({
     activate: function(e, ui) {
@@ -102,6 +149,7 @@ $space.find('.tabs').tabs({
 
     }
 });
+
 
 
 
@@ -155,8 +203,9 @@ function loadTips() {
         method:'GET'
     })
     .done(function(data) {
-        $space.find('.tips-container').removeClass('loading').empty();
+        $space.find('.tips-container').removeClass('loading').find('.loading-container').addClass('hidden');
         if(data.length > 0) {
+            $space.find('.tip').remove();
             $(data).each(function(index) {
                 var val = parseTemplate('spaceTip', data[index]);
                 $space.find('.tips-container').append(val);
@@ -164,6 +213,8 @@ function loadTips() {
             $space.find('.tip').each(function () {
                 $(this).find('.timestamp').html(moment($(this).find('.timestamp').html(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]").fromNow());
             });
+        } else {
+            $space.find('.no-tips').removeClass('hidden');
         }
 
     })
@@ -219,10 +270,10 @@ $(window).on('layout', function(event) {
             //map.setZoom(18);
             new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
         }
-        $space.find('.tabs>ul').unstick();
+        //$space.find('.tabs>ul').unstick();
     } else {
         $space.find('a[href=#map-#{id}]').parent('li').show(0);
-        $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
+        //$space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
     }
 });
 </script>

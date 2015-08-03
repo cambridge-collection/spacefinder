@@ -1,4 +1,4 @@
-<div class="new-tag-container">
+
     <div class="title">
         <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
         <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
@@ -14,7 +14,8 @@
         <section class="section-tags">
             <p>current tags</p>
             <ul>
-                #{tags[<li class="tag #{attr}">#{value}</li>]}
+                #{admin_tag_list[<li class="tag admin #{attr}">#{value}</li>]}
+                #{user_tags_list[<li class="tag #{attr}">#{value}</li>]}
             </ul>
         </section>
 
@@ -26,7 +27,7 @@
         </ul>
         <a href="#" class="btn tag-submit disabled">Add tag</a>
     </div>
-</div>
+
 <script type="text/javascript">
 $tags = $('#tag-#{id}');
 $space = $('#space-' + $tags.data('space-id'));
@@ -110,9 +111,9 @@ $tags.find('.tag-submit').on('click', function(event) {
 });
 
 //checked logged in status
-if(userDetails == null) {
+if(userDetails == null || userDetails.details_needed == true  || userDetails.details_needed == 'true') {
     showLoginScreen($tags);
-    
+    console.log('show login screen');
 }
 
 

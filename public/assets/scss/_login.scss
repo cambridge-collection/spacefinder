@@ -13,8 +13,19 @@
     }
     .raven-login {
         border-bottom: 1px solid $lowlight;
-        margin: 0 0 24px;
+        margin: 0;
         padding: 24px;
+    }
+    .facebook-login {
+        padding: 24px;
+
+        .facebook-login-button {
+            background-color: #3a5a9b;
+            background-image: url(/assets/img/facebook-logo.png);
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: contain;
+        }
     }
 
     .raven-logo {
@@ -37,7 +48,22 @@
         }
     }
 }
-
-.fb_iframe_widget {
-    //display: none!important;
+.user-avatar-container {
+    width: 150px;
+    margin: 24px auto 0;
+    .btn {
+        font-size: 1rem;
+        bottom: 0;
+        width: 100%;
+    }
+}
+.user-avatar {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: $lowlight;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }

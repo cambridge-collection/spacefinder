@@ -48,9 +48,32 @@
         position: relative;
         background-color: $bodyColor;
     }
+
+    .gallery-control {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        padding-top: calc(50% - 1.5rem);
+        [class^='icon-'] {
+            font-size: 3rem;
+            color: #FFF;
+        }
+        &.disabled {
+            opacity: 0.4;
+        }
+        &.back {
+
+        }
+        &.forward {
+            text-align: right;
+            right: 0;
+        }
+    }
+
     .gallery {
         height: 100%;
-        overflow: auto;
+        overflow: hidden;
         width: 100%;
         .gallery-images {
             height: 100%;
@@ -135,6 +158,11 @@
                     margin: 0 12px 6px 0;
                     padding: 3px 12px;
 
+                    &.admin {
+                        background: darken($lowlight, 50%);
+                        color: #FFF;
+                    }
+
                 }
             }
             &.section-facilities {
@@ -159,6 +187,10 @@
                     width: 50%;
                     text-align: center;
                     padding: 20px;
+
+                    @media screen and (min-width:1500px) {
+                        width: 33%;
+                    }
                 }
             }
         }
@@ -219,6 +251,15 @@
 
     .add-tip {
         padding: 12px;
+    }
+
+    .no-tips {
+        background: $lightBackgroundColor;
+        border: 1px solid $lowlight;
+        padding: 12px;
+        margin-top: 12px;
+        color: darken($lowlight, 40%);
+        text-align: center;
     }
 
     .tip {
