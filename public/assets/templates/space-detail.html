@@ -7,8 +7,6 @@
     <div class="gallery-container">
         <div class="gallery">
             <div class="gallery-images">
-                <div style="background-image:url(/assets/data/images/1.jpg)" class="image"></div>
-                <div style="background-image:url(/assets/data/images/2.jpg)" class="image"></div>
                 #{images[<div style="background-image:url(#{value})" class="image"></div>]}
             </div>
 
@@ -105,7 +103,7 @@ if(images.length > 1) {
                 if(!$(this).hasClass('disabled')) {
                     currImage--;
                     $space.find('.gallery-container .gallery-control.forward').removeClass('disabled')
-                    $space.find('.gallery-container .gallery').animate({scrollLeft:$(images[currImage]).offset().left}, 300);
+                    $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
                     if(currImage - 1 < 0) {
                         $(this).addClass('disabled');
                     }
@@ -119,8 +117,10 @@ if(images.length > 1) {
                 event.preventDefault();
                 if(!$(this).hasClass('disabled')) {
                     currImage++;
+                    console.log(currImage);
+                    console.log($(images[currImage]).position().left);
                     $space.find('.gallery-container .gallery-control.back').removeClass('disabled')
-                    $space.find('.gallery-container .gallery').animate({scrollLeft:$(images[currImage]).offset().left}, 300);
+                    $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
 
                     if(currImage + 1 > images.length - 1) {
                         $(this).addClass('disabled');
