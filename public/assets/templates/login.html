@@ -24,7 +24,7 @@
         </div>
         <form>
             <input type="file" class="avatar-upload" style="visibility:hidden;"/>
-
+            <input type="hidden" name="image_data" />
             <input placeholder="Display name" type="text" name="name" />
             <input placeholder="Discipline of study" type="text" name="discipline" />
             <input placeholder="email" type="text" name="email" />
@@ -62,15 +62,16 @@ $login.find('#login-form').submit(function(event) {
 $login.find('#update-user-details').submit(function(event) {
     event.preventDefault();
     console.log('submit details update');
+    console.log($(this).serialize());
     $.ajax({
-        url: '/assets/data/login.json',
+        url: 'https://uoc-spacefinder.herokuapp.com/user?callback=?',
         method: 'POST',
         data: $(this).serialize()
     })
     .done(function(data) {
-        if(data.status == "success") {
-            userDetails = data;
-            if($('.user-details').data('from-login') == 'true') {
+        if(data.status == "ok") {
+            $.extend(userDetails, data);
+            if(!userDetails.details_needed) {
                 loginSuccess();
             }
         }
@@ -99,10 +100,19 @@ $login.find('.avatar-upload').on('change', function(event) {
             continue;
         }
         var preview = $('.user-avatar');
-        var objectURL = window.URL.createObjectURL(file);
-        preview.css('background-image', 'url(' + objectURL + ')');
+        var reader = new FileReader();
+        var objectURL = reader.readAsDataURL(file);
+        reader.onloadend = function () {
+            //preview.src = reader.result;
+            preview.css('background-image', 'url(' + reader.result + ')');
+            $login.find('input[name=image_data]').val(reader.result);
+        }
 
-        console.log(objectURL);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+
+        console.log(file);
 
     }
 });
