@@ -28,4 +28,13 @@ var iconMap = [
     ["work_private", 'Alone, in private', ''],
     ["work_friends", 'With friends', ''],
     ["work_group", 'On a group project', ''],
+
+    ["atmosphere_disciplined", 'disciplined', ''],
+    ["atmosphere_relaxed", 'relaxed', ''],
+    ["atmosphere_historic", 'historic', ''],
+    ["atmosphere_modern", 'modern', ''],
+    ["atmosphere_inspiring", 'inspiring', ''],
+    ["atmosphere_cosy", 'cosy', ''],
+    ["atmosphere_social", 'social', ''],
+    ["atmosphere_friendly", 'friendly', ''],
 ];

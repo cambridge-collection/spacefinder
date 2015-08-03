@@ -752,7 +752,7 @@ function convertToValue(t, data, options) {
                     str = str.replace(/#{attr}/g, iconMap[searchIconMap][0].replace(/ /g, '-'));
                     str = str.replace(/#{icon}/g, iconMap[searchIconMap][2]);
                 } else {
-                    str = str.replace(/#{value}/g, data[i].replace(/(.*?)_/, ''));
+                    str = str.replace(/#{value}/g, data[i].replace(/(.*?)/, ''));
                     str = str.replace(/#{attr}/g, data[i]);
                 }
             }
