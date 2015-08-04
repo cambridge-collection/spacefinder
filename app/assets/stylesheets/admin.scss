@@ -1,0 +1,309 @@
+@import '_variables';
+@import '_top-bar';
+@import '_icons';
+
+@font-face {
+    font-family: 'MyriadPro-Light';
+    src: font-url('MyriadPro-Light.eot?#iefix') format('embedded-opentype'),  font-url('MyriadPro-Light.otf')  format('opentype'),
+    font-url('MyriadPro-Light.woff') format('woff'), font-url('MyriadPro-Light.ttf')  format('truetype'), font-url('MyriadPro-Light.svg#MyriadPro-Light') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    padding: 0;
+    margin: 0;
+    background: $backgroundColor;
+    font-size: 14px;
+    font-family: 'MyriadPro-Light', verdana, sans-serif;
+    //font-weight: lighter;
+}
+body * {
+    box-sizing: border-box;
+}
+
+body {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+
+    min-height: 100vh;
+    padding-top: $navHeight;
+
+    &.small-page {
+        -webkit-justify-content: center;
+        justify-content: center;
+        padding-top: 0;
+    }
+}
+.container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #FFF;
+    padding: 12px;
+}
+h1 {
+    font-weight: normal;
+}
+h1>small {
+    display: block;
+}
+
+.btn, .btn-inline {
+    width: 100%;
+    text-align: center;
+    background: #642c73;
+    color: #FFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 6px 4px;
+    font-size: 1.4rem;
+    display: inline-block;
+    font-family: 'MyriadPro-Light';
+    border: none;
+    &.disabled {
+        background: $lowlight;
+    }
+}
+
+.login {
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    .btn {
+        margin-top: 24px;
+    }
+}
+#top-bar {
+    padding-top: 12px;
+    display: block;
+    .title {
+        font-size: 1.4rem;
+        float: left;
+    }
+    .logout {
+        padding-top: 12px;
+        float: right;
+        text-align: right;
+    }
+}
+$break-small: 600px;
+
+.overview {
+
+    max-width: 600px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    a {
+        width: 100%;
+        height: 200px;
+        padding: 24px;
+        font-size: 1.4rem;
+        text-decoration: none;
+        color: $barColor;
+        &>span {
+            display: block;
+        }
+
+        i {
+            display: block;
+            margin: 24px 0;
+        }
+
+        border-right: 1px solid $lowlight;
+        text-align: center;
+
+        .bubble {
+            display: inline-block;
+            background-color: rgba(225,0,0,1);
+            color: #FFF;
+            padding: 6px 12px;
+            margin-top: -18px;
+            border-radius: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        &:last-child {
+            border: none;
+        }
+    }
+
+    @media screen and (max-width: $break-small) {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        margin-top: $navHeight;
+        a {
+            font-size: 2rem;
+            border-right: none;
+            border-bottom: 1px solid $lowlight;
+        }
+    }
+}
+
+.header {
+    text-transform: uppercase;
+    display: -webkit-flex;
+    display: flex;
+    line-height: 1rem;
+    background-color: $lightBackgroundColor;
+    border-top: 1px solid $lowlight;
+    border-bottom: 1px solid $lowlight;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin: 6px -12px 6px -12px;
+    //padding: 12px;
+
+    .title {
+        padding: 12px 12px;
+        -webkit-flex-grow:1;
+        flex-grow: 1;
+    }
+    .section-collapse {
+        height: 100%;
+        padding: 12px 12px;
+        border-left: 1px solid $lowlight;
+    }
+
+    &:first-of-type {
+        margin-top: -12px;
+    }
+}
+
+.section {
+    padding-bottom: 24px;
+}
+
+.hidden {
+    display: none;
+}
+
+.term-times, .holiday-times {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    & > div {
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        width: calc(100% - 120px);
+    }
+    .field {
+        -webkit-flex-grow: 0;
+        flex-grow: 0;
+        width: 100px;
+
+    }
+    .closed, .times {
+        background-color: $lightBackgroundColor;
+        border: 1px solid $lowlight;
+        text-align: center;
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+    .times {
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        label {
+            display: inline-block;
+        }
+    }
+    .splitter {
+        display: inline-block;
+        padding: 0 12px;
+    }
+}
+
+
+
+.edit {
+    input[type=text], input[type=password], input[type=number], textarea {
+        -webkit-appearance: none;
+        border: 1px solid $lowlight;
+        border-radius: 0;
+        display: block;
+        font-size: 1rem;
+        padding: 6px;
+        margin: 0;
+        width: 100%;
+    }
+    select {
+        display: block;
+    }
+    .field {
+        //border-bottom: 1px solid $lowlight;
+        padding: 12px;
+    }
+
+    label {
+        display: block;
+    }
+
+    input[type=checkbox] {
+        display: none;
+    }
+    input[type=checkbox] + [class^="icon-"] {
+        border: 1px solid $lowlight;
+        padding: 4px 3px;
+        color: $lowlight;
+        font-size: 0.8rem;
+        margin-right: 6px;
+    }
+    input[type=checkbox]:checked + [class^="icon-"] {
+        color: $highlightI;
+    }
+}
+
+.btn, input[type="submit"], button, .btn-inline {
+    -webkit-appearance:none;
+    border-radius: 0;
+    border:none;
+    width: 100%;
+    text-align: center;
+    background: #642c73;
+    color: #FFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 6px 4px;
+    font-size: 1.4rem;
+    display: inline-block;
+    font-family: 'MyriadPro-Light';
+    border: none;
+    &.disabled {
+        background: $lowlight;
+    }
+}
+
+.btn-inline {
+    display: inline-block;
+    width: auto;
+    font-size: 1rem;
+    padding: 9px 6px 3px;
+}
+
+.location {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    .field {
+        width: 50%;
+    }
+    .get-location {
+        display: block;
+        width: 100%;
+        -webkit-flex-grow: 2;
+        flex-grow: 2;
+        margin: 0 12px;
+    }
+}

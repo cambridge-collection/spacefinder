@@ -4,6 +4,7 @@ class SpacesController < ApplicationController
   before_filter :check_user_details_set, only: :add_tag
   before_action :set_space, only: [:show, :edit, :update, :destroy, :add_tag]
   after_action :jsonp_callback, only: [:index, :show, :filters]
+  layout "admin"
 
   # GET /spaces
   # GET /spaces.json
