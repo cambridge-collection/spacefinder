@@ -306,7 +306,11 @@ function switchView(newView, modal) {
             })
         }
     }
-
+    if($('.loading-cover').length > 0) {
+        $('.loading-cover').addClass('loaded').delay(500).fadeOut(300, function() {
+            $(this).remove();
+        });
+    }
 }
 
 function loadSpace(options) {
@@ -406,7 +410,7 @@ function loadSpaces(options) {
         distCount = 0;
         if(!!getLocation) {
             $.each(points, function(key, value) {
-                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+
                 if(points[key].lat !== null && points[key].lng !== null) {
                     getDistance(userLoc, {lat:Number(points[key].lat),lng:Number(points[key].lng)}, function(dist) {
                         points[key].distance = dist;
@@ -438,9 +442,12 @@ function loadSpaces(options) {
                         }
                     }
                 }
-
+                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
             });
         } else {
+            $.each(points, function(key, value) {
+                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+            });
             if(!defaults.reset) {
                 loadSearch();
 
@@ -591,8 +598,9 @@ function loadMap(options) {
             }
             if($('#bubble-' + points[key].id).length == 0) {
                 setTimeout(function() {
-                    $('#bubble-' + points[key].id).html('');
-                    $('#bubble-' + points[key].id).append(parseTemplate(points[key].template, points[key]));
+                    var parent = $('#bubble-' + points[key].id).parent();
+                    $('#bubble-' + points[key].id).remove();
+                    $(parent).append(parseTemplate(points[key].template, points[key]));
                     //points[key].mapSummary.maxWidth = $('#map').width() * 0.9;
                 }, 100);
             }

@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'spacefinder';
-	src:url('../fonts/spacefinder.eot?j6f4kv');
-	src:url('../fonts/spacefinder.eot?#iefixj6f4kv') format('embedded-opentype'),
-		url('../fonts/spacefinder.ttf?j6f4kv') format('truetype'),
-		url('../fonts/spacefinder.woff?j6f4kv') format('woff'),
-		url('../fonts/spacefinder.svg?j6f4kv#spacefinder') format('svg');
+	src:url('../fonts/spacefinder.eot?-yrj0gh');
+	src:url('../fonts/spacefinder.eot?#iefix-yrj0gh') format('embedded-opentype'),
+		url('../fonts/spacefinder.ttf?-yrj0gh') format('truetype'),
+		url('../fonts/spacefinder.woff?-yrj0gh') format('woff'),
+		url('../fonts/spacefinder.svg?-yrj0gh#spacefinder') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -30,7 +30,12 @@
 @-webkit-keyframes spin {  0% {-webkit-transform: rotate(0deg);} 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg);} }
 @keyframes spin {  0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-
+.icon-pencil:before {
+	content: "\e621";
+}
+.icon-callout:before {
+	content: "\e622";
+}
 .icon-arrow-up:before {
 	content: "\e61e";
 }
@@ -63,6 +68,14 @@
 	content: "\e601";
 }
 .icon-close:before {
+	content: "\e602";
+}
+.icon-add {
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.icon-add:before {
 	content: "\e602";
 }
 .icon-coffee:before {
