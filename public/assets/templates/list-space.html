@@ -1,6 +1,6 @@
 <div class="list-space">
-    <h1><a href="#{link}">#{name}</a></h1>
-
+    <h1><a href="#{link}">#{name}</a><small>#{distance}</small></h1>
+    <h2>#{library}</h2>
 
     <div class="space-details">
         #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
@@ -13,3 +13,9 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+    $('.list-space>h2').each(function(index, el) {
+        if($(this).html() == "") $(this).remove();
+    });
+</script>

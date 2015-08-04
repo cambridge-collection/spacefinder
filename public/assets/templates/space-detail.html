@@ -2,7 +2,7 @@
     <div class="title">
         <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
         <h1>#{name}</h1>
-        <small>#{distance}les away</small>
+        <small><span class="distance">#{distance}</span>les away</small>
     </div>
     <div class="gallery-container">
         <div class="gallery">
@@ -87,6 +87,12 @@ $space.find('.close-view').on('click', function(event) {
     }
 
 });
+
+if($space.find('.distance').html() == "") {
+    $space.find('.distance').parent().remove();
+    $space.find('.title h1').css('margin-top', '10px');
+}
+
 //set up gallery
 $space.find('.gallery>.gallery-images').width(($space.find('.gallery .image').length * 100) + '%');
 //set up carousel

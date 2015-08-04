@@ -101,7 +101,6 @@ $login.find('.avatar-upload').on('change', function(event) {
         }
         var preview = $('.user-avatar');
         var reader = new FileReader();
-        var objectURL = reader.readAsDataURL(file);
         reader.onloadend = function () {
             //preview.src = reader.result;
             preview.css('background-image', 'url(' + reader.result + ')');
