@@ -11,6 +11,10 @@
 </head>
 <body>
   
+  <nav id="top-bar">
+    <div class="logout"><%= link_to('Logout', users_sign_out_path, :method => :delete) %></div>
+  </nav>
+  
   <%= yield %>
   
   <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>

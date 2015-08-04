@@ -1,224 +1,385 @@
 <%= form_for(@space) do |f| %>
-  <% if @space.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:</h2>
+  <div class="header"><span class="title">Basic info</span></div>
+  <div class="section">
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+      </div>
+      <div class="field">
+        <%= f.label :space_type_id %>
+        <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title) %>
+      </div>
+      <div class="field">
+        <%= f.label :access_id %>
+        <%= f.collection_select(:access_id, Access.all, :id, :title) %>
+      </div>
+      
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :restricted,
+        label: "Restricted"
+      } %>
+      
+      <div class="field">
+        <%= f.label :restriction %>
+        <%= f.text_field :restriction %>
+      </div>
+      
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :disabled_access,
+        label: "Disabled access"
+      } %>
+      
+      <div class="field">
+        <%= f.label :expensive %>
+        <%= f.number_field :expensive, min: 1, max: 5 %>
+      </div>
+  </div>
+  <div class="header"><span class="title">Location</span></div>
+  <div class="section">
+      <div class="field">
+        <%= f.label :address %>
+        <%= f.text_area :address %>
+      </div>
+      <div class="field">
+        <%= f.label :library_id %>
+        <%= f.collection_select(:library_id, Library.all, :id, :name) %>
+        or add new library:
+        <%= f.text_field :new_library_name %>
+      </div>
+      <div class="field">
+        <%= f.label :floor %>
+        <%= f.text_field :floor %>
+      </div>
+      <div class="location">
+        <div class="field">
+          <%= f.label :lat %>
+          <%= f.text_field :lat %>
+        </div>
+        <div class="field">
+          <%= f.label :lng %>
+          <%= f.text_field :lng %>
+        </div>
+        <a href="#" class="get-location btn">Use my location</a>
+      </div>
 
-      <ul>
-      <% @space.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  </div>
+  <div class="header"><span class="title">Opening hours</span></div>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="section">
+      <h2>Term-time opening hours</h2>
+      <div class="term-times">
+          <div class="field">
+              <label for="term_mon_open"><input id="term_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_mon_allday"><input id="term_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_tue_open"><input id="term_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_tue_allday"><input id="term_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_wed_open"><input id="term_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_wed_allday"><input id="term_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_thur_open"><input id="term_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_thur_allday"><input id="term_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_fri_open"><input id="term_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_fri_allday"><input id="term_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_sat_open"><input id="term_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sat_allday"><input id="term_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="term_sun_open"><input id="term_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sun_allday"><input id="term_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+      </div>
+      <h2 class="times-label">Out-of-term opening hours</h2>
+      <div class="holiday-times">
+          <div class="field">
+              <label for="holiday_mon_open"><input id="holiday_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_mon_allday"><input id="holiday_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_tue_open"><input id="holiday_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_tue_allday"><input id="holiday_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_wed_open"><input id="holiday_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_wed_allday"><input id="holiday_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_thur_open"><input id="holiday_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_thur_allday"><input id="holiday_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_fri_open"><input id="holiday_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_fri_allday"><input id="holiday_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_sat_open"><input id="holiday_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sat_allday"><input id="holiday_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+          <div class="field">
+              <label for="holiday_sun_open"><input id="holiday_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
+          </div>
+          <div class="closed">closed</div>
+          <div class="times">
+              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sun_allday"><input id="holiday_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
+          </div>
+      </div>
+      <a href="#" id="show-holiday-times" class="btn">Show holiday times</a>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+  <div class="header"><span class="title">Contact details</span></div>
+  <div class="section">
+      <div class="field">
+        <%= f.label :url %>
+        <%= f.text_field :url %>
+      </div>
+      <div class="field">
+        <%= f.label :phone_number %>
+        <%= f.text_field :phone_number %>
+      </div>
+      <div class="field">
+        <%= f.label :twitter_screen_name %>
+        <%= f.text_field :twitter_screen_name %>
+      </div>
+      <div class="field">
+        <%= f.label :facebook_url %>
+        <%= f.text_field :facebook_url %>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :access_id %><br>
-    <%= f.collection_select(:access_id, Access.all, :id, :title) %>
+  <div class="header"><span class="title">atmosphere</span></div>
+  <div class="section">
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_disciplined,
+        label: "atmosphere_disciplined"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_relaxed,
+        label: "atmosphere_relaxed"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_historic,
+        label: "atmosphere_historic"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_modern,
+        label: "atmosphere_modern"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_inspiring,
+        label: "atmosphere_inspiring"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_cosy,
+        label: "atmosphere_cosy"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_social,
+        label: "atmosphere_social"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :atmosphere_friendly,
+        label: "atmosphere_friendly"
+      } %>
   </div>
-  <div class="field">
-    <%= f.label :space_type_id %><br>
-    <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title) %>
-  </div>
-  <div class="field">
-    <%= f.label :library_id %><br>
-    <%= f.collection_select(:library_id, Library.all, :id, :name) %>
-    or add new library:
-    <%= f.text_field :new_library_name %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_area :address %>
-  </div>
-  <div class="field">
-    <%= f.label :floor %><br>
-    <%= f.text_field :floor %>
-  </div>
-  <div class="field">
-    <%= f.label :lat %><br>
-    <%= f.text_field :lat %>
-  </div>
-  <div class="field">
-    <%= f.label :lng %><br>
-    <%= f.text_field :lng %>
-  </div>
-  <div class="field">
-    <%= f.label :opening_hours %><br>
-    <%= f.text_area :opening_hours %>
-  </div>
-  <div class="field">
-    <%= f.label :restricted %><br>
-    <%= f.check_box :restricted %>
-  </div>
-  <div class="field">
-    <%= f.label :restriction %><br>
-    <%= f.text_field :restriction %>
-  </div>
-  <div class="field">
-    <%= f.label :disabled_access %><br>
-    <%= f.check_box :disabled_access %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :phone_number %><br>
-    <%= f.text_field :phone_number %>
-  </div>
-  <div class="field">
-    <%= f.label :twitter_screen_name %><br>
-    <%= f.text_field :twitter_screen_name %>
-  </div>
-  <div class="field">
-    <%= f.label :facebook_url %><br>
-    <%= f.text_field :facebook_url %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_disciplined %><br>
-    <%= f.check_box :atmosphere_disciplined %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_relaxed %><br>
-    <%= f.check_box :atmosphere_relaxed %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_historic %><br>
-    <%= f.check_box :atmosphere_historic %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_modern %><br>
-    <%= f.check_box :atmosphere_modern %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_inspiring %><br>
-    <%= f.check_box :atmosphere_inspiring %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_cosy %><br>
-    <%= f.check_box :atmosphere_cosy %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_social %><br>
-    <%= f.check_box :atmosphere_social %>
-  </div>
-  <div class="field">
-    <%= f.label :atmosphere_friendly %><br>
-    <%= f.check_box :atmosphere_friendly %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :noise_id %><br>
-    <%= f.collection_select(:noise_id, Noise.all, :id, :title) %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :facility_food_drink %><br>
-    <%= f.check_box :facility_food_drink %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_daylight %><br>
-    <%= f.check_box :facility_daylight %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_views %><br>
-    <%= f.check_box :facility_views %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_large_desks %><br>
-    <%= f.check_box :facility_large_desks %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_free_wifi %><br>
-    <%= f.check_box :facility_free_wifi %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_no_wifi %><br>
-    <%= f.check_box :facility_no_wifi %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_computers %><br>
-    <%= f.check_box :facility_computers %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_laptops_allowed %><br>
-    <%= f.check_box :facility_laptops_allowed %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_sockets %><br>
-    <%= f.check_box :facility_sockets %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_signal %><br>
-    <%= f.check_box :facility_signal %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_printers_copiers %><br>
-    <%= f.check_box :facility_printers_copiers %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_whiteboards %><br>
-    <%= f.check_box :facility_whiteboards %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_projector %><br>
-    <%= f.check_box :facility_projector %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_outdoor_seating %><br>
-    <%= f.check_box :facility_outdoor_seating %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_bookable %><br>
-    <%= f.check_box :facility_bookable %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_toilets %><br>
-    <%= f.check_box :facility_toilets %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_refreshments %><br>
-    <%= f.check_box :facility_refreshments %>
-  </div>
-  <div class="field">
-    <%= f.label :facility_break %><br>
-    <%= f.check_box :facility_break %>
+
+  <div class="header"><span class="title">Noise levels</span></div>
+  <div class="section">
+      <div class="field">
+        <%= f.label :noise_id %>
+        <%= f.collection_select(:noise_id, Noise.all, :id, :title) %>
+      </div>
   </div>
   
-  <div class="field">
-    <%= f.label :work_private %><br>
-    <%= f.check_box :work_private %>
+  <div class="header"><span class="title">Facilities</span></div>
+  <div class="section">
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_food_drink,
+        label: "facility_food_drink"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_daylight,
+        label: "facility_daylight"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_views,
+        label: "facility_views"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_large_desks,
+        label: "facility_large_desks"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_free_wifi,
+        label: "facility_free_wifi"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_no_wifi,
+        label: "facility_no_wifi"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_computers,
+        label: "facility_computers"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_laptops_allowed,
+        label: "facility_laptops_allowed"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_sockets,
+        label: "facility_sockets"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_signal,
+        label: "facility_signal"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_printers_copiers,
+        label: "facility_printers_copiers"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_whiteboards,
+        label: "facility_whiteboards"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_projector,
+        label: "facility_projector"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_outdoor_seating,
+        label: "facility_outdoor_seating"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_bookable,
+        label: "facility_bookable"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_toilets,
+        label: "facility_toilets"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_refreshments,
+        label: "facility_refreshments"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_break,
+        label: "facility_break"
+      } %>
   </div>
-  <div class="field">
-    <%= f.label :work_close %><br>
-    <%= f.check_box :work_close %>
+
+  <div class="header"><span class="title">Work environment</span></div>
+  <div class="section">
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :work_private,
+        label: "work_private"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :work_close,
+        label: "work_close"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :work_friends,
+        label: "work_friends"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :work_group,
+        label: "work_group"
+      } %>
   </div>
-  <div class="field">
-    <%= f.label :work_friends %><br>
-    <%= f.check_box :work_friends %>
+  <div class="header"><span class="title">Tags</span></div>
+  <div class="section">
+      <div class="field">
+        <%= f.label :tags %>
+        <%= f.text_field :tag_list, value: @space.tag_list.to_s %>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :work_group %><br>
-    <%= f.check_box :work_group %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :expensive %><br>
-    <%= f.number_field :expensive %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :tags %><br>
-    <%= f.text_field :tag_list, value: @space.tag_list.to_s %>
-  </div>
-  
+
+
+
+
+
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
