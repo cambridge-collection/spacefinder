@@ -82,6 +82,19 @@
 
     }
     .filter-option {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        p {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            padding: 0;
+            margin: 0;
+        }
+        p::first-letter {
+            text-transform: uppercase;
+        }
         cursor: pointer;
 
         &.active {

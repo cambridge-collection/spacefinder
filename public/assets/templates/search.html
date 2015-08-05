@@ -4,27 +4,27 @@
 <ul>
     <li><div class="header"><span class="title">I want to work...</span></div>
         <ul id="search-work">
-            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
+            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><i class="icon-tick"></i><p>#{value}</p></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Atmosphere</span></div>
         <ul id="search-atmosphere">
-            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><i class="icon-tick"></i><span>#{value}</span></li>]}
+            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><i class="icon-tick"></i><p>#{value}</p></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Noise levels</span></div>
         <ul  id="search-noise">
-            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><i class="#{title(icon)}"></i><span>#{title}</span></li>]}
+            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><i class="#{title(icon)}"></i><p>#{title}</p></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Facilities</span></div>
         <ul id="search-facilities">
-            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><i class="#{icon}"></i><span>#{value}</span></li>]}
+            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><i class="#{icon}"></i><p>#{value}</p></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Tags</span></div>
         <ul id="search-tags">
-            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><i class="icon-tick"></i><span>#{name}</span></li>]}
+            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><i class="icon-tick"></i><p>#{name}</p></li>]}
         </ul>
     </li>
 </ul>
@@ -74,11 +74,13 @@
             "queryString": searchString,
             "reset": true,
             "callback": function() {
-                if(oldView !== undefined) {
+                //go back to last view
+                /*if(oldView !== undefined) {
                     window.location.hash = oldView;
                 } else {
                     window.location.hash = '/';
-                }
+                }*/
+                window.location.hash = '/list';
                 $search.html(initText);
             }
         })

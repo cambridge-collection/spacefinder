@@ -1,6 +1,6 @@
 {
     "name" : "",
     "email" : "",
-    "details_needed" : true,
-    "status" : "success"
+    "details_needed" : false,
+    "status" : "ok"
 }

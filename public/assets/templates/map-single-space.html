@@ -1,6 +1,7 @@
 <div id="bubble-#{id}" data-link="#{link}">
     <h1><a href="#{link}">#{name}</a><small>#{distance}</small></h1>
     <p>#{description(limit="100")}</p>
+    <a href="#{link}">More info</a>
     <div>
         #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i></span>]}
     </div>
@@ -9,7 +10,7 @@
     $bubble = $('#bubble-#{id}');
     console.log('loaded bubble');
     console.log($bubble);
-    $('#bubble-#{id}').find('h1').on('click', function(event) {
+    $bubble.find('h1').on('click', function(event) {
         event.preventDefault();
         console.log($bubble.data('link'));
         window.location.hash = $bubble.data('link');

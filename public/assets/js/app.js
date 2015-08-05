@@ -14,7 +14,11 @@ loginWindow,
 mapOptions = {
     center: loc,
     zoom: 14,
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    zoomControl: true,
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+    }
 },
 oldView = undefined,
 currViewHash = undefined,
@@ -196,7 +200,7 @@ $().ready(function() {
     $(window).on('login_success', function(event) {
         event.preventDefault();
         console.log('login successful');
-        $('.login-screen').hide(300, function() {
+        $('.login-screen').fadeOut(300, function() {
             $(this).remove();
         });
     });
@@ -469,9 +473,9 @@ function showLoginScreen(container, data) {
     $.extend(tData, data);
 
     $('<div />')
-        .addClass('login-screen')
-        .html(parseTemplate('login', tData))
-        .appendTo($con);
+    .addClass('login-screen')
+    .html(parseTemplate('login', tData))
+    .appendTo($con);
     $($con.parents('div')[$con.parents('div').length - 1]).scrollTop(0);
 
 }

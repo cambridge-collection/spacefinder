@@ -80,7 +80,10 @@ var $space = $('#space-#{id}');
 //close button
 $space.find('.close-view').on('click', function(event) {
     event.preventDefault();
-    if(oldView !== undefined) {
+    if(currView == "large") {
+        window.location.hash = '/';
+        return;
+    } else if(oldView !== undefined) {
         window.location.hash = oldView;
     } else {
         window.location.hash = '/';
@@ -147,7 +150,7 @@ $space.find('.tabs').tabs({
             $(ui.newPanel).height($(window).height() - ($space.find('.ui-tabs-nav').outerHeight(true) + $space.find('.title').outerHeight(true)))
             google.maps.event.trigger(localMap, 'resize');
             localMap.setCenter(m.getPosition());
-            $(document).scrollTop($space.find('.tabs').position(true).top - $space.find('.ui-tabs-nav').outerHeight(true));
+            $(document).scrollTop($space.find('.tabs').position(true).top - $space.find('.title').outerHeight(true));
         }
         if($(ui.newPanel).attr('id') == "tips") {
             $space.find('.tips-container').css('min-height', $(window).height() - $space.find('.tips-container').offset().top);
