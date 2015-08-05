@@ -6,7 +6,7 @@
   } %>
 <div class="closed">closed</div>
 <div class="times">
-    <%= day_form.time_field :from %> <span class="splitter">to</span> <%= day_form.time_field :to %><span class="splitter">or:</span><%= render partial: "checkbox", locals: {
+    <%= day_form.time_field :from, value: day_form.object.from %> <span class="splitter">to</span> <%= day_form.time_field :to, value: day_form.object.to %><span class="splitter">or:</span><%= render partial: "checkbox", locals: {
       f: day_form,
       field: :allday,
       label: "All day",
