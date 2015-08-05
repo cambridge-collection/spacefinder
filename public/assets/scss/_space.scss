@@ -55,7 +55,7 @@
         top: 0;
         width: 50%;
         height: 100%;
-        padding-top: calc(50% - 1.5rem);
+        padding-top: 25vh;
         [class^='icon-'] {
             font-size: 3rem;
             color: #FFF;
@@ -223,7 +223,7 @@
             flex-grow: 1;
             text-align: center;
             height: 100%;
-
+            border-top: 4px solid transparent;
         }
         .ui-tabs-nav>li>a {
             text-decoration: none;
@@ -237,7 +237,7 @@
         }
         .ui-tabs-nav>li.ui-tabs-active {
             background-color: #FFF;
-            border-top: 4px solid $highlightI;
+            border-top-color: $highlightI;
             a {
                 color: $fontColor;
             }

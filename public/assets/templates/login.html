@@ -35,29 +35,6 @@
 </div>
 <script type="text/javascript">
 $login = $('.login-screen');
-$login.find('#login-form').submit(function(event) {
-    event.preventDefault();
-    console.log('submit raven form');
-    $.ajax({
-        url: '/assets/data/login.json',
-        method: 'POST',
-        data: {"username": $(this).find('input[name="username"]').val(), "password":$(this).find('input[name="password"]').val()}
-    })
-    .done(function(data) {
-        if(data.status == "success") {
-            if (!!data.details_needed) {
-                $login.find('.login').fadeOut(300);
-                $login.find('.user-details').data('from-login', 'true').fadeIn(300);
-            } else {
-                userDetails = data;
-                loginSuccess();
-            }
-        }
-    })
-    .fail(function() {
-        console.log("error");
-    });
-});
 
 $login.find('#update-user-details').submit(function(event) {
     event.preventDefault();
@@ -65,6 +42,7 @@ $login.find('#update-user-details').submit(function(event) {
     console.log($(this).serialize());
     $.ajax({
         url: 'https://uoc-spacefinder.herokuapp.com/user?callback=?',
+        //url: '/assets/data/login.json',
         method: 'POST',
         data: $(this).serialize()
     })

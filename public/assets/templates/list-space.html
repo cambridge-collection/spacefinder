@@ -1,4 +1,4 @@
-<div class="list-space">
+<div class="list-space" data-id="#{id}" data-link="#{link}">
     <h1><a href="#{link}">#{name}</a><small>#{distance}</small></h1>
     <h2>#{library}</h2>
 
@@ -7,7 +7,7 @@
         <div>
             <p class="description">#{description(limit="100")}</p>
 
-            #{facilities[<span class="facility #{attr}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>]}
+            #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>]}
             <!--a href="#{link}" title="#{name}">View details</a-->
         </div>
 
@@ -15,7 +15,39 @@
 </div>
 
 <script type="text/javascript">
-    $('.list-space>h2').each(function(index, el) {
-        if($(this).html() == "") $(this).remove();
-    });
+$('.list-space>h2').each(function(index, el) {
+    if($(this).html() == "") $(this).remove();
+});
+$('.list-space').each(function () {
+    $(this).hover(function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if(!$(this).hasClass('hover')) {
+            $(this).addClass('hover')
+            var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
+            if(space.marker !== undefined && space.marker.icon !== undefined) {
+                space.marker.icon.fillColor = activeColor;
+                space.marker.setMap(map);
+            }
+        }
+
+        /* Act on the event */
+    }, function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if(!!$(this).hasClass('hover')) {
+            $(this).removeClass('hover')
+            var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
+            if(space.marker !== undefined && space.marker.icon !== undefined) {
+                space.marker.icon.fillColor = inactiveColor;
+                space.marker.setMap(map);
+            }
+
+        }
+    }).on('click', function(event) {
+        event.preventDefault();
+        window.location.hash = $(this).data('link');
+        /* Act on the event */
+    });;
+})
 </script>
