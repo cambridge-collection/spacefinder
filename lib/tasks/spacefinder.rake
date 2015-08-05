@@ -26,7 +26,6 @@ namespace :spacefinder do
       space.floor = space_csv[:floor]
       space.lat = space_csv[:"decimal_gps_coordinates_(lattitude)_eg_52.197949"]
       space.lng = space_csv[:"decimal_gps_coordinates_(longitude)_eg_0.122951"]
-      space.opening_hours = space_csv[:opening_hours]
       
       if space_csv[:access_restrictions][0, 3] == "yes" then
         space.restricted = true 
