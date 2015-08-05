@@ -3,6 +3,10 @@ class Space < ActiveRecord::Base
   acts_as_taggable_on :user_tags
   
   validates_inclusion_of :expensive, :in => 1..5, :allow_blank => true
+  validates :term_time_hours, presence: true
+  validates_associated :term_time_hours
+  validates :out_of_term_hours, presence: true
+  validates_associated :out_of_term_hours
 
   belongs_to :access
   belongs_to :space_type

@@ -7,11 +7,13 @@ class OpeningHoursWeek < ActiveRecord::Base
   belongs_to :saturday, class_name: "OpeningHoursDay", :foreign_key => 'saturday_id', dependent: :destroy
   belongs_to :sunday, class_name: "OpeningHoursDay", :foreign_key => 'sunday_id', dependent: :destroy
   
+  
   def self.days
     [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
   end
   
   days.each {|day|
     accepts_nested_attributes_for day
+    validates day, presence: true
   }
 end
