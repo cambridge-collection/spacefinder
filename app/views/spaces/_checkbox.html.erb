@@ -1,6 +1,12 @@
-<div class="field">
+<% if (defined? wrapper).nil? then wrapper = true end %>
+
+<% if wrapper === true then %>
+  <div class="field">
+<% end %>
   <%= f.label field do %>
     <%= f.check_box field %>
     <i class="icon-tick"></i><%= label %>
   <% end %>
-</div>
+<% if wrapper === true then %>
+  </div>
+<% end %>

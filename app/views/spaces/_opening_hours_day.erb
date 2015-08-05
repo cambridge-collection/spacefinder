@@ -1,0 +1,17 @@
+<%= f.fields_for day do |day_form| %>
+  <%= render partial: "checkbox", locals: {
+    f: day_form,
+    field: :open,
+    label: label
+  } %>
+<div class="closed">closed</div>
+<div class="times">
+    <%= day_form.time_field :from %> <span class="splitter">to</span> <%= day_form.time_field :to %><span class="splitter">or:</span><%= render partial: "checkbox", locals: {
+      f: day_form,
+      field: :allday,
+      label: "All day",
+      wrapper: false
+    } %>
+</div>
+  
+<% end %>

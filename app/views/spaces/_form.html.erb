@@ -73,108 +73,31 @@
 
   <div class="section">
       <h2>Term-time opening hours</h2>
+      
+      
       <div class="term-times">
-          <div class="field">
-              <label for="term_mon_open"><input id="term_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_mon_allday"><input id="term_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_tue_open"><input id="term_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_tue_allday"><input id="term_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_wed_open"><input id="term_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_wed_allday"><input id="term_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_thur_open"><input id="term_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_thur_allday"><input id="term_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_fri_open"><input id="term_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_fri_allday"><input id="term_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_sat_open"><input id="term_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sat_allday"><input id="term_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="term_sun_open"><input id="term_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sun_allday"><input id="term_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
+        <%= f.fields_for :term_time_hours do |term_time_hours_form| %>
+          <% OpeningHoursWeek.days.each do |day| %>
+            <%= render partial: "opening_hours_day", locals: {
+              f: term_time_hours_form,
+              day: day,
+              label: day[0,3].titlecase
+            } %>
+          <% end %>
+        <% end %>
+         
       </div>
       <h2 class="times-label">Out-of-term opening hours</h2>
       <div class="holiday-times">
-          <div class="field">
-              <label for="holiday_mon_open"><input id="holiday_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_mon_allday"><input id="holiday_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_tue_open"><input id="holiday_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_tue_allday"><input id="holiday_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_wed_open"><input id="holiday_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_wed_allday"><input id="holiday_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_thur_open"><input id="holiday_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_thur_allday"><input id="holiday_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_fri_open"><input id="holiday_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_fri_allday"><input id="holiday_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_sat_open"><input id="holiday_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sat_allday"><input id="holiday_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
-          <div class="field">
-              <label for="holiday_sun_open"><input id="holiday_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
-          </div>
-          <div class="closed">closed</div>
-          <div class="times">
-              <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sun_allday"><input id="holiday_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-          </div>
+        <%= f.fields_for :out_of_term_hours do |out_of_term_hours_form| %>
+          <% OpeningHoursWeek.days.each do |day| %>
+            <%= render partial: "opening_hours_day", locals: {
+              f: out_of_term_hours_form,
+              day: day,
+              label: day[0,3].titlecase
+            } %>
+          <% end %>
+        <% end %>
       </div>
       <a href="#" id="show-holiday-times" class="btn">Show holiday times</a>
   </div>

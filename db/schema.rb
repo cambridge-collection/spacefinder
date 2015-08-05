@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731143117) do
+ActiveRecord::Schema.define(version: 20150804144739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,35 @@ ActiveRecord::Schema.define(version: 20150731143117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "opening_hours_days", force: :cascade do |t|
+    t.boolean  "open"
+    t.boolean  "allday"
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "opening_hours_weeks", force: :cascade do |t|
+    t.integer  "monday_id"
+    t.integer  "tuesday_id"
+    t.integer  "wednesday_id"
+    t.integer  "thursday_id"
+    t.integer  "friday_id"
+    t.integer  "saturday_id"
+    t.integer  "sunday_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "opening_hours_weeks", ["friday_id"], name: "index_opening_hours_weeks_on_friday_id", using: :btree
+  add_index "opening_hours_weeks", ["monday_id"], name: "index_opening_hours_weeks_on_monday_id", using: :btree
+  add_index "opening_hours_weeks", ["saturday_id"], name: "index_opening_hours_weeks_on_saturday_id", using: :btree
+  add_index "opening_hours_weeks", ["sunday_id"], name: "index_opening_hours_weeks_on_sunday_id", using: :btree
+  add_index "opening_hours_weeks", ["thursday_id"], name: "index_opening_hours_weeks_on_thursday_id", using: :btree
+  add_index "opening_hours_weeks", ["tuesday_id"], name: "index_opening_hours_weeks_on_tuesday_id", using: :btree
+  add_index "opening_hours_weeks", ["wednesday_id"], name: "index_opening_hours_weeks_on_wednesday_id", using: :btree
 
   create_table "space_types", force: :cascade do |t|
     t.string   "title"
@@ -102,12 +131,16 @@ ActiveRecord::Schema.define(version: 20150731143117) do
     t.boolean  "work_close"
     t.boolean  "work_friends"
     t.boolean  "work_group"
+    t.integer  "term_time_hours_id"
+    t.integer  "out_of_term_hours_id"
   end
 
   add_index "spaces", ["access_id"], name: "index_spaces_on_access_id", using: :btree
   add_index "spaces", ["library_id"], name: "index_spaces_on_library_id", using: :btree
   add_index "spaces", ["noise_id"], name: "index_spaces_on_noise_id", using: :btree
+  add_index "spaces", ["out_of_term_hours_id"], name: "index_spaces_on_out_of_term_hours_id", using: :btree
   add_index "spaces", ["space_type_id"], name: "index_spaces_on_space_type_id", using: :btree
+  add_index "spaces", ["term_time_hours_id"], name: "index_spaces_on_term_time_hours_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

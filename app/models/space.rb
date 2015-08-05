@@ -9,12 +9,17 @@ class Space < ActiveRecord::Base
   belongs_to :library
   belongs_to :noise
   
+  belongs_to :term_time_hours, class_name: "OpeningHoursWeek", :foreign_key => 'term_time_hours_id'
+  belongs_to :out_of_term_hours, class_name: "OpeningHoursWeek", :foreign_key => 'out_of_term_hours_id'
+  
+  accepts_nested_attributes_for :term_time_hours
+  accepts_nested_attributes_for :out_of_term_hours
+  
   has_many :tips
 
   attr_accessor :new_library_name
 
   before_save :create_library_from_name
-  
 
   def create_library_from_name
     unless new_library_name.blank? then
