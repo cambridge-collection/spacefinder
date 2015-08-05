@@ -68,4 +68,13 @@
         text-align: center;
         //border: 1px solid;
     }
+
+    .empty-list {
+        background: $lightBackgroundColor;
+        border: 1px solid $lowlight;
+        padding: 12px;
+        margin: 12px;
+        color: darken($lowlight, 40%);
+        text-align: center;
+    }
 }

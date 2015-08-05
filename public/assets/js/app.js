@@ -412,6 +412,17 @@ function loadSpaces(options) {
         //$.getJSON('/assets/data/points.json').done(function(data) {
         points = data,
         distCount = 0;
+
+        if(points.length == 0) {
+            loadMap();
+            loadList();
+
+            if(typeof(defaults.callback) == 'function') {
+                defaults.callback();
+            }
+            return false;
+        }
+
         if(!!getLocation) {
             $.each(points, function(key, value) {
 
@@ -633,6 +644,11 @@ function loadList(options) {
         activeColor:'#e2637c'
     };
     $.extend(defaults, options);
+    if(points.length == 0) {
+        $list.append($('<div />').html('There are no spaces to show with the current search criteria.').addClass('empty-list'));
+
+        return true;
+    }
     $.each( points, function( key ) {
         var space = parseTemplate('list', points[key]);
 
