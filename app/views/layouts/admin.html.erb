@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit</title>
+    <title><%= yield :title %></title>
     <%= stylesheet_link_tag "admin" %>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <script type="text/javascript">
-        showHolidayTimes = false;
-    </script>
+    
+    <%= yield :javascripts %>
+    
 </head>
-<body>
+<body class="<%= yield :body_class %>">
   
   <nav id="top-bar">
     <div class="logout"><%= link_to('Logout', users_sign_out_path, :method => :delete) %></div>

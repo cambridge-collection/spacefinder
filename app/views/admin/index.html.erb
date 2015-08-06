@@ -1,0 +1,10 @@
+<% content_for :title, "Spacefinder Administration Dashboard" %>
+<% content_for :body_class, "small-page" %>
+
+<div class="container overview">
+    <a href="/admin/edit.html"><i class="icon-pencil"></i>Edit an existing space</a>
+    <%= link_to new_space_path do %>
+      <i class="icon-add"></i>Add a new space
+    <% end %>
+    <a href="#"><i class="icon-callout"></i><span>Review Tips <span class="bubble">3</span></span></a>
+</div>
