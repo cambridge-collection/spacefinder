@@ -21,3 +21,18 @@ json.facilities @facilities.collect{|fk| if @space.send(fk) == true then fk else
 json.atmosphere @atmospheres.collect{|ak| if @space.send(ak) == true then ak else nil end}.compact
 json.admin_tag_list @space.tag_list
 json.user_tags_list @space.user_tag_list
+
+json.term_time_hours do
+  OpeningHoursWeek.days.each { |day|
+    json.set! day do
+      json.extract! @space.term_time_hours.send(day), :open, :allday, :from, :to
+    end
+  }
+end
+json.out_of_term_hours do
+  OpeningHoursWeek.days.each { |day|
+    json.set! day do
+      json.extract! @space.term_time_hours.send(day), :open, :allday, :from, :to
+    end
+  }
+end
