@@ -45,6 +45,13 @@ namespace :spacefinder do
       space.twitter_screen_name = (space_csv[:twitter]).to_s.tr('@', '')
       space.facebook_url = space_csv[:facebook_page]
       
+      term_time_hours = space.build_term_time_hours
+      out_of_term_hours = space.build_out_of_term_hours
+      OpeningHoursWeek.days.each {|day|
+        term_time_hours.send("build_#{day}")
+        out_of_term_hours.send("build_#{day}")
+      }
+      
       space.atmosphere_disciplined = !(space_csv[:disciplined?].nil? or space_csv[:disciplined?].empty?) ? true : false
       space.atmosphere_relaxed = !(space_csv[:relaxed_or_informal?].nil? or space_csv[:relaxed_or_informal?].empty?) ? true : false
       space.atmosphere_modern = !(space_csv[:modern?].nil? or space_csv[:modern?].empty?) ? true : false
@@ -85,7 +92,12 @@ namespace :spacefinder do
       if space.save then
         puts "Saved: #{space_csv[:basic_info]}"
       else
+        puts "------"
         puts "There was a problem saving: #{space_csv[:basic_info]}"
+        space.errors.full_messages.each do |message|
+          puts message
+        end
+        puts "------"
       end
     }
   end
