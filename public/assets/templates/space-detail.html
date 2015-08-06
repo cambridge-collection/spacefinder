@@ -166,7 +166,7 @@ var lat = Number(#{lat}),
     lng = Number(#{lng});
 
 //set up map
-if(lat !== null && lng !== null) {
+if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
     spaceMapOptions = {
         center: {'lat':lat, 'lng':lng},
         zoom: 18,
@@ -187,12 +187,12 @@ if(lat !== null && lng !== null) {
     m.icon.fillOpacity = 1;
     localMap.setCenter(m.getPosition());
 } else {
-    $space.find('a[href="#map-#{id}]"').parent('li').remove();
+    $space.find('a[href=#map-#{id}]').parent('li').remove();
 }
 
 if(currView == 'large') {
     $space.find('a[href=#map-#{id}]').parent('li').hide(0);
-    if(lat !== null && lng !== null) {
+    if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
         map.setCenter({'lat':lat, 'lng':lng});
         map.setZoom(18);
         new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
@@ -271,16 +271,17 @@ $space.find('.add-tag').on('click', function(event) {
 
 $(window).on('layout', function(event) {
     event.preventDefault();
-    console.log('change layout');
+    console.log('change layout ' + currView);
     if(currView == 'large') {
         $space.find('a[href=#map-#{id}]').parent('li').hide(0);
-        if(lat !== null && lng !== null) {
+        if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
             map.setCenter({'lat':lat, 'lng':lng});
             //map.setZoom(18);
             new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
         }
         //$space.find('.tabs>ul').unstick();
     } else {
+
         $space.find('a[href=#map-#{id}]').parent('li').show(0);
         //$space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
     }

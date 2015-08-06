@@ -97,7 +97,7 @@ $().ready(function() {
 
     var startView = initialView;
     $(window).on('hashchange', function(Event) {
-        console.log(Event.originalEvent.oldURL);
+        console.log('hashchange');
         if (Event.originalEvent.oldURL !== undefined) {
             oldView = Event.originalEvent.oldURL.split('#')[1];
         } else {
@@ -210,7 +210,6 @@ function resizeForMobile() {
     currView = 'small';
     $('body').removeClass('large_view')
     $('#top-bar').find('a[href!="#/search"]').show(0);
-    $(window).trigger('hashchange');
     $('#search-btn').removeClass('active')
 }
 function resizeForDesktop() {
