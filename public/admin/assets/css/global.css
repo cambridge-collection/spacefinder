@@ -330,6 +330,14 @@ h1 > small {
         border-right: none;
         border-bottom: 1px solid #d0d1d1; } }
 
+#spaces {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  background-color: #F3F3F3; }
+  #spaces select {
+    margin: 12px; }
+
 .header {
   text-transform: uppercase;
   display: -webkit-flex;
