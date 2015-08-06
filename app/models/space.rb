@@ -7,6 +7,17 @@ class Space < ActiveRecord::Base
   validates_associated :term_time_hours
   validates :out_of_term_hours, presence: true
   validates_associated :out_of_term_hours
+  
+  validates :name, :space_type, :address, :lat, :lng, presence: true
+  validates :facebook_url, format: {with: /\Ahttps?:\/\//, message: "should start with http:// or https://"}, allow_blank: true
+  validates :twitter_screen_name, format: {with: /\A@[\S]+\z/, message: "in format \"@cambridge_uni\""}, allow_blank: true
+  before_validation do
+    self.twitter_screen_name = self.twitter_screen_name.strip
+    self.facebook_url = self.facebook_url.strip
+  end
+  before_save do
+    self.twitter_screen_name = self.twitter_screen_name.tr('@', '')
+  end
 
   belongs_to :access
   belongs_to :space_type
