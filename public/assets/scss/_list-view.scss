@@ -38,6 +38,9 @@
         padding: 12px;
         border-bottom: 1px solid $lowlight;
 
+        &.hover {
+            background-color: $lightBackgroundColor;
+        }
 
     }
     .space-details {

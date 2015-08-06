@@ -156,6 +156,8 @@
   #list .list-space {
     padding: 12px;
     border-bottom: 1px solid #d0d1d1; }
+    #list .list-space.hover {
+      background-color: #F3F3F3; }
   #list .space-details {
     display: -webkit-flex;
     display: flex;
