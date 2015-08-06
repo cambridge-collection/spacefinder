@@ -1,4 +1,21 @@
 $().ready(function () {
+    showHolidayTimes = null;
+    $('#edit-space-link').on('click', function(event) {
+        event.preventDefault();
+        var $this = $(this);
+        $(this).css('border', 'none').nextAll('a').css('overflow', 'hidden').animate({width:0, 'padding-left':0, 'padding-right':0}, {
+            speed: 300,
+            complete: function() {
+                $(this).css('display', 'none');
+                $this.animate({height:140}, 300);
+                $('#spaces').slideDown(300);
+            }
+        });
+    });
+    $('#edit-space').on('click', function(event) {
+        event.preventDefault();
+        window.location = '/spaces/' + $('#spaces-list').val() + '/edit';
+    });
     $('.header').append(
         $('<a />')
         .append($('<i />').addClass('icon-arrow-down'))
@@ -67,7 +84,7 @@ $().ready(function () {
         }
     });
 
-    if(showHolidayTimes !== undefined && showHolidayTimes == false) {
+    if(showHolidayTimes !== null && showHolidayTimes !== undefined && showHolidayTimes == false) {
         $('.holiday-times').slideUp(300);
 
     } else {
