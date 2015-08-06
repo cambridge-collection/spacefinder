@@ -2,20 +2,20 @@
   <div class="header"><span class="title">Basic info</span></div>
   <div class="section">
       <div class="field">
-        <%= f.label :name, "Space name e.g. first floor west, the red bean bags or relaxed reading space" %>
+        <%= f.label :name, "Name (e.g. first floor west, the red bean bags or relaxed reading space)" %>
         <%= f.text_field :name %>
       </div>
       <div class="field">
-        <%= f.label :description, "Text description of space" %>
+        <%= f.label :description, "Short description" %>
         <%= f.text_area :description %>
       </div>
       <div class="field">
-        <%= f.label :space_type_id, "Type of space" %>
-        <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title) %>
+        <%= f.label :space_type_id, "Type" %>
+        <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title, {selected: SpaceType.find_by(title:"Library space").id}) %>
       </div>
       <div class="field">
-        <%= f.label :access_id, "Who can use the space?" %>
-        <%= f.collection_select(:access_id, Access.all, :id, :title) %>
+        <%= f.label :access_id, "Who can use this space?" %>
+        <%= f.collection_select(:access_id, Access.all, :id, :title, {selected: Access.find_by(title:"Anyone (public)").id }) %>
       </div>
       
       <%= render partial: "checkbox", locals: {
@@ -25,14 +25,14 @@
       } %>
       
       <div class="field">
-        <%= f.label :restriction, "Description of access restriction" %>
+        <%= f.label :restriction, "Description of access restriction  (e.g. Electronic badge entry after 18:00)" %>
         <%= f.text_field :restriction %>
       </div>
       
       <%= render partial: "checkbox", locals: {
         f: f,
         field: :disabled_access,
-        label: "Disabled access"
+        label: "Accessible by the disabled"
       } %>
       
       <div class="field">
@@ -49,7 +49,7 @@
       </div>
       <div class="field">
         <%= f.label :library_id, "In library" %>
-        <%= f.collection_select(:library_id, Library.all, :id, :name) %>
+        <%= f.collection_select(:library_id, Library.order('name ASC'), :id, :name) %>
         or add new library:
         <%= f.text_field :new_library_name %>
       </div>
@@ -59,11 +59,11 @@
       </div>
       <div class="location">
         <div class="field">
-          <%= f.label :lat, "Latitude (decimal coordinates eg 52.197949)" %>
+          <%= f.label :lat, "Latitude (decimal coordinates e.g. 52.197949)" %>
           <%= f.text_field :lat %>
         </div>
         <div class="field">
-          <%= f.label :lng, "Longitude (decimal coordinates eg 0.122951)" %>
+          <%= f.label :lng, "Longitude (decimal coordinates e.g. 0.122951)" %>
           <%= f.text_field :lng %>
         </div>
         <a href="#" class="get-location btn">Use my location</a>
@@ -113,11 +113,11 @@
         <%= f.text_field :phone_number %>
       </div>
       <div class="field">
-        <%= f.label :twitter_screen_name, "Twitter screen name (eg cambridge_uni)" %>
+        <%= f.label :twitter_screen_name, "Twitter screen name (e.g. cambridge_uni)" %>
         <%= f.text_field :twitter_screen_name %>
       </div>
       <div class="field">
-        <%= f.label :facebook_url, "Facebook page (eg https://www.facebook.com/thesnugbar)" %>
+        <%= f.label :facebook_url, "Facebook page (e.g. https://www.facebook.com/thesnugbar)" %>
         <%= f.text_field :facebook_url %>
       </div>
   </div>
@@ -295,7 +295,7 @@
   <div class="header"><span class="title">Tags</span></div>
   <div class="section">
       <div class="field">
-        <%= f.label :tags, "Some tags that might be used to describe this space. Try to choose tags that are distinct from the questions above. Please list them separated by a comma. (eg dark, water allowed, busy)" %>
+        <%= f.label :tags, "Some tags that might be used to describe this space. Try to choose tags that are distinct from the questions above. Please list them separated by a comma. (e.g. dark, water allowed, busy)" %>
         <%= f.text_field :tag_list, value: @space.tag_list.to_s %>
       </div>
   </div>
