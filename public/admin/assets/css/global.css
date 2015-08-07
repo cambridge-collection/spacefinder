@@ -271,6 +271,12 @@ h1 > small {
   .btn.disabled, .btn-inline.disabled {
     background: #d0d1d1; }
 
+.btn-inline {
+  display: inline-block;
+  width: auto;
+  font-size: 1rem;
+  padding: 9px 6px 3px; }
+
 .login {
   text-align: center;
   max-width: 500px;
@@ -396,7 +402,7 @@ h1 > small {
     display: inline-block;
     padding: 0 12px; }
 
-.edit input[type=text], .edit input[type=password], .edit input[type=number], .edit textarea {
+input[type=text], input[type=password], input[type=number], textarea {
   -webkit-appearance: none;
   border: 1px solid #d0d1d1;
   border-radius: 0;
@@ -405,6 +411,7 @@ h1 > small {
   padding: 6px;
   margin: 0;
   width: 100%; }
+
 .edit select {
   display: block; }
 .edit .field {
@@ -461,3 +468,56 @@ h1 > small {
     -webkit-flex-grow: 2;
     flex-grow: 2;
     margin: 0 12px; }
+
+.tips .tip {
+  background-color: #FFF;
+  padding: 12px 0;
+  border-bottom: 1px solid #d0d1d1; }
+  .tips .tip.new {
+    background-color: #F3F3F3;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 12px;
+    padding-right: 12px; }
+  .tips .tip:last-child {
+    border: none; }
+  .tips .tip:before {
+    border-top: none; }
+  .tips .tip .meta {
+    display: flex;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    flex-direction: row; }
+  .tips .tip .comment {
+    padding: 12px 0; }
+  .tips .tip .avatar {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-position: center;
+    background-color: #d0d1d1;
+    flex-grow: 0;
+    -webkit-flex-grow: 0;
+    margin-right: 6px; }
+  .tips .tip .user, .tips .tip .timestamp {
+    flex-grow: 1;
+    -webkit-flex-grow: 1; }
+  .tips .tip .name {
+    display: block;
+    font-size: 1.2rem; }
+  .tips .tip .discipline, .tips .tip .timestamp {
+    color: #838585; }
+  .tips .tip .timestamp {
+    text-align: right;
+    min-width: 30px; }
+  .tips .tip .buttons {
+    padding-top: 12px; }
+    .tips .tip .buttons:after {
+      content: '';
+      width: 100%;
+      clear: both;
+      height: 1px; }
+    .tips .tip .buttons .remove {
+      background-color: #000; }
+    .tips .tip .buttons .respond {
+      float: right; }
