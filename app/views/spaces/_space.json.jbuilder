@@ -32,7 +32,7 @@ end
 json.out_of_term_hours do
   OpeningHoursWeek.days.each { |day|
     json.set! day do
-      json.extract! @space.term_time_hours.send(day), :open, :allday, :from, :to
+      json.extract! @space.out_of_term_hours.send(day), :open, :allday, :from, :to
     end
   }
 end
