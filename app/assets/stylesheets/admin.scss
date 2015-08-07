@@ -69,6 +69,13 @@ h1>small {
     }
 }
 
+.btn-inline {
+    display: inline-block;
+    width: auto;
+    font-size: 1rem;
+    padding: 9px 6px 3px;
+}
+
 .login {
     text-align: center;
     max-width: 500px;
@@ -233,19 +240,19 @@ $break-small: 600px;
     }
 }
 
-
+input[type=text], input[type=password], input[type=number], textarea {
+    -webkit-appearance: none;
+    border: 1px solid $lowlight;
+    border-radius: 0;
+    display: block;
+    font-size: 1rem;
+    padding: 6px;
+    margin: 0;
+    width: 100%;
+}
 
 .edit {
-    input[type=text], input[type=password], input[type=number], textarea {
-        -webkit-appearance: none;
-        border: 1px solid $lowlight;
-        border-radius: 0;
-        display: block;
-        font-size: 1rem;
-        padding: 6px;
-        margin: 0;
-        width: 100%;
-    }
+
     select {
         display: block;
     }
@@ -316,5 +323,79 @@ $break-small: 600px;
         -webkit-flex-grow: 2;
         flex-grow: 2;
         margin: 0 12px;
+    }
+}
+
+.tips {
+    .tip {
+        &.new {
+            background-color: $lightBackgroundColor;
+            margin-left: -12px;
+            margin-right: -12px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        background-color: #FFF;
+        padding: 12px 0;
+        border-bottom: 1px solid $lowlight;
+        &:last-child {
+            border: none;
+        }
+        &:before {
+            border-top: none;
+        }
+        .meta {
+            display: flex;
+            display: -webkit-flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .comment {
+            padding: 12px 0;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            background-position: center;
+            background-color: $lowlight;
+            flex-grow: 0;
+            -webkit-flex-grow: 0;
+            margin-right: 6px;
+        }
+        .user, .timestamp {
+            flex-grow: 1;
+            -webkit-flex-grow: 1;
+        }
+        .name {
+            display: block;
+            font-size: 1.2rem;
+        }
+        .discipline, .timestamp {
+            color: darken($lowlight, 30%);
+        }
+        .timestamp {
+            text-align: right;
+            min-width: 30px;
+        }
+
+        .buttons {
+            padding-top: 12px;
+            &:after {
+                content: '';
+                width: 100%;
+                clear: both;
+                height: 1px;
+            }
+            .remove {
+                background-color: #000;
+            }
+            .respond {
+                float: right;
+            }
+        }
     }
 }

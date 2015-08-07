@@ -6,7 +6,9 @@
     <%= link_to new_space_path do %>
       <i class="icon-add"></i>Add a new space
     <% end %>
-    <a href="#"><i class="icon-callout"></i><span>Review Tips <span class="bubble">3</span></span></a>
+    <%= link_to admin_review_path do %>
+      <i class="icon-callout"></i><span>Review Tips <span class="bubble"><%= @tips_review_count %></span></span>
+    <% end %>
 </div>
 
 <div id="spaces" style="display:none;">

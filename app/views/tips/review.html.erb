@@ -1,0 +1,43 @@
+<% content_for :title, "Review Tips – Spacefinder" %>
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+      showHolidayTimes = false;
+  </script>
+<% end %>
+
+<div class="container tips">
+  <% @tips.each do |tip| %>
+    <div class="header"><span class="title"><%= tip.space.name %></span></div>
+    <div class="section">
+        <!--tip-->
+        <div class="tip">
+            <div class="meta">
+                <div class="avatar" style="background-image:url(<%= tip.user.profile_image %>)"></div>
+                <div class="user">
+                    <span class="name"><%= tip.user.name %></span>
+                    <span class="discipline"><%= tip.user.discipline %></span>
+                </div>
+                <div class="timestamp">
+                  <%= time_ago_in_words(tip.updated_at) %>
+                </div>
+            </div>
+            <div class="comment">
+                <%= tip.comment %>
+            </div>
+            <%= form_for([tip.space, tip]) do |f| %>
+              <div class="response">
+                <%= f.text_area :response, placeholder: "your response to the tip" %>
+              </div>
+              <div class="buttons">
+                
+                <%= f.submit "Add response", class: "btn-inline respond" %>
+              </div>
+            <% end %>
+            <div class="buttons">
+              <%= button_to 'Remove tip', space_tip_path(tip.space, tip), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-inline remove" %>
+            </div>
+        </div>
+        <!--end tip-->
+    </div>
+  <% end %>
+</div>

@@ -34,10 +34,42 @@ class TipsController < ApplicationController
       end
     end
   end
+  
+  def destroy
+    @tip = Tip.find(params[:id])
+    @tip.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_review_url, notice: 'Tip was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
+  def review
+    @tips = Tip.order('updated_at DESC').where(:response => nil)
+    render layout: "admin"
+  end
+  
+  def update
+    @tip = Tip.find(params[:id])
+    @tip.responding_user = User.first # TODO use current admin user
+    respond_to do |format|
+      if @tip.update(response_params)
+        format.html { redirect_to admin_review_url, notice: 'Tip was successfully updated.' }
+        format.json { render :show, status: :ok, location: @tip }
+      else
+        format.html { redirect_to admin_review_url }
+        format.json { render json: @tip.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   private
 
     def tip_params
       params.require(:tip).permit(:comment, :atmosphere_disciplined, :noise_quiet, :facility_large_desks, :work_friends, :atmosphere_relaxed, :facility_views, :atmosphere_inspiring, :space_id)
+    end
+    
+    def response_params
+      params.require(:tip).permit(:response)
     end
 end

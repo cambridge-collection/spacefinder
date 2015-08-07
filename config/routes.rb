@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   get 'admin', to: 'admin#index'
+  get 'admin/review', to: 'tips#review'
 
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
   devise_scope :user do

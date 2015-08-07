@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805160659) do
+ActiveRecord::Schema.define(version: 20150807135629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,8 +174,13 @@ ActiveRecord::Schema.define(version: 20150805160659) do
     t.datetime "updated_at",             null: false
     t.integer  "space_id"
     t.integer  "user_id"
+    t.datetime "deleted_at"
+    t.text     "response"
+    t.integer  "responding_user_id"
   end
 
+  add_index "tips", ["deleted_at"], name: "index_tips_on_deleted_at", using: :btree
+  add_index "tips", ["responding_user_id"], name: "index_tips_on_responding_user_id", using: :btree
   add_index "tips", ["space_id"], name: "index_tips_on_space_id", using: :btree
   add_index "tips", ["user_id"], name: "index_tips_on_user_id", using: :btree
 
