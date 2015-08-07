@@ -60,8 +60,8 @@ templates = {
         template : ''
     }
 },
-inactiveColor = 'rgba(0,0,0,0.6)',
-activeColor = '#E37222',
+inactiveColor = 'rgba(0,0,0,1)',
+activeColor = '#00b1c1',
 initialView = 'map',
 view = '',
 mapViewed = false;
@@ -580,12 +580,12 @@ function loadMap(options) {
             content: contentString,
             shadowStyle: 0,
             padding: 0,
-            backgroundColor: 'rgba(54,54,54,0.9)',
-            borderRadius: 4,
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            borderRadius: 0,
             arrowSize: 10,
-            borderWidth: 1,
+            borderWidth: 0,
             //borderColor: '#2c2c2c',
-            padding: 10,
+            padding: 12,
             disableAutoPan: false,
             hideCloseButton: false,
             //maxWidth:($(window).width() * 0.9),
@@ -614,6 +614,8 @@ function loadMap(options) {
                 setTimeout(function() {
                     var parent = $('#bubble-' + points[key].id).parent();
                     $('#bubble-' + points[key].id).remove();
+                    parent.css('max-width', $('#map').width() * 0.7);
+                    points[key].mapSummary.open();
                     $(parent).append(parseTemplate(points[key].template, points[key]));
                     //points[key].mapSummary.maxWidth = $('#map').width() * 0.9;
                 }, 100);
@@ -698,7 +700,8 @@ function parseTemplate(t, data, partial) {
     matches,
     limit = null,
     icon = null,
-    attr = null;
+    attr = null,
+    raw = null;
 
     if(partial == true) {
         template = t;
@@ -736,8 +739,12 @@ function parseTemplate(t, data, partial) {
             value = matches[i].match(/.*\(.*value="(.*)".*/);
             attr = matches[i].match(/.*\(.*attr="(.*)".*/);
             icon = matches[i].match(/.*\(.*icon.*/);
+            raw = matches[i].match(/.*\(.*raw.*/);
             if(icon !== null) {
                 icon = true;
+            }
+            if(raw !== null) {
+                raw = true;
             }
             if(limit !== null) {
                 limit = Number(limit[1]);
@@ -749,12 +756,12 @@ function parseTemplate(t, data, partial) {
                 value = value[1];
             }
             var key = ''
-            if (limit !== null || icon !== null || attr !== null || value !== null) {
+            if (limit !== null || icon !== null || attr !== null || value !== null || raw !== null) {
                 key = matches[i].match(/#{(.*)\(.*}/);
             } else {
                 key = matches[i].match(/#{(.*)}/);
             }
-            var str = convertToValue(matches[i], data[key[1]], {"limit":limit, "icon":icon, "attr":attr, "value":value});
+            var str = convertToValue(matches[i], data[key[1]], {"limit":limit, "icon":icon, "attr":attr, "value":value, "raw":raw});
             template = template.replace(matches[i],str);
 
         }
@@ -771,7 +778,12 @@ function convertToValue(t, data, options) {
         for (var i = 0; i < data.length; i++) {
             var str = t;
             if($.type(data[i]) == 'object' || $.type(data[i]) == 'array') {
-                str = parseTemplate(t, data[i], true);
+                if(!!options.raw) {
+                    str = data[i];
+                } else {
+                    str = parseTemplate(t, data[i], true);
+                }
+
             } else {
                 var searchIconMap = searchArray(iconMap, data[i]);
                 if(searchIconMap !== -1) {
@@ -793,6 +805,10 @@ function convertToValue(t, data, options) {
 
     } else if($.type(data) == 'object') {
         var temp = t;
+        if(!!options.raw) {
+            console.log(data);
+            return JSON.stringify(data);
+        }
         if(options.value !== null) {
             if (options.limit !== null) {
                 temp = data[options.value].substr(0, options.limit);

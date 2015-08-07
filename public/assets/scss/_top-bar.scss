@@ -42,9 +42,11 @@
             -webkit-transition: all 0.3s linear;
             -moz-transition: all 0.3s linear;
             -o-transition: all 0.3s linear;
-            transition: all 0.3s linear; 
-            & [class^="icon-"]:before {
+            transition: all 0.3s linear;
+
+            [class^="icon-"] {
                 font-size: 1.2rem;
+                margin-right: 0;
             }
 
             &.active {

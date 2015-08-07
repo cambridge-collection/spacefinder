@@ -3,7 +3,7 @@
     padding-bottom: 60px;
     .search-text {
         background-color: $lightBackgroundColor;
-
+        border-bottom: 1px solid $lowlight;
         padding:12px;
 
         input {
@@ -34,11 +34,13 @@
     }
     .header {
         background-color: $lightBackgroundColor;
+        font-family: 'Myriad Pro', verdana, sans-serif;
+        font-weight: normal;
         text-transform: uppercase;
         display: -webkit-flex;
         display: flex;
         line-height: 1rem;
-        border-top: 1px solid $lowlight;
+        //border-top: 1px solid $lowlight;
         .title {
             padding: 12px 12px;
             -webkit-flex-grow:1;
@@ -55,20 +57,31 @@
         list-style: none;
         margin: 0;
         padding: 0;
-        li:last-child {
+        li.expanded {
+            border-bottom: 1px solid #c4c4c4;
+        }
+        & > li {
             border-bottom: 1px solid $lowlight;
+        }
+        li:last-child {
+            //border-bottom: 1px solid $lowlight;
         }
         ul {
             li {
-                padding: 12px 0 12px 18px;
+                border: none;
+                padding: 0 0 0 12px;
                 margin: 0 4px;
-                border-bottom: 1px solid $lowlight;
+                //border-bottom: 1px solid $lowlight;
                 background-color: #FFF;
                 &:first-child {
                     border-top: 1px solid lighten($lowlight, 8%);
                 }
                 &:last-child {
                     border-bottom: none;
+
+                    div {
+                        border-bottom: none;
+                    }
                 }
                 [class^="icon-"] {
                     font-size: 1rem;
@@ -77,15 +90,25 @@
                     margin-right: 6px;
                     color: $lowlight;
                 }
+                &.active {
+                    color: #141212;
+                    font-family: 'Myriad Pro', verdana, sans-serif;
+                    font-weight: normal;
+                    [class^="icon-"] {
+                        color: #141212;
+                    }
+                }
             }
         }
 
     }
-    .filter-option {
+    .filter-option > div {
         display: -webkit-flex;
         display: flex;
         -webkit-flex-direction: row;
         flex-direction: row;
+        border-bottom: 1px solid $lowlight;
+        padding: 18px 0 15px 0;
         p {
             -webkit-flex-grow: 1;
             flex-grow: 1;
@@ -97,13 +120,7 @@
         }
         cursor: pointer;
 
-        &.active {
-            color: $highlightI;
 
-            [class^="icon-"] {
-                color: $highlightI;
-            }
-        }
     }
 
     .search-button {
@@ -111,10 +128,10 @@
         bottom: 0;
         left: 0;
         padding: 18px;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
 
         [class^="icon-"] {
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-right: 6px;
         }
 

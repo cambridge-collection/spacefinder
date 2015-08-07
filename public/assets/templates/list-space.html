@@ -1,13 +1,13 @@
 <div class="list-space" data-id="#{id}" data-link="#{link}">
-    <h1><a href="#{link}">#{name}</a><small>#{distance}</small></h1>
-    <h2>#{library}</h2>
+    <h1><a href="#{link}">#{name}</a></h1>
+    <h2><span class="library">#{library}</span><span class="address hidden">#{address}</span><small>#{distance}</small></h2>
 
     <div class="space-details">
         #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
         <div>
             <p class="description">#{description(limit="100")}</p>
 
-            #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>]}
+            #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>](limit="5")}
             <!--a href="#{link}" title="#{name}">View details</a-->
         </div>
 
@@ -15,8 +15,16 @@
 </div>
 
 <script type="text/javascript">
-$('.list-space>h2').each(function(index, el) {
-    if($(this).html() == "") $(this).remove();
+$('.list-space>h2>.library').each(function(index, el) {
+    var $address = $(this).next('.address');
+    if($(this).html() == "")  {
+        if($address.length > 0 && $address.html() !== '') {
+            $address.removeClass('hidden').html($address.html().split(/\r\n|\r|\n|,/g)[0]);
+            $(this).remove();
+        }
+    } else {
+        $address.remove();
+    }
 });
 $('.list-space').each(function () {
     $(this).hover(function(event) {

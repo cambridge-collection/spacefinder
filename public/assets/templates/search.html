@@ -4,27 +4,27 @@
 <ul>
     <li><div class="header"><span class="title">I want to work...</span></div>
         <ul id="search-work">
-            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><i class="icon-tick"></i><p>#{value}</p></li>]}
+            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><div><i class="icon-tick"></i><p>#{value}</p></div></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Atmosphere</span></div>
         <ul id="search-atmosphere">
-            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><i class="icon-tick"></i><p>#{value}</p></li>]}
+            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><div><i class="icon-tick"></i><p>#{value}</p></div></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Noise levels</span></div>
         <ul  id="search-noise">
-            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><i class="#{title(icon)}"></i><p>#{title}</p></li>]}
+            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><div><i class="#{title(icon)}"></i><p>#{title}</p></div></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Facilities</span></div>
         <ul id="search-facilities">
-            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><i class="#{icon}"></i><p>#{value}</p></li>]}
+            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
         </ul>
     </li>
     <li><div class="header"><span class="title">Tags</span></div>
         <ul id="search-tags">
-            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><i class="icon-tick"></i><p>#{name}</p></li>]}
+            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><div><i class="icon-tick"></i><p>#{name}</p></div></li>]}
         </ul>
     </li>
 </ul>
@@ -37,7 +37,7 @@
         /* Act on the event */
     });
 
-    $('.header').append(
+    $('.header').parents('li').addClass('expanded').end().append(
         $('<a />')
         .append($('<i />').addClass('icon-arrow-down'))
         .addClass('section-collapse')
@@ -57,7 +57,7 @@
                 $(this).parents('li').find('>ul:first-of-type').slideDown(300);
             }
             $(this).toggleClass('expanded');
-
+            $(this).parents('li').toggleClass('expanded');
         })
     );
 

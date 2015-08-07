@@ -14,6 +14,10 @@
         -webkit-overflow-scrolling: touch;
     }
 
+    #map {
+        width: 100%;
+    }
+
     #list, #search, #map {
         display: block;
         display: block;
@@ -23,36 +27,55 @@
 
     #list {
         background-color: #FFF;
+        max-width: 510px;
+        min-width: 425px;
+        .list-space {
+            padding: 18px 18px 24px 18px;
+        }
     }
 
     #search {
-        min-width: 300px;
-        max-width: 300px;
+        min-width: 256px;
+        max-width: 256px;
         -webkit-flex-grow:0;
         flex-grow:0;
         .search-button {
-            width: 300px;
+            width: 256px;
         }
+        ul ul li div {
+            padding: 12px 0 12px 0px;
+       }
     }
     .space-container {
         min-height: 0;
         margin-top: $navHeight;
         height: calc(100% - #{$navHeight});
         overflow: auto;
-        width: 50%;
+        width: 100%;
         -webkit-overflow-scrolling: touch;
+        max-width: 510px;
+        min-width: 425px;
     }
     .space {
         position: relative;
         min-height: calc(100% - #{$navHeight});
         width: auto;
+
         z-index: 0;
         .title {
             position: relative;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
         }
         .gallery-container {
             margin-top: -50px;
+        }
+        .lowlight {
+            background:$lightBackgroundColor;
+            padding: 12px;
+            margin-left: -12px;
+            margin-right: -12px;
+            padding-top: 18px;
+            padding-bottom: 18px;
         }
     }
     .new-tag-container, .new-tip-container {

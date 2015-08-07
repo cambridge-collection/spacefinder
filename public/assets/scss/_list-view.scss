@@ -1,5 +1,5 @@
 #list {
-    background: $lightBackgroundColor;
+    background: #FFF;
     h1 {
         a {
             color: $barColor;
@@ -12,30 +12,38 @@
         width: 100%;
         margin-bottom: 12px;
         margin-top: 0;
-        font-weight: normal;
         display: -webkit-flex;
         display: flex;
         -webkit-flex-direction: row;
         flex-direction: row;
     }
-    h1>small {
-        color: $lowlight;
-        font-size: 1.2rem;
-        margin-top: 12px;
+    h2>small {
+        font-size: 1rem;
+        text-transform: capitalize;
+        //margin-top: 12px;
     }
     h1+h2 {
         margin-top: -12px;
+        margin-bottom: 18px;
     }
     h2 {
         border-bottom: none;
         color: darken($lowlight, 20%);
         font-size: 1rem;
-        font-weight: normal;
+        text-transform: uppercase;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        span {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+        }
     }
 
 
     .list-space {
-        padding: 12px;
+        padding: 18px 12px 24px 12px;
         border-bottom: 1px solid $lowlight;
 
         &.hover {
@@ -69,6 +77,7 @@
         padding: 0 0 10px;
         width: 30px;
         text-align: center;
+        color: $bodyColor;
         //border: 1px solid;
     }
 

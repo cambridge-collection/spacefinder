@@ -21,12 +21,12 @@
         </ul>
         <div class="tab-panel" id="info">
 
-                <p>#{description}</p>
+            <p>#{description}</p>
             <section class="section-facts">
                 <h2>Key facts</h2>
                 <ul>
                     <li><i class="icon-marker"></i><span>#{address}</span></li>
-                    <li class="opening-times"><i class="icon-time-short"></i><span>#{opening_hours}</span></li>
+                    <li class="opening-times"><i class="icon-time-short"></i><span class="open_now"></span></li>
                 </ul>
             </section>
             <section class="lowlight section-facilities">
@@ -70,12 +70,133 @@
 <script type="text/javascript">
 console.log('#space-#{id}');
 var $space = $('#space-#{id}');
-//stick headers
-/*if(currView == 'small') {
-    setTimeout(function () {
-        $space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
-    }, 500);
-}*/
+
+var termHours = #{term_time_hours(raw)};
+var holidayHours = #{out_of_term_hours(raw)};
+var weekOrder = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday"
+];
+
+if(!!isClosed(holidayHours) && !isClosed(termHours)) {
+    //we can loop through and say whether its open
+    var str = (!!openNow(termHours[moment().format('dddd').toLowerCase()]) ? '<strong class="open">Open now</strong>' : '');
+    if(!!termHours[moment().format('dddd').toLowerCase()].open) {
+        str += '<a href="#" class="show-full-hours">' + termHours[moment().format('dddd').toLowerCase()].from + ' - ' + termHours[moment().format('dddd').toLowerCase()].to + '</a>';
+    } else {
+        str += '<strong>Closed all day.</strong>';
+        if(!!termHours[moment().hour(24).format('dddd').toLowerCase()].open) {
+            str += ' <a href="#" class="show-full-hours">Open tomorrow ' + termHours[moment().hour(24).format('dddd').toLowerCase()].from + ' - ' + termHours[moment().hour(24).format('dddd').toLowerCase()].to + '</a>';
+        }
+    }
+
+    $space.find('.opening-times').append(str);
+} else if (!isClosed(holidayHours)) {
+    //weve got both termtime and holiday hours so display the table
+    $space.find('.opening-times').append(getFullHours());
+} else {
+    //we dont have any data, remove the time icon
+    $space.find('.opening-times').remove();
+}
+
+$('.show-full-hours').on('click', function(event) {
+    event.preventDefault();
+    var fullHours = getFullHours(),
+    $parent = $(this).parent();
+    $parent.find('i').nextAll().remove();
+    $parent.append(fullHours);
+});
+
+function getFullHours() {
+    //do term hours
+    var ret = $('<div />').addClass('opening-grid');
+    var incHolidays = (!!isClosed(holidayHours) ? false : true);
+    if(!!incHolidays) {
+        //show term time header
+        ret.append('<div />').find('div:last').append($('<strong />').html ('Term opening hours'));
+        ret.find('div:last').append($('<div />').append(loopWeek(termHours)));
+    } else {
+        ret.append($('<div />').append(loopWeek(termHours)));
+    }
+    //do term time times
+
+
+    if(incHolidays) {
+        ret.append('<div />').find('div:last').append($('<strong />').html ('Out-of-term opening hours'));
+        ret.find('div:last').append($('<div />').append(loopWeek(holidayHours)));
+    }
+
+    return ret;
+}
+
+function loopWeek(data) {
+    var ret = $('<dl />');
+    for (var i = 0; i < weekOrder.length; i++) {
+        if(data[weekOrder[i]] !== null) {
+            ret.append($('<dt />').html(weekOrder[i]));
+            if(!data[weekOrder[i]].open) {
+                ret.append($('<dd />').html('Closed'));
+            } else if (!!data[weekOrder[i]].allday) {
+                ret.append($('<dd />').html('Open (24 hours)'));
+            } else {
+                ret.append($('<dd />').html(data[weekOrder[i]].from + ' - ' + data[weekOrder[i]].to));
+            }
+        }
+        console.log(weekOrder[i], moment().format('dddd'));
+        if(weekOrder[i] == moment().format('dddd').toLowerCase()) {
+            console.log('add class today');
+            ret.find('dd:last, dt:last').addClass('today');
+        }
+    }
+    return ret;
+}
+
+function openNow(data) {
+    console.log(data);
+    if(!!data.allday) return true;
+    if(!data.open) return false;
+    var nowHour = moment().format('HH'),
+    nowMin = moment().format('mm'),
+    dFrom = data.from.split(':'),
+    dTo = data.to.split(':');
+
+    if(dTo[0] < dFrom[0]) dTo[0] = Number(dTo[0]) + 24;
+    dFrom = moment().hour(dFrom[0]).minute(dFrom[1]);
+    dTo = moment().hour(dTo[0]).minute(dTo[1]);
+
+    return moment().isBetween(dFrom, dTo)
+}
+
+
+function isNull(data) {
+    ret = true;
+    if(data !== null && $.type(data) == 'object') {
+        $.each(data, function(key, value) {
+            if($.type(value) !== 'object') {
+                if(!isNull(value)) ret =  false;
+            } else {
+                if(value !== null) ret = false;
+            }
+        });
+    }
+
+    return ret;
+}
+
+function isClosed(data) {
+    ret = true;
+    $.each(data, function(key, value) {
+        if(!!data[key].open) ret = false;
+    });
+
+    return ret;
+}
+
 
 //close button
 $space.find('.close-view').on('click', function(event) {
@@ -100,44 +221,44 @@ if($space.find('.distance').html() == "") {
 $space.find('.gallery>.gallery-images').width(($space.find('.gallery .image').length * 100) + '%');
 //set up carousel
 var images = $space.find('.gallery-images .image'),
-    currImage = 0;
+currImage = 0;
 //add controls
 if(images.length > 1) {
     $space.find('.gallery-container').append(
         $('<div />')
-            .addClass('gallery-control back disabled')
-            .append('<i class="icon-arrow-left"></i>')
-            .on('click', function(event) {
-                event.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                    currImage--;
-                    $space.find('.gallery-container .gallery-control.forward').removeClass('disabled')
-                    $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
-                    if(currImage - 1 < 0) {
-                        $(this).addClass('disabled');
-                    }
+        .addClass('gallery-control back disabled')
+        .append('<i class="icon-arrow-left"></i>')
+        .on('click', function(event) {
+            event.preventDefault();
+            if(!$(this).hasClass('disabled')) {
+                currImage--;
+                $space.find('.gallery-container .gallery-control.forward').removeClass('disabled')
+                $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
+                if(currImage - 1 < 0) {
+                    $(this).addClass('disabled');
                 }
-            })
+            }
+        })
     ).append(
         $('<div />')
-            .addClass('gallery-control forward ' + (images.length == 1 ? 'disabled' : ''))
-            .append('<i class="icon-arrow-right"></i>')
-            .on('click', function(event) {
-                event.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                    currImage++;
-                    console.log(currImage);
-                    console.log($(images[currImage]).position().left);
-                    $space.find('.gallery-container .gallery-control.back').removeClass('disabled')
-                    $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
+        .addClass('gallery-control forward ' + (images.length == 1 ? 'disabled' : ''))
+        .append('<i class="icon-arrow-right"></i>')
+        .on('click', function(event) {
+            event.preventDefault();
+            if(!$(this).hasClass('disabled')) {
+                currImage++;
+                console.log(currImage);
+                console.log($(images[currImage]).position().left);
+                $space.find('.gallery-container .gallery-control.back').removeClass('disabled')
+                $space.find('.gallery-container .gallery').animate({scrollLeft:$space.find('.gallery-container .gallery').scrollLeft() + $(images[currImage]).position().left}, 300);
 
-                    if(currImage + 1 > images.length - 1) {
-                        $(this).addClass('disabled');
-                    }
-
-
+                if(currImage + 1 > images.length - 1) {
+                    $(this).addClass('disabled');
                 }
-            })
+
+
+            }
+        })
     );
 } else {
     $space.find('.gallery-container').height(0);
@@ -163,7 +284,7 @@ $space.find('.tabs').tabs({
 
 
 var lat = Number(#{lat}),
-    lng = Number(#{lng});
+lng = Number(#{lng});
 
 //set up map
 if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
@@ -197,7 +318,7 @@ if(currView == 'large') {
         map.setZoom(18);
         new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
         setTimeout(function() {
-                points[openPoints[0]].mapSummary.close();
+            points[openPoints[0]].mapSummary.close();
         }, 100)
 
     }
