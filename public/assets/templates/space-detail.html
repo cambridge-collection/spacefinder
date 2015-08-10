@@ -25,7 +25,7 @@
             <section class="section-facts">
                 <h2>Key facts</h2>
                 <ul>
-                    <li><i class="icon-marker"></i><span>#{address}</span></li>
+                    <li><i class="icon-marker"></i><span class="space-address">#{address}</span></li>
                     <li class="opening-times"><i class="icon-time-short"></i><span class="open_now"></span></li>
                 </ul>
             </section>
@@ -71,6 +71,10 @@
 console.log('#space-#{id}');
 var $space = $('#space-#{id}');
 
+if ($space.find('.space-address').html() == '') {
+    $space.find('.space-address').parent().remove();
+}
+
 var termHours = #{term_time_hours(raw)};
 var holidayHours = #{out_of_term_hours(raw)};
 var weekOrder = [
@@ -85,7 +89,14 @@ var weekOrder = [
 
 if(!!isClosed(holidayHours) && !isClosed(termHours)) {
     //we can loop through and say whether its open
-    var str = (!!openNow(termHours[moment().format('dddd').toLowerCase()]) ? '<strong class="open">Open now</strong>' : '');
+    var str = "";
+    var openFrom = moment().hour(termHours[moment().format('dddd').toLowerCase()].from.split(':')[0]).minute(termHours[moment().format('dddd').toLowerCase()].from.split(':')[1]);
+    if(!!openNow(termHours[moment().format('dddd').toLowerCase()])) {
+        str += '<strong class="open">Open now</strong>';
+    } else if (!!termHours[moment().format('dddd').toLowerCase()].open && !!moment().isBefore(openFrom)) {
+        console.log('before');
+        str += '<strong class="open">Open today: </strong>';
+    }
     if(!!termHours[moment().format('dddd').toLowerCase()].open) {
         str += '<a href="#" class="show-full-hours">' + termHours[moment().format('dddd').toLowerCase()].from + ' - ' + termHours[moment().format('dddd').toLowerCase()].to + '</a>';
     } else {
