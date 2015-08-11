@@ -124,6 +124,10 @@
         <%= f.text_field :phone_number %>
       </div>
       <div class="field">
+        <%= f.label :email_address, "Email address" %>
+        <%= f.text_field :email_address %>
+      </div>
+      <div class="field">
         <%= f.label :twitter_screen_name, "Twitter screen name (e.g. @cambridge_uni)" %>
         <%= f.text_field :twitter_screen_name, :value => f.object.twitter_screen_name.nil? ? "" : "@#{f.object.twitter_screen_name.tr('@','')}" %>
       </div>

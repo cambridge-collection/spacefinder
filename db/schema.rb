@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807135629) do
+ActiveRecord::Schema.define(version: 20150811170659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 20150807135629) do
     t.boolean  "work_group"
     t.integer  "term_time_hours_id"
     t.integer  "out_of_term_hours_id"
+    t.string   "email_address"
   end
 
   add_index "spaces", ["access_id"], name: "index_spaces_on_access_id", using: :btree
