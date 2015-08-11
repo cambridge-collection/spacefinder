@@ -18,6 +18,7 @@ space_type_list = [
   "Meeting room",
   "Restaurant",
   "Seminar room",
+  "Other"
 ]
 
 space_type_list.each do |title|
