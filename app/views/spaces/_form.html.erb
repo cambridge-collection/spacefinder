@@ -128,11 +128,11 @@
         <%= f.text_field :email_address %>
       </div>
       <div class="field">
-        <%= f.label :twitter_screen_name, "Twitter screen name (e.g. @cambridge_uni)" %>
+        <%= f.label :twitter_screen_name, "Twitter screen name (e.g. cambridge_uni)" %>
         <%= f.text_field :twitter_screen_name, :value => f.object.twitter_screen_name.nil? ? "" : "@#{f.object.twitter_screen_name.tr('@','')}" %>
       </div>
       <div class="field">
-        <%= f.label :facebook_url, "Facebook page (e.g. https://www.facebook.com/thesnugbar)" %>
+        <%= f.label :facebook_url, "Facebook page name (e.g. thesnugbar)" %>
         <%= f.text_field :facebook_url %>
       </div>
   </div>
@@ -310,7 +310,7 @@
   <div class="header"><span class="title">Tags</span></div>
   <div class="section">
       <div class="field">
-        <%= f.label :tags, "Some tags that might be used to describe this space. Try to choose tags that are distinct from the questions above. Please list them separated by a comma. (e.g. dark, water allowed, busy)" %>
+        <%= f.label :tags, "Some tags that might be used to describe this space. Try to choose tags that are distinct from the questions above. Please list them separated by a comma. (e.g. dark, bottled water only, busy)" %>
         <%= f.text_field :tag_list, value: @space.tag_list.to_s %>
       </div>
   </div>

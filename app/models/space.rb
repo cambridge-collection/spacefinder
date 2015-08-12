@@ -9,14 +9,12 @@ class Space < ActiveRecord::Base
   validates_associated :out_of_term_hours
   
   validates :name, :space_type, :address, :lat, :lng, presence: true
-  validates :facebook_url, format: {with: /\Ahttps?:\/\//, message: "should start with http:// or https://"}, allow_blank: true
-  validates :twitter_screen_name, format: {with: /\A@[\S]+\z/, message: "in format \"@cambridge_uni\""}, allow_blank: true
+  validates :facebook_url, format: {without: /(\Ahttps?:\/\/|facebook.com|\/)/, message: "should be the page name, without the http://facebook.com/"}, allow_blank: true
+  validates :twitter_screen_name, format: {without: /(\A@|twitter.com)/, message: "in format \"cambridge_uni\""}, allow_blank: true
   before_validation do
+    self.twitter_screen_name = self.twitter_screen_name.tr('@', '')
     self.twitter_screen_name = self.twitter_screen_name.strip
     self.facebook_url = self.facebook_url.strip
-  end
-  before_save do
-    self.twitter_screen_name = self.twitter_screen_name.tr('@', '')
   end
 
   belongs_to :access
