@@ -250,6 +250,21 @@ body {
   .back i {
     margin-top: -3px; }
 
+.event-success {
+  text-align: center;
+  margin: 12px 0;
+  border: 1px solid green;
+  padding: 12px; }
+  .event-success p {
+    margin: 0;
+    display: inline-block;
+    color: green; }
+  .event-success [class^='icon-'] {
+    display: inline-block;
+    color: green;
+    text-align: center;
+    margin-right: 6px; }
+
 .container {
   width: 100%;
   max-width: 800px;
