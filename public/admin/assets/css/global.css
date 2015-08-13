@@ -41,8 +41,9 @@
       -moz-transition: all 0.3s linear;
       -o-transition: all 0.3s linear;
       transition: all 0.3s linear; }
-      #top-bar a#search-btn [class^="icon-"]:before {
-        font-size: 1.2rem; }
+      #top-bar a#search-btn [class^="icon-"] {
+        font-size: 1.2rem;
+        margin-right: 0; }
       #top-bar a#search-btn.active {
         border-radius: 4px 4px 0 0;
         background: #F3F3F3;
@@ -269,7 +270,7 @@ h1 > small {
   font-family: 'MyriadPro-Light';
   border: none; }
   .btn.disabled, .btn-inline.disabled {
-    background: #d0d1d1; }
+    background: #e8e8e8; }
 
 .btn-inline {
   display: inline-block;
@@ -308,7 +309,7 @@ h1 > small {
     font-size: 1.4rem;
     text-decoration: none;
     color: #106470;
-    border-right: 1px solid #d0d1d1;
+    border-right: 1px solid #e8e8e8;
     text-align: center; }
     .overview a > span {
       display: block; }
@@ -334,7 +335,7 @@ h1 > small {
       .overview a {
         font-size: 2rem;
         border-right: none;
-        border-bottom: 1px solid #d0d1d1; } }
+        border-bottom: 1px solid #e8e8e8; } }
 
 #spaces {
   width: 100%;
@@ -350,8 +351,8 @@ h1 > small {
   display: flex;
   line-height: 1rem;
   background-color: #F3F3F3;
-  border-top: 1px solid #d0d1d1;
-  border-bottom: 1px solid #d0d1d1;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
   text-transform: uppercase;
   font-size: 1.2rem;
   margin: 6px -12px 6px -12px; }
@@ -362,7 +363,7 @@ h1 > small {
   .header .section-collapse {
     height: 100%;
     padding: 12px 12px;
-    border-left: 1px solid #d0d1d1; }
+    border-left: 1px solid #e8e8e8; }
   .header:first-of-type {
     margin-top: -12px; }
 
@@ -389,7 +390,7 @@ h1 > small {
     width: 100px; }
   .term-times .closed, .term-times .times, .holiday-times .closed, .holiday-times .times {
     background-color: #F3F3F3;
-    border: 1px solid #d0d1d1;
+    border: 1px solid #e8e8e8;
     text-align: center;
     padding-top: 10px;
     margin-bottom: 10px; }
@@ -404,13 +405,38 @@ h1 > small {
 
 input[type=text], input[type=password], input[type=number], textarea {
   -webkit-appearance: none;
-  border: 1px solid #d0d1d1;
+  border: 1px solid #e8e8e8;
   border-radius: 0;
   display: block;
   font-size: 1rem;
   padding: 6px;
   margin: 0;
-  width: 100%; }
+  width: 100%;
+  font-family: 'Myriad Pro', verdana, sans-serif;
+  font-weight: lighter; }
+  input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, textarea:focus {
+    -webkit-outline: none;
+    outline: none;
+    border-color: #00b1c1; }
+
+.pre-fill {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+  background: #FFF;
+  border: 1px solid #e8e8e8; }
+  .pre-fill.focus {
+    border-color: #00b1c1; }
+  .pre-fill span {
+    padding: 6px 6px 0; }
+  .pre-fill input {
+    border: none;
+    padding-left: 0;
+    -webkit-flex-grow: 1;
+    flex-grow: 1; }
+    .pre-fill input:focus {
+      border-color: transparent; }
 
 .edit select {
   display: block; }
@@ -421,9 +447,9 @@ input[type=text], input[type=password], input[type=number], textarea {
 .edit input[type=checkbox] {
   display: none; }
 .edit input[type=checkbox] + [class^="icon-"] {
-  border: 1px solid #d0d1d1;
+  border: 1px solid #e8e8e8;
   padding: 4px 3px;
-  color: #d0d1d1;
+  color: #e8e8e8;
   font-size: 0.8rem;
   margin-right: 6px; }
 .edit input[type=checkbox]:checked + [class^="icon-"] {
@@ -445,7 +471,7 @@ input[type=text], input[type=password], input[type=number], textarea {
   font-family: 'MyriadPro-Light';
   border: none; }
   .btn.disabled, input[type="submit"].disabled, button.disabled, .btn-inline.disabled {
-    background: #d0d1d1; }
+    background: #e8e8e8; }
 
 .btn-inline {
   display: inline-block;
@@ -472,7 +498,7 @@ input[type=text], input[type=password], input[type=number], textarea {
 .tips .tip {
   background-color: #FFF;
   padding: 12px 0;
-  border-bottom: 1px solid #d0d1d1; }
+  border-bottom: 1px solid #e8e8e8; }
   .tips .tip.new {
     background-color: #F3F3F3;
     margin-left: -12px;
@@ -495,7 +521,7 @@ input[type=text], input[type=password], input[type=number], textarea {
     height: 50px;
     background-size: cover;
     background-position: center;
-    background-color: #d0d1d1;
+    background-color: #e8e8e8;
     flex-grow: 0;
     -webkit-flex-grow: 0;
     margin-right: 6px; }
@@ -506,7 +532,7 @@ input[type=text], input[type=password], input[type=number], textarea {
     display: block;
     font-size: 1.2rem; }
   .tips .tip .discipline, .tips .tip .timestamp {
-    color: #838585; }
+    color: #9c9c9c; }
   .tips .tip .timestamp {
     text-align: right;
     min-width: 30px; }

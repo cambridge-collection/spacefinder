@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <script type="text/javascript">
-        showHolidayTimes = false;
+    showHolidayTimes = false;
     </script>
 </head>
 <body>
@@ -222,11 +222,16 @@
                 </div>
                 <div class="field">
                     <label for="space_twitter_screen_name">Twitter screen name</label>
-                    <input type="text" name="space[twitter_screen_name]" id="space_twitter_screen_name" />
+                    <div class="pre-fill">
+                        <span>@</span><input type="text" name="space[twitter_screen_name]" id="space_twitter_screen_name" />
+                    </div>
+
                 </div>
                 <div class="field">
                     <label for="space_facebook_url">Facebook url</label>
-                    <input type="text" name="space[facebook_url]" id="space_facebook_url" />
+                    <div class="pre-fill">
+                        <span>http://www.facebook.com/</span><input type="text" name="space[facebook_url]" id="space_facebook_url" />
+                    </div>
                 </div>
             </div>
             <div class="header"><span class="title">atmosphere</span></div>

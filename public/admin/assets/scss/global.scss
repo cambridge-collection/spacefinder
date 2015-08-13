@@ -249,6 +249,37 @@ input[type=text], input[type=password], input[type=number], textarea {
     padding: 6px;
     margin: 0;
     width: 100%;
+    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-weight: lighter;
+    &:focus {
+        -webkit-outline:none;
+        outline: none;
+        border-color: #00b1c1;
+    }
+}
+
+.pre-fill {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    background: #FFF;
+    border: 1px solid $lowlight;
+    &.focus {
+        border-color: #00b1c1;
+    }
+    span {
+        padding: 6px 6px 0;
+    }
+    input {
+        border: none;
+        padding-left: 0;
+        &:focus {
+            border-color: transparent;
+        }
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+    }
 }
 
 .edit {
