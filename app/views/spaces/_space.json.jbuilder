@@ -4,13 +4,7 @@ end
 
 json.extract! @space, :id, :name, :description, :access, :space_type, :library, :address, :floor, :lat, :lng, :restricted, :restriction, :disabled_access, :url, :phone_number, :email_address, :twitter_screen_name, :facebook_url, :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise, :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets, :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, :work_group, :expensive, :tags, :user_tags, :created_at, :updated_at
 
-json.images [
-  "/assets/data/images/5416627354_3d4e3a5a64_b.jpg", 
-  "/assets/data/images/6322480339_f3d3a72cba_b.jpg", 
-  "/assets/data/images/6918671064_ee0cc56161_b.jpg", 
-  "/assets/data/images/4454391080_f2c4a4f066_o.jpg", 
-  "/assets/data/images/17204888780_6860921a46_c.jpg"
-]
+json.images @space.space_photos.collect{|space_photo| space_photo.photo.url(:resized)}
 
 json.access @space.try(:access).try(:title)
 json.space_type @space.try(:space_type).try(:title)
