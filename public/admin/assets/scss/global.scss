@@ -39,6 +39,15 @@ body {
         padding-top: 0;
     }
 }
+
+.back {
+    float: left;
+
+    i {
+        margin-top: -3px;
+    }
+}
+
 .container {
     width: 100%;
     max-width: 800px;
