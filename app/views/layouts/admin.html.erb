@@ -11,6 +11,11 @@
 <body class="<%= yield :body_class %>">
   
   <nav id="top-bar">
+    <% unless @disable_back_button then %>
+      <%= link_to admin_path, class: "back" do %>
+        <i class="icon-arrow-left"></i>Back
+      <% end %>
+    <% end %>
     <div class="logout"><%= link_to('Logout', users_sign_out_path, :method => :delete) %></div>
   </nav>
   

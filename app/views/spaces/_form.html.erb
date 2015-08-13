@@ -144,11 +144,15 @@
       </div>
       <div class="field">
         <%= f.label :twitter_screen_name, "Twitter screen name (e.g. 'cambridge_uni')" %>
-        <%= f.text_field :twitter_screen_name, :value => f.object.twitter_screen_name.nil? ? "" : "@#{f.object.twitter_screen_name.tr('@','')}" %>
+        <div class="pre-fill">
+          <span>@</span><%= f.text_field :twitter_screen_name %>
+        </div>
       </div>
       <div class="field">
         <%= f.label :facebook_url, "Facebook page name (e.g. 'thesnugbar' or 'pages/Central-Library-Cambridge/106156113195')" %>
-        <%= f.text_field :facebook_url %>
+        <div class="pre-fill">
+          <span>http://www.facebook.com/</span><%= f.text_field :facebook_url %>
+        </div>
       </div>
   </div>
   <div class="header"><span class="title">atmosphere</span></div>

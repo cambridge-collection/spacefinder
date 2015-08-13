@@ -1,9 +1,15 @@
 
 //= require jquery
-//= require jquery_nested_form
 
 $().ready(function () {
     showHolidayTimes = null;
+    $('.pre-fill input').on('focus', function(event) {
+        event.preventDefault();
+        $(this).parent().addClass('focus')
+    }).on('blur', function(event) {
+        event.preventDefault();
+        $(this).parent().removeClass('focus')
+    });
     $('#edit-space-link').on('click', function(event) {
         event.preventDefault();
         var $this = $(this);
