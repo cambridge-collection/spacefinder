@@ -16,19 +16,27 @@
             font-size: 1rem;
 
             &::-webkit-input-placeholder {
-                color: $fontColor;
+                color: lighten($fontColor, 50%);
+                font-style: italic;
+                font-size: 0.9rem;
             }
 
             &:-moz-placeholder { /* Firefox 18- */
-                color: $fontColor;
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
             }
 
             &::-moz-placeholder {  /* Firefox 19+ */
-                color: $fontColor;
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
             }
 
             &:-ms-input-placeholder {
-                color: $fontColor;
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
             }
         }
     }
@@ -123,7 +131,13 @@
 
     }
 
+    #clear-search {
+        font-size: 0.9rem;
+        margin-top: 6px;
+    }
+
     .search-button {
+        cursor: pointer;
         position: fixed;
         bottom: 0;
         left: 0;

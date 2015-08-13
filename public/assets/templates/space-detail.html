@@ -2,7 +2,7 @@
     <div class="title">
         <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
         <h1>#{name}</h1>
-        <small><span class="distance">#{distance}</span>les away</small>
+        <small><span class="distance">#{distance}</span></small>
     </div>
     <div class="gallery-container">
         <div class="gallery">
@@ -48,7 +48,8 @@
                 <dl>
                     <dt>Website:</dt><dd><a href="#{url}" title="#{name}">#{url}</a></dd>
                     <dt>Phone:</dt><dd><a href="tel:#{phone_number}" title="call now">#{phone_number}</a></dd>
-                    <dt>Twitter:</dt><dd><a href="https://twitter.com/#{twitter_screen_name}" title="#{twitter_screen_name}">#{twitter_screen_name}</a></dd>
+                    <dt>Email:</dt><dd><a class="email-address" href="mailto:#{email_address}">#{email_address}</a></dd>
+                    <dt>Twitter:</dt><dd><a href="https://twitter.com/#{twitter_screen_name}" title="#{twitter_screen_name}">@#{twitter_screen_name}</a></dd>
                     <dt>Facebook:</dt><dd><a href="https://facebook.com/#{facebook_url}" title="#{facebook_url}">#{facebook_url}</a></dd>
                 </dl>
             </section>
@@ -75,6 +76,18 @@ if ($space.find('.space-address').html() == '') {
     $space.find('.space-address').parent().remove();
 }
 
+if ($space.find('.email-address').html() == '') {
+    $space.find('.email-address').parent().prev().remove().end().remove();
+}
+
+$('li.tag').off('click').on('click', function(event) {
+    event.preventDefault();
+    $this = $(this);
+    $('#search').find('input[type="text"]').val($('#search').find('input[type="text"]').val() + " " + $this.html());
+    $('#search').find('.search-button').trigger('click');
+    window.location.hash = '/list';
+});;
+
 var termHours = #{term_time_hours(raw)};
 var holidayHours = #{out_of_term_hours(raw)};
 var weekOrder = [
@@ -92,7 +105,7 @@ if(!!isClosed(holidayHours) && !isClosed(termHours)) {
     var str = "";
     var openFrom = moment().hour(termHours[moment().format('dddd').toLowerCase()].from.split(':')[0]).minute(termHours[moment().format('dddd').toLowerCase()].from.split(':')[1]);
     if(!!openNow(termHours[moment().format('dddd').toLowerCase()])) {
-        str += '<strong class="open">Open now</strong>';
+        str += '<strong class="open">Open now! </strong>';
     } else if (!!termHours[moment().format('dddd').toLowerCase()].open && !!moment().isBefore(openFrom)) {
         console.log('before');
         str += '<strong class="open">Open today: </strong>';
@@ -212,6 +225,13 @@ function isClosed(data) {
 //close button
 $space.find('.close-view').on('click', function(event) {
     event.preventDefault();
+    setTimeout(function() {
+        var space = findMarkers(points, {'id':#{id}}).spaces[0];
+        if(space.marker !== undefined && space.marker.icon !== undefined) {
+            space.marker.icon.fillColor = inactiveColor;
+            space.marker.setMap(map);
+        }
+    }, 100)
     if(currView == "large") {
         window.location.hash = '/';
         return;
@@ -223,9 +243,25 @@ $space.find('.close-view').on('click', function(event) {
 
 });
 
+if(currView == "small") {
+    $('body').scrollTop(0);
+}
+
 if($space.find('.distance').html() == "") {
     $space.find('.distance').parent().remove();
     $space.find('.title h1').css('margin-top', '10px');
+} else if ($space.find('.distance').html().indexOf('ft') !== -1) {
+    if (parseFloat("#{distance}") == 1) {
+        $space.find('.distance').html(parseFloat("#{distance}") + ' foot away');
+    } else {
+        $space.find('.distance').html(parseFloat("#{distance}") + ' feet away');
+    }
+} else {
+    if (parseFloat("#{distance}") == 1) {
+        $space.find('.distance').html(parseFloat("#{distance}") + ' mile away');
+    } else {
+        $space.find('.distance').html(parseFloat("#{distance}") + ' miles away');
+    }
 }
 
 //set up gallery
@@ -325,13 +361,14 @@ if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
 if(currView == 'large') {
     $space.find('a[href=#map-#{id}]').parent('li').hide(0);
     if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
-        map.setCenter({'lat':lat, 'lng':lng});
+        var space = findMarkers(points, {'id':#{id}}).spaces[0];
+        openPoints.push(space._jsid);
+        console.log(lat, lng);
+        systemEvent = true;
         map.setZoom(18);
-        new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
-        setTimeout(function() {
-            points[openPoints[0]].mapSummary.close();
-        }, 100)
-
+        systemEvent = true;
+        map.setCenter({'lat':lat, 'lng':lng});
+        space.marker.icon.fillColor = activeColor;
     }
 }
 
@@ -348,8 +385,16 @@ function loadTips() {
         if(data.length > 0) {
             $space.find('.tip').remove();
             $(data).each(function(index) {
-                var val = parseTemplate('spaceTip', data[index]);
-                $space.find('.tips-container').append(val);
+                var $val = $(parseTemplate('spaceTip', data[index]));
+                $space.find('.tips-container').append($val);
+                var $response = $space.find('.tip.response:last');
+                console.log($response.find('.comment').html());
+                if($response.find('.comment').html() == '') {
+                    $response.remove();
+                    $space.find('.tip:last').addClass('no-response');
+                }
+
+
             });
             $space.find('.tip').each(function () {
                 $(this).find('.timestamp').html(moment($(this).find('.timestamp').html(), "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]").fromNow());
@@ -365,7 +410,7 @@ loadTips();
 
 //tips
 
-$space.find('.add-tip').on('click', function(event) {
+$space.find('.add-tip').off('click').on('click', function(event) {
     console.log('load tip screen');
     event.preventDefault();
     space = findMarkers(points, {'id':#{id}}).spaces[0];
@@ -384,7 +429,7 @@ $space.find('.add-tip').on('click', function(event) {
 
 //tags
 
-$space.find('.add-tag').on('click', function(event) {
+$space.find('.add-tag').off('click').on('click', function(event) {
     console.log('load tag screen');
     event.preventDefault();
     space = findMarkers(points, {'id':#{id}}).spaces[0];
@@ -401,12 +446,13 @@ $space.find('.add-tag').on('click', function(event) {
     });
 });
 
-$(window).on('layout', function(event) {
+$(window).off('layout').on('layout', function(event) {
     event.preventDefault();
     console.log('change layout ' + currView);
     if(currView == 'large') {
         $space.find('a[href=#map-#{id}]').parent('li').hide(0);
         if(lat !== null && lng !== null && lat !== 0 && lng !== 0) {
+            systemEvent = true;
             map.setCenter({'lat':lat, 'lng':lng});
             //map.setZoom(18);
             new google.maps.event.trigger(findMarkers(points, {'id':#{id}}).spaces[0].marker, 'click' );
@@ -417,5 +463,27 @@ $(window).on('layout', function(event) {
         $space.find('a[href=#map-#{id}]').parent('li').show(0);
         //$space.find('.tabs>ul').sticky({topSpacing:$space.find('.title').outerHeight()});
     }
+});
+$(window).off('event_success').on('event_success', function(event, options) {
+    console.log(options);
+    var display = $('<div />')
+    .addClass('event-success')
+    .append('<i class="icon-tick"></i>')
+    .append('<p>' + options.message + '</p>');
+
+    if(options.type == 'tag') {
+        $space.find('.section-tags h2').after(display);
+        $space.scrollTop($space.find('.section-tags h2').position().top);
+    } else if(options.type == 'tip') {
+        $space.find('.btn.add-tip').after(display);
+        $space.scrollTop($space.find('.btn.add-tip').position().top);
+    }
+
+    window.setTimeout(function() {
+        display.slideUp(300, function() {
+            display.remove();
+        })
+    }, 3000)
+    /* Act on the event */
 });
 </script>

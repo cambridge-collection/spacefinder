@@ -44,6 +44,8 @@
 
 
         &[type=submit] {
+            font-family: "Myriad Pro", verdana, sans-serif;
+            font-weight: lighter;
             @extend .btn;
         }
     }
