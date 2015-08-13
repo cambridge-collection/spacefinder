@@ -8,4 +8,8 @@
     $bubble = $('#bubble-#{id}');
     console.log('loaded bubble');
     console.log($bubble);
+
+    if($bubble.find('ul li').length > 3) {
+        $bubble.find('ul li:nth-child(3)').nextAll('li').slideUp(300);
+    }
 </script>

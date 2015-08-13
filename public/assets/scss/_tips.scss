@@ -40,8 +40,31 @@
     }
 
     .space-summary {
-        padding: 12px;
+        margin: 12px;
         background-color: $lightBackgroundColor;
+        padding-right: 6px;
+        h2 {
+            padding-top: 6px;
+            border-bottom: none;
+            margin-bottom: 6px;
+        }
+        p {
+            margin: 0;
+        }
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+
+        .space-image {
+            min-width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 12px;
+            justify-content: space-around;
+            align-items: stretch;
+        }
 
     }
 

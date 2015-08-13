@@ -1,32 +1,35 @@
 
-    <div class="title">
-        <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
-        <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
-    </div>
-    <div class="space-summary">
+<div class="title">
+    <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
+    <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
+</div>
+<div class="space-summary">
+    #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+    <div>
         <h2>#{name}</h2>
         <p>#{description(limit="100")}</p>
     </div>
+</div>
 
-    <div class="tag-form-container">
-        <h2>Add a tag</h2>
+<div class="tag-form-container">
+    <h2>Add a tag</h2>
 
-        <section class="section-tags">
-            <p>current tags</p>
-            <ul>
-                #{admin_tag_list[<li class="tag admin #{attr}">#{value}</li>]}
-                #{user_tags_list[<li class="tag #{attr}">#{value}</li>]}
-            </ul>
-        </section>
-
-        <section class="section-new">
-            <input type="text" id="new-tag" placeholder="tag name" /><a href="#" class="btn-inline new-tag disabled">Add</a>
-        </section>
-        <ul class="new-tags-list">
-
+    <section class="section-tags">
+        <p>current tags</p>
+        <ul>
+            #{admin_tag_list[<li class="tag admin #{attr}">#{value}</li>]}
+            #{user_tags_list[<li class="tag #{attr}">#{value}</li>]}
         </ul>
-        <a href="#" class="btn tag-submit disabled">Add tag</a>
-    </div>
+    </section>
+
+    <section class="section-new">
+        <input type="text" id="new-tag" placeholder="tag name" /><a href="#" class="btn-inline new-tag disabled">Add</a>
+    </section>
+    <ul class="new-tags-list">
+
+    </ul>
+    <a href="#" class="btn tag-submit disabled">Add tag</a>
+</div>
 
 <script type="text/javascript">
 $tags = $('#tag-#{id}');
@@ -103,9 +106,20 @@ $tags.find('.tag-submit').on('click', function(event) {
             data += '&tags[]=' + $(this).data('tag-value');
         });
         $.post('https://uoc-spacefinder.herokuapp.com/spaces/#{id}/tags?callback=?', data)
-            .done(function(data) {
-                $tags.find('.close-view').trigger('click');
-            });
+        .done(function(data) {
+            $tags.find('.close-view').trigger('click');
+            $(window).trigger('event_success', {
+                type: 'tag',
+                message: 'Your tags have been successfully submitted.'
+            })
+        })
+        .error(function() {
+            $tags.find('.close-view').trigger('click');
+            $(window).trigger('event_success', {
+                type: 'tag',
+                message: 'Your tags have been successfully submitted.'
+            })
+        });
     }
 
 });

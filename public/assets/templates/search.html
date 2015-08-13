@@ -1,5 +1,6 @@
 <div class="search-text">
-    <input type="text" id="search_query" name="filters[search_query]" placeholder="Search for a space, keyword or tag" />
+    <input type="text" id="search_query" name="filters[search_query]" placeholder="Search for a space or keyword" />
+    <a id="clear-search" class="btn secondary">Clear all</a>
 </div>
 <ul>
     <li><div class="header"><span class="title">I want to work...</span></div>
@@ -22,11 +23,11 @@
             #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
         </ul>
     </li>
-    <li><div class="header"><span class="title">Tags</span></div>
+    <!--li><div class="header"><span class="title">Tags</span></div>
         <ul id="search-tags">
-            #{tags[<li class="filter-option tag #{name(attr="_")}" data-id=" #{id}"><div><i class="icon-tick"></i><p>#{name}</p></div></li>]}
+            #{tags[<li class="filter-option #{name(attr="_")}" data-id="#{name}"><div><i class="icon-tick"></i><p>#{name}</p></div></li>]}
         </ul>
-    </li>
+    </li-->
 </ul>
 <a class="btn search-button"><i class="icon-search"></i>Search</a>
 
@@ -34,7 +35,14 @@
     $('.filter-option').on('click', function(event) {
         event.preventDefault();
         $(this).toggleClass('active');
-        /* Act on the event */
+        $('.search-button').click();
+    });
+
+    $("#clear-search").on('click', function(event) {
+        event.preventDefault();
+        $('#search_query').val('');
+        $('.filter-option').removeClass('active');
+        $('.search-button').click();
     });
 
     $('.header').parents('li').addClass('expanded').end().append(
@@ -49,21 +57,29 @@
                 //collapse
                 //$(this).text('expand');
                 $(this).find('i').removeAttr('class').addClass('icon-arrow-up');
-                $(this).parents('li').find('>ul:first-of-type').slideUp(300);
+                $(this).parents('li').find('>ul:first-of-type').stop().slideUp(300);
             } else {
                 //expand
                 //$(this).text('collapse');
                 $(this).find('i').removeAttr('class').addClass('icon-arrow-down');
-                $(this).parents('li').find('>ul:first-of-type').slideDown(300);
+                $(this).parents('li').find('>ul:first-of-type').stop().slideDown(300);
             }
             $(this).toggleClass('expanded');
             $(this).parents('li').toggleClass('expanded');
         })
     );
 
+    $('#search_query').on('keyup', function(event) {
+        event.preventDefault();
+        if(event.keyCode == 13) {
+            $('.search-button').trigger('click');
+            $(this).blur();
+        }
+    });
+
     $('.search-button').on('click', function(event) {
-        var $search = $(this),
-            initText = $search.html();
+        console.log(event);
+        var $search = $(this);
         event.preventDefault();
         $search.height($search.height());
         $search.html('<i class="icon-loading"></i>');
@@ -80,8 +96,17 @@
                 } else {
                     window.location.hash = '/';
                 }*/
-                window.location.hash = '/list';
-                $search.html(initText);
+
+                if (event.isTrigger == undefined) {
+                    console.log('trigger - ', event.isTrigger);
+                    window.location.hash = '/list';
+                }
+
+                $search.html('<i class="icon-search"></i>Search');
+                if(map !== null && map !== undefined) {
+                    map.setZoom(currentZoom);
+                    map.setCenter(currentLoc);
+                }
             }
         })
     });
@@ -98,7 +123,7 @@
             query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
         });
         $('#search-tags .active').each(function(index, el) {
-            query += '&filters[with_tag_ids][]=' + $(this).data('id');
+            query += '&filters[with_tag_names][]=' + $(this).data('id');
         });
         $('#search-noise .active').each(function(index, el) {
             query += '&filters[with_noise_ids][]=' + $(this).data('id');

@@ -1,5 +1,11 @@
 .space-container {
     min-height: 100vh;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 30;
 }
 .space {
     background: #FFF;
@@ -21,7 +27,7 @@
 
     .title {
         background:$barColor;
-        position: fixed;
+        //position: fixed;
         min-height: $navHeight;
         top: 0;
         left: 0;
@@ -172,6 +178,15 @@
                         display: block;
                         margin-bottom: 6px;
                     }
+
+                    @media screen and (max-width:450px) {
+                        -webkit-flex-flow: column;
+                        flex-flow: column;
+
+                        &>div:last-child {
+                            margin-top: 18px;
+                        }
+                    }
                 }
             }
             &.section-contact {
@@ -188,6 +203,7 @@
                     font-style: normal;
                     color: #000;
                     text-align: right;
+                    min-width: 55px;
                     width: 55px;
                     margin-right: 6px;
 
@@ -219,7 +235,7 @@
                     font-weight: normal;
                     font-size: 0.8rem;
                     color: #FFF;
-
+                    cursor: pointer;
                 }
             }
             &.section-facilities {
@@ -325,7 +341,26 @@
 
     .tip {
         padding: 12px 0;
-        border-top: 1px solid $lowlight;
+        border-bottom: 1px solid $lowlight;
+
+        &.no-response, &.response {
+            border-color: #c4c4c4;
+            margin-bottom: 6px;
+        }
+
+        &.response {
+            background-color: $lightBackgroundColor;
+            padding-left: 12px;
+            .avatar {
+                width: 38px;
+                height: 38px;
+            }
+
+            .comment {
+                padding: 0;
+                color: darken($lowlight, 30%);
+            }
+        }
 
         &:before {
             border-top: none;
@@ -387,4 +422,25 @@
             }
         }
     }
+}
+
+.event-success {
+    text-align: center;
+    margin: 12px 0;
+    border: 1px solid green;
+    padding: 12px;
+
+    p {
+        margin: 0;
+        display: inline-block;
+        color: green;
+    }
+
+    [class^='icon-'] {
+        display: inline-block;
+        color: green;
+        text-align: center;
+        margin-right: 6px;
+    }
+
 }

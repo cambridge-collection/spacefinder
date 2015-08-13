@@ -5,7 +5,7 @@
     <div class="space-details">
         #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
         <div>
-            <p class="description">#{description(limit="100")}</p>
+            <p class="description">#{description}</p>
 
             #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>](limit="5")}
             <!--a href="#{link}" title="#{name}">View details</a-->
@@ -13,49 +13,3 @@
 
     </div>
 </div>
-
-<script type="text/javascript">
-$('.list-space>h2>.library').each(function(index, el) {
-    var $address = $(this).next('.address');
-    if($(this).html() == "")  {
-        if($address.length > 0 && $address.html() !== '') {
-            $address.removeClass('hidden').html($address.html().split(/\r\n|\r|\n|,/g)[0]);
-            $(this).remove();
-        }
-    } else {
-        $address.remove();
-    }
-});
-$('.list-space').each(function () {
-    $(this).hover(function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        if(!$(this).hasClass('hover')) {
-            $(this).addClass('hover')
-            var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
-            if(space.marker !== undefined && space.marker.icon !== undefined) {
-                space.marker.icon.fillColor = activeColor;
-                space.marker.setMap(map);
-            }
-        }
-
-        /* Act on the event */
-    }, function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        if(!!$(this).hasClass('hover')) {
-            $(this).removeClass('hover')
-            var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
-            if(space.marker !== undefined && space.marker.icon !== undefined) {
-                space.marker.icon.fillColor = inactiveColor;
-                space.marker.setMap(map);
-            }
-
-        }
-    }).on('click', function(event) {
-        event.preventDefault();
-        window.location.hash = $(this).data('link');
-        /* Act on the event */
-    });;
-})
-</script>

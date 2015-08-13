@@ -2,7 +2,7 @@ var map,
 $list = $('#list'),
 openPoints = [],
 loc = {'lat':52.205575, 'lng':0.121682},
-userLoc = {'lat':0, 'lng':0},
+userLoc = {'lat':0, 'lng':0}, //52.2050683,0.1077597
 userDetails = null,
 getLocation = true,
 centerOnLocation = false,
@@ -11,9 +11,13 @@ listScroll = 0,
 currView = 'small',
 currWidth = 0,
 loginWindow,
+currentZoom = 14,
+currentLoc = loc,
+systemEvent = false,
+spacesRequest = null,
 mapOptions = {
     center: loc,
-    zoom: 14,
+    zoom: 20,
     disableDefaultUI: true,
     zoomControl: true,
     zoomControlOptions: {
@@ -84,7 +88,7 @@ $().ready(function() {
     $('#search-btn').on('click touchstart', function(event) {
         if(currView == 'large') {
             event.preventDefault();
-            console.log('search clicked');
+            //console.log('search clicked');
             if($(this).hasClass('active')) {
                 $('#search').hide(0);
                 $(this).removeClass('active')
@@ -92,12 +96,18 @@ $().ready(function() {
                 $('#search').show(0);
                 $(this).addClass('active')
             }
+            $('div[id^=space-]').css({
+                'left': $list.offset().left,
+                'width': $list.width()
+            });
+            systemEvent = true;
+            google.maps.event.trigger(map, 'resize')
         }
     });
 
     var startView = initialView;
     $(window).on('hashchange', function(Event) {
-        console.log('hashchange');
+        //console.log('hashchange');
         if (Event.originalEvent.oldURL !== undefined) {
             oldView = Event.originalEvent.oldURL.split('#')[1];
         } else {
@@ -105,7 +115,7 @@ $().ready(function() {
                 oldView = currViewHash
             }
         }
-
+        console.log(oldView);
         currViewHash = view = window.location.hash.substr(1);
         if(view.substr(0,1) != '/') {
             return false;
@@ -113,6 +123,7 @@ $().ready(function() {
             window.location.hash = '/' + initialView;
         }
         view = view.substr(1);
+        console.log('switch view - ' + view);
         switchView(view);
     });
 
@@ -128,14 +139,13 @@ $().ready(function() {
     loadTemplates({
         data: templates,
         callback: function() {
-            if ("geolocation" in navigator && !!getLocation) {
+            if ("geolocation" in navigator && !!getLocation && userLoc.lat == 0 && userLoc.lng == 0) {
+                //console.log('get user location');
                 navigator.geolocation.getCurrentPosition(function(position) {
                     userLoc.lat = position.coords.latitude;
                     userLoc.lng = position.coords.longitude;
                     //set the center of the map on users current location
-                    if(!!centerOnLocation) {
-                        map.setCenter(userLoc);
-                    }
+
                     loadSpaces({
                         callback:function() {
                             switchView(startView);
@@ -148,6 +158,10 @@ $().ready(function() {
                             switchView(startView);
                         }
                     });
+                }, {
+                    enableHighAccuracy: false,
+                    timeout: 5000,
+                    maximumAge: 0
                 });
             } else {
                 loadSpaces({
@@ -177,8 +191,10 @@ $().ready(function() {
     });
 
     $(window).on('resize', function(event) {
+        systemEvent = true;
         event.preventDefault();
         currWidth = $(window).width();
+        $('div[id^=space-]').width($list.width()).css('left', $list.offset().left);
         if(currWidth < 1000 && currView !== 'small') {
             resizeForMobile();
             $(window).trigger('layout');
@@ -186,6 +202,16 @@ $().ready(function() {
             resizeForDesktop();
             $(window).trigger('layout');
         }
+        if(map !== undefined && openPoints.length == 0) {
+
+            if(!!centerOnLocation) {
+                map.setCenter(userLoc);
+            } else {
+                map.setCenter(loc);
+            }
+
+        }
+
     });
 
     $(window).trigger('resize');
@@ -199,7 +225,7 @@ $().ready(function() {
 
     $(window).on('login_success', function(event) {
         event.preventDefault();
-        console.log('login successful');
+        //console.log('login successful');
         $('.login-screen').fadeOut(300, function() {
             $(this).remove();
         });
@@ -210,36 +236,33 @@ function resizeForMobile() {
     currView = 'small';
     $('body').removeClass('large_view')
     $('#top-bar').find('a[href!="#/search"]').show(0);
-    $('#search-btn').removeClass('active')
+    $('#search-btn').removeClass('active');
+    $('div[id^=space-]').css('margin-top', '0');
 }
 function resizeForDesktop() {
     currView = 'large';
     $('body').addClass('large_view')
     $('#top-bar').find('a[href!="#/search"]').hide(0);
     $('#map').show(0);
-    if($('.space-container').length == 0) {
-        $('#list').show(0);
-    } else {
-        $('#list').hide(0);
-    }
     $('#search-btn').addClass('active');
     $('#search').show();
+    $('div[id^=space-]').css('margin-top', $('#top-bar').outerHeight());
     if(map !== undefined) {
-        map.setZoom(14);
+        /*map.setZoom(14);
         if(openPoints.length > 0) {
-            for (var i = 0; i < openPoints.length; i++) {
-                points[openPoints[i]].mapSummary.close();
-                points[openPoints[i]].marker.icon.fillColor = inactiveColor;
-                points[openPoints[i]].marker.setMap(map);
-                openPoints.splice(i, 1);
-            }
-        }
-        if(!!centerOnLocation) {
-            map.setCenter(userLoc);
-        } else {
-            map.setCenter(loc);
-        }
+        for (var i = 0; i < openPoints.length; i++) {
+        points[openPoints[i]].mapSummary.close();
+        points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+        points[openPoints[i]].marker.setMap(map);
+        openPoints.splice(i, 1);
     }
+}
+if(!!centerOnLocation) {
+map.setCenter(userLoc);
+} else {
+map.setCenter(loc);
+}*/
+}
 
 }
 
@@ -250,8 +273,11 @@ function switchView(newView, modal) {
     }
     if(newView == undefined) newView = initialView;
     closeSpaces();
+    if(currView == 'small') $('.view-container').css('position', '');
+    //console.log('new view = ' + newView);
     if(newView.indexOf('/') == -1 && $('#' + newView).length > 0) {
         if(currView == 'small') {
+            console.log(newView);
             $('.view-container').css('display', 'none');
             $('a').removeClass('active');
             $('a[href="#/' + newView + '"]').addClass('active');
@@ -267,6 +293,7 @@ function switchView(newView, modal) {
                     }
                     if(!mapViewed) {
                         mapViewed == true;
+                        systemEvent = true;
                         if(!!centerOnLocation) {
                             map.setCenter(userLoc);
                         } else {
@@ -282,26 +309,17 @@ function switchView(newView, modal) {
                     if (newView == 'map') {
                         if(openPoints.length > 0) {
                             new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
-                            map.setZoom(14);
+                            systemEvent = true;
+                            map.setZoom(currentZoom);
                         }
                     }
                 }
             });
-        } else {
-
-            if(!mapViewed) {
-                mapViewed == true;
-                if(!!centerOnLocation) {
-                    map.setCenter(userLoc);
-                } else {
-                    map.setCenter(loc);
-                }
-            }
         }
     } else {
 
         if(newView.indexOf('space') !== -1) {
-            if(currView == 'small') $('.view-container').css('display', 'none');
+            if(currView == 'small') $('.view-container').css('position', 'fixed');
             var parts = newView.split('/');
             loadSpace({
                 'id': parts[1],
@@ -314,6 +332,14 @@ function switchView(newView, modal) {
             $(this).remove();
         });
     }
+    /*if(!mapViewed) {
+    mapViewed == true;
+    if(!!centerOnLocation) {
+    map.setCenter(userLoc);
+} else {
+map.setCenter(loc);
+}
+}*/
 }
 
 function loadSpace(options) {
@@ -346,51 +372,85 @@ function loadSpace(options) {
 
         //load the space and show it;
     } else {
-        console.log('too many spaces with same ID returned');
+        //console.log('too many spaces with same ID returned');
     }
 
 }
 
 function showSpace(data) {
     var space = $('<div />')
-    .css('display', 'none')
+    .css({'margin-top':$(window).height()})
     .attr('id', 'space-' + data.id)
     .addClass('space-container')
     .append(parseTemplate('spaceDetail', data))
     .insertAfter('#list')
-    .fadeIn(300);
+    //.fadeIn(300)
+
 
     if(currView == 'large') {
-        $('#list').css('display', 'none');
+        //$('#list').css('display', 'none');
+        space.width($list.width()).css('left', $list.offset().left);
+        space.animate({'margin-top': $('#top-bar').outerHeight(true)}, 300);
+    } else {
+        space.animate({'margin-top': 0}, 300, function() {
+            space.find('.title').css('position', 'fixed');
+            space.css('overflow', 'auto');
+        });
     }
 }
 
 function closeSpaces() {
-    $('div[id^=space-]').fadeOut(300, function() {
+    var spaces = $('div[id^=space-]');
+    spaces.css('overflow', 'hidden').find('.title').removeAttr('style');
+    $('div[id^=space-]').animate({'margin-top' : $(window).height()}, 300, function() {
         $(this).remove();
+        if(currView == 'large')$('#list').css('display', 'block');
     });
-    if(currView == 'large') {
-        $('#list').css('display', 'block');
-        map.setZoom(14);
-        if(openPoints.length > 0) {
-            for (var i = 0; i < openPoints.length; i++) {
-                points[openPoints[i]].mapSummary.close();
-                points[openPoints[i]].marker.icon.fillColor = inactiveColor;
-                points[openPoints[i]].marker.setMap(map);
-                openPoints.splice(i, 1);
-            }
-        }
-        if(!!centerOnLocation) {
-            map.setCenter(userLoc);
-        } else {
-            map.setCenter(loc);
+
+    if(openPoints.length > 0) {
+        for (var i = 0; i < openPoints.length; i++) {
+            if(points[openPoints[i]].mapSummary !== undefined) points[openPoints[i]].mapSummary.close();
+            points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+            points[openPoints[i]].marker.setMap(map);
+            openPoints.splice(i, 1);
         }
     }
+
+    systemEvent = true;
+    map.setZoom(currentZoom);
+    systemEvent = true;
+    map.setCenter(currentLoc);
 }
 
 function resetViews() {
+    mapOptions.center = currentLoc;
+    mapOptions.zoom = currentZoom;
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     $('#list').html('');
+
+    google.maps.event.addListener(map, 'center_changed', function(e) {
+        if(!systemEvent && $('div[id^=space-]').length == 0) {
+            //console.log('non system event fired - center');
+            var newCenter = map.getCenter();
+            currentLoc.lat = newCenter.G;
+            currentLoc.lng = newCenter.K;
+        }
+
+        setTimeout(function() {
+            systemEvent = false;
+        }, 300);
+    });
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+        if(!systemEvent && $('div[id^=space-]').length == 0) {
+            //console.log('non system event fired - bounds');
+            currentZoom = map.getZoom();
+            pointsInView();
+        }
+        setTimeout(function() {
+            systemEvent = false;
+        }, 300);
+
+    });
 }
 
 function loadSpaces(options) {
@@ -402,7 +462,12 @@ function loadSpaces(options) {
     /*----load spaces-----*/
 
     resetViews();
-    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces.json?callback=?', {
+    console.log(spacesRequest);
+    if (spacesRequest  && spacesRequest.readyState != 4) {
+        console.log('abort request');
+        spacesRequest.abort();
+    }
+    spacesRequest = $.ajax('https://uoc-spacefinder.herokuapp.com/spaces.json?callback=?', {
         cache:false,
         dataType:'json',
         method:'GET',
@@ -423,6 +488,7 @@ function loadSpaces(options) {
         }
 
         if(!!getLocation) {
+            //console.log('get distance');
             $.each(points, function(key, value) {
 
                 if(points[key].lat !== null && points[key].lng !== null) {
@@ -434,6 +500,7 @@ function loadSpaces(options) {
                                 loadSearch();
 
                             }
+                            orderSpaces();
                             loadMap();
                             loadList();
 
@@ -449,6 +516,7 @@ function loadSpaces(options) {
                             loadSearch();
 
                         }
+                        orderSpaces();
                         loadMap();
                         loadList();
                         if(typeof(defaults.callback) == 'function') {
@@ -466,6 +534,7 @@ function loadSpaces(options) {
                 loadSearch();
 
             }
+            orderSpaces();
             loadMap();
             loadList();
             if(typeof(defaults.callback) == 'function') {
@@ -497,7 +566,7 @@ function loadSearch() {
         method:'GET'
     })
     .done(function(data) {
-        console.log('loaded search');
+        //console.log('loaded search');
         $('#search').append(parseTemplate('search', data));
     })
 }
@@ -598,10 +667,8 @@ function loadMap(options) {
         points[key].mapSummary = infowindow;
         marker.setMap(map);
 
-
-
-
         google.maps.event.addListener(marker, 'click', function() {
+            systemEvent = true;
             if(openPoints.length > 0) {
                 for (var i = 0; i < openPoints.length; i++) {
                     points[openPoints[i]].mapSummary.close();
@@ -612,13 +679,17 @@ function loadMap(options) {
             }
             if($('#bubble-' + points[key].id).length == 0) {
                 setTimeout(function() {
+                    systemEvent = true;
                     var parent = $('#bubble-' + points[key].id).parent();
                     $('#bubble-' + points[key].id).remove();
-                    parent.css('max-width', $('#map').width() * 0.7);
+                    parent.parents('.infoBubble').css('width', $('#map').width() * 0.8);
                     points[key].mapSummary.open();
                     $(parent).append(parseTemplate(points[key].template, points[key]));
-                    //points[key].mapSummary.maxWidth = $('#map').width() * 0.9;
+                    parent.parents('.infoBubble').css('width', $('#map').width() * 0.8);
                 }, 100);
+            } else {
+                var parent = $('#bubble-' + points[key].id).parent();
+                parent.parents('.infoBubble').css('width', $('#map').width() * 0.8);
             }
 
 
@@ -657,7 +728,60 @@ function loadList(options) {
 
     });
 
+    $('.list-space>h2>.library').each(function(index, el) {
+        var $address = $(this).next('.address');
+        if($(this).html() == "")  {
+            if($address.length > 0 && $address.html() !== '') {
+                $address.removeClass('hidden').html($address.html().split(/\r\n|\r|\n|,/g)[0]);
+                $(this).remove();
+            }
+        } else {
+            $address.remove();
+        }
+    });
+    $('.list-space').each(function () {
+        var desc = $(this).find('.description').html();
+        //console.log(desc);
+        //$(this).find('.description').html(desc.substr(0, desc.lastIndexOf(' ')) + '...');
+        $(this).hover(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if(!$(this).hasClass('hover')) {
+                $(this).addClass('hover')
+                var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
+                if(space.marker !== undefined && space.marker.icon !== undefined) {
+                    space.marker.icon.fillColor = activeColor;
+                    space.marker.setMap(map);
+                }
+            }
 
+            /* Act on the event */
+        }, function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if(!!$(this).hasClass('hover')) {
+                $(this).removeClass('hover')
+                var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
+                if(!$(this).hasClass('clicked')) {
+                    if(space.marker !== undefined && space.marker.icon !== undefined) {
+                        space.marker.icon.fillColor = inactiveColor;
+                        space.marker.setMap(map);
+                    }
+                }
+
+            }
+        }).on('click', function(event) {
+            event.preventDefault();
+            $this = $(this);
+            $this.addClass('clicked')
+            setTimeout(function() {
+                $this.removeClass('clicked');
+            }, 400);
+            $this.trigger('mouseout')
+            window.location.hash = $(this).data('link');
+            /* Act on the event */
+        });;
+    })
 
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
@@ -806,7 +930,7 @@ function convertToValue(t, data, options) {
     } else if($.type(data) == 'object') {
         var temp = t;
         if(!!options.raw) {
-            console.log(data);
+            //console.log(data);
             return JSON.stringify(data);
         }
         if(options.value !== null) {
@@ -870,6 +994,7 @@ function searchArray(haystack, needle) {
 }
 
 function getDistance(origin, dest, callback) {
+    //console.log('get distance()');
     var service = new google.maps.DistanceMatrixService();
     if($.type(origin) !== 'array') {
         var temp = [];
@@ -904,8 +1029,8 @@ function getDistance(origin, dest, callback) {
 }
 
 function loginCallback(response) {
-    console.log('login callback success');
-    console.log(response);
+    //console.log('login callback success');
+    //console.log(response);
     if(response.status == 'success') {
         if($.type(response) == 'object') {
             userDetails = response;
@@ -914,4 +1039,73 @@ function loginCallback(response) {
     }
 
 
+}
+
+function orderSpaces() {
+    points.sort(function(a, b) {
+        aNum = parseFloat(a.distance);
+        bNum = parseFloat(b.distance);
+        ////console.log(parseFloat(a.distance), parseFloat(b.distance));
+        if(a.distance == undefined) return 1;
+        if(b.distance == undefined) return -1;
+
+        if(a.distance.indexOf('ft') !== -1) {
+            aNum = Number("0.0" + parseFloat(a.distance));
+        }
+        if(b.distance.indexOf('ft') !== -1) {
+            bNum = Number("0.0" + parseFloat(b.distance));
+        }
+        //check if we have one in feet and one in miles - return feet
+        //console.log(a.distance.indexOf('ft'), b.distance.indexOf('ft'));
+
+        if (aNum > bNum) {
+            return 1;
+        } else if (aNum < bNum) {
+            return -1;
+        } else {
+            return 0;
+        }
+        //else compare the number from both as they will be the same unit of measurement
+
+
+    });
+}
+
+function pointsInView() {
+    var mapBounds = map.getBounds(),
+    bounds = [
+        new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.G),
+        new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.G),
+        new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.j),
+        new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.j)
+    ];
+
+    /*//console.log(mapBounds.Ia.G, mapBounds.Ca.G);
+    //console.log(mapBounds.Ia.j, mapBounds.Ca.G)
+    //console.log(mapBounds.Ia.j, mapBounds.Ca.j)
+    //console.log(mapBounds.Ia.G, mapBounds.Ca.j)*/
+    var poly =  new google.maps.Polygon({
+        paths: bounds,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 3,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
+    });
+    //poly.setMap(map);
+
+    for (var i = 0; i < points.length; i++) {
+        ////console.log(points[i].lat, points[i].lng);
+        if(points[i].lat !== null || points[i].lng !== null) {
+            var latlng = new google.maps.LatLng(points[i].lat, points[i].lng);
+            ////console.log(latlng);
+            var contains = google.maps.geometry.poly.containsLocation(latlng, poly);
+            if (!!contains) {
+                $list.find('[data-id=' + points[i].id + ']').slideDown(300);
+            } else {
+                $list.find('[data-id=' + points[i].id + ']').slideUp(300);
+            }
+        }
+
+    }
 }

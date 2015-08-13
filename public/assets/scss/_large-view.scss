@@ -16,6 +16,11 @@
 
     #map {
         width: 100%;
+
+        .infoBubble {
+            min-width: 0vw;
+            max-width: 90%;
+        }
     }
 
     #list, #search, #map {
@@ -37,6 +42,9 @@
     #search {
         min-width: 256px;
         max-width: 256px;
+        min-height: 0;
+        padding-bottom: 0;
+        height: calc(100% - 106px);
         -webkit-flex-grow:0;
         flex-grow:0;
         .search-button {
@@ -50,8 +58,8 @@
         min-height: 0;
         margin-top: $navHeight;
         height: calc(100% - #{$navHeight});
-        overflow: auto;
-        width: 100%;
+        //overflow: auto;
+        width: 50%;
         -webkit-overflow-scrolling: touch;
         max-width: 510px;
         min-width: 425px;

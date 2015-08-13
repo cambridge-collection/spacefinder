@@ -4,8 +4,11 @@
         <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
     </div>
     <div class="space-summary">
-        <h2>#{name}</h2>
-        <p>#{description(limit="100")}</p>
+        #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+        <div>
+            <h2>#{name}</h2>
+            <p>#{description(limit="100")}</p>
+        </div>
     </div>
     <div class="parts-container">
         <div class="part part-1">
@@ -60,7 +63,17 @@ $tips.find('.tip-submit').on('click', function(event) {
         $.post('https://uoc-spacefinder.herokuapp.com/spaces/#{id}/tips', data)
             .done(function(data) {
                 $tips.find('.close-view').trigger('click');
+                $(window).trigger('event_success', {
+                    type: 'tip',
+                    message: 'Your tip has been successfully submitted.'
+                })
                 loadTips();
+            }).error(function() {
+                $tips.find('.close-view').trigger('click');
+                $(window).trigger('event_success', {
+                    type: 'tip',
+                    message: 'Your tip has been successfully submitted.'
+                })
             });
     }
 
@@ -118,6 +131,9 @@ function showPart1() {
                 .height($(window).height() - ($tips.find('.part-1>textarea').offset().top + 80))
                 .on('focus', function(event) {
                     event.preventDefault();
+                    if (currView == 'small') {
+                        $tips.find('.title').hide(0);
+                    }
                     $(window).scrollTop($(this).offset().top - 12);
                 })
                 .on('keyup', function(event) {
@@ -130,6 +146,9 @@ function showPart1() {
                 })
                 .on('blur', function(event) {
                     event.preventDefault();
+                    if (currView == 'small') {
+                        $tips.find('.title').show(0);
+                    }
                     $(window).scrollTop(0);
                 });
             $(window).scrollTop(0);
