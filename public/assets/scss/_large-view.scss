@@ -5,9 +5,14 @@
     flex-flow: row;
     overflow: hidden;
     height: 100vh;
+
+    #top-bar {
+        position: absolute;
+    }
+
     .view-container {
-        display: flex;
-        min-height: calc(100% - #{$navHeight});
+        min-height: 0;
+        height: calc(100% - #{$navHeight});
         width: 50%;
         margin-top: $navHeight;
         left: auto;
@@ -23,8 +28,7 @@
         }
     }
 
-    #list, #search, #map {
-        display: block;
+    #list, #search .search-options-container, #map {
         display: block;
         max-height: 100vh;
         overflow: auto;
@@ -44,7 +48,8 @@
         max-width: 256px;
         min-height: 0;
         padding-bottom: 0;
-        height: calc(100% - 106px);
+        margin-bottom: 0;
+        overflow: hidden;
         -webkit-flex-grow:0;
         flex-grow:0;
         .search-button {
@@ -52,6 +57,14 @@
         }
         ul ul li div {
             padding: 12px 0 12px 0px;
+       }
+
+       .search-button {
+           position: absolute;
+       }
+
+       .search-options-container {
+           height: calc(100% - 56px);
        }
     }
     .space-container {

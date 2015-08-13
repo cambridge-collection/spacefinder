@@ -1,0 +1,41 @@
+html, body, .view-container {
+    height: 100%;
+    min-height: 100%;
+    background-color: #FFF;
+}
+
+.space-container {
+    min-height: 100%;
+
+    .space {
+
+        min-height: 100%;
+
+        .tab-panel {
+            margin-top: 60px;
+        }
+    }
+}
+
+.loading-cover {
+    height: 100%;
+    z-index: 100;
+    color: #000;
+
+    p {
+        margin: 0 auto;
+        width: 50%;
+    }
+}
+
+#top-bar a {
+    width: 50%;
+}
+
+#search-btn {
+    display: none;
+}
+
+.ui-tabs-nav {
+    display: none;
+}

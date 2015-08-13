@@ -52,6 +52,7 @@
 
     .gallery-container {
         height: 50vh;
+        max-height: 500px;
         position: relative;
         background-color: $bodyColor;
     }
@@ -61,7 +62,12 @@
         top: 0;
         width: 50%;
         height: 100%;
-        padding-top: 25vh;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+
+        -webkit-align-items: center;
+
         [class^='icon-'] {
             font-size: 3rem;
             color: #FFF;
@@ -73,7 +79,8 @@
 
         }
         &.forward {
-            text-align: right;
+            -webkit-justify-content: flex-end;
+            justify-content:flex-end;
             right: 0;
         }
     }

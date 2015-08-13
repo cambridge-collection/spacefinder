@@ -249,6 +249,7 @@
     z-index: 10; }
   .space .gallery-container {
     height: 50vh;
+    max-height: 500px;
     position: relative;
     background-color: #b0b0b0; }
   .space .gallery-control {
@@ -256,14 +257,18 @@
     top: 0;
     width: 50%;
     height: 100%;
-    padding-top: 25vh; }
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center; }
     .space .gallery-control [class^='icon-'] {
       font-size: 3rem;
       color: #FFF; }
     .space .gallery-control.disabled {
       opacity: 0.4; }
     .space .gallery-control.forward {
-      text-align: right;
+      -webkit-justify-content: flex-end;
+      justify-content: flex-end;
       right: 0; }
   .space .gallery {
     height: 100%;
@@ -1155,8 +1160,8 @@ h2 {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 50;
   text-align: center;
   -webkit-transition: all 1s ease-in-out;
@@ -1212,9 +1217,11 @@ h2 {
   flex-flow: row;
   overflow: hidden;
   height: 100vh; }
+  .large_view #top-bar {
+    position: absolute; }
   .large_view .view-container {
-    display: flex;
-    min-height: calc(100% - 50px);
+    min-height: 0;
+    height: calc(100% - 50px);
     width: 50%;
     margin-top: 50px;
     left: auto;
@@ -1224,8 +1231,7 @@ h2 {
     .large_view #map .infoBubble {
       min-width: 0vw;
       max-width: 90%; }
-  .large_view #list, .large_view #search, .large_view #map {
-    display: block;
+  .large_view #list, .large_view #search .search-options-container, .large_view #map {
     display: block;
     max-height: 100vh;
     overflow: auto; }
@@ -1240,13 +1246,18 @@ h2 {
     max-width: 256px;
     min-height: 0;
     padding-bottom: 0;
-    height: calc(100% - 106px);
+    margin-bottom: 0;
+    overflow: hidden;
     -webkit-flex-grow: 0;
     flex-grow: 0; }
     .large_view #search .search-button {
       width: 256px; }
     .large_view #search ul ul li div {
       padding: 12px 0 12px 0px; }
+    .large_view #search .search-button {
+      position: absolute; }
+    .large_view #search .search-options-container {
+      height: calc(100% - 56px); }
   .large_view .space-container {
     min-height: 0;
     margin-top: 50px;
