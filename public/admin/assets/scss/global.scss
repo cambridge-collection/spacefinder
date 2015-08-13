@@ -288,6 +288,10 @@ input[type=text], input[type=password], input[type=number], textarea {
     }
 }
 
+textarea {
+    min-height: 80px;
+}
+
 .pre-fill {
     display: -webkit-flex;
     display: flex;

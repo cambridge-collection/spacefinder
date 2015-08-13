@@ -439,6 +439,9 @@ input[type=text], input[type=password], input[type=number], textarea {
     outline: none;
     border-color: #00b1c1; }
 
+textarea {
+  min-height: 80px; }
+
 .pre-fill {
   display: -webkit-flex;
   display: flex;
