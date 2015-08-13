@@ -12,19 +12,6 @@
 <% end %>
   <div class="header"><span class="title">Basic info</span></div>
   <div class="section">
-    
-    <%= f.fields_for :space_photos do |photo_form| %>
-      <div class="field">
-        <% if photo_form.object.new_record? %>
-          <%= photo_form.label :photo %>
-          <%= photo_form.file_field :photo %>
-        <% else %> 
-          <%= image_tag(photo_form.object.photo.url(:resized)) %>
-          <%= photo_form.link_to_remove "Remove this photo" %>
-        <% end %>
-      </div>
-    <% end %>  
-    <p><%= f.link_to_add "Add photo", :space_photos %></p>
       <div class="field">
         <%= f.label :name, "Name of space (e.g. first floor west, the red bean bags or relaxed reading space)" %>
         <%= f.text_field :name %>
@@ -64,6 +51,21 @@
         (1 = cheap, 5 = expensive)" %>
         <%= f.number_field :expensive, min: 1, max: 5 %>
       </div>
+  </div>
+  <div class="header"><span class="title">Photos</span></div>
+  <div class="section">
+    <%= f.fields_for :space_photos do |photo_form| %>
+      <div class="field">
+        <% if photo_form.object.new_record? %>
+          <%= photo_form.label :photo %>
+          <%= photo_form.file_field :photo %>
+        <% else %> 
+          <%= image_tag(photo_form.object.photo.url(:resized)) %>
+          <%= photo_form.link_to_remove "Remove this photo" %>
+        <% end %>
+      </div>
+    <% end %>  
+    <p><%= f.link_to_add "Add photo", :space_photos %></p>
   </div>
   <div class="header"><span class="title">Location</span></div>
   <div class="section">
