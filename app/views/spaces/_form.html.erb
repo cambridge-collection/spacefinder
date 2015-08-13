@@ -1,4 +1,4 @@
-<%= form_for(@space) do |f| %>
+<%= nested_form_for(@space, :html => { :multipart => true }) do |f| %>
 <% if @space.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@space.errors.count, "error") %> prohibited this space from being saved:</h2>
@@ -12,6 +12,19 @@
 <% end %>
   <div class="header"><span class="title">Basic info</span></div>
   <div class="section">
+    
+    <%= f.fields_for :space_photos do |photo_form| %>
+      <div class="field">
+        <% if photo_form.object.new_record? %>
+          <%= photo_form.label :photo %>
+          <%= photo_form.file_field :photo %>
+        <% else %> 
+          <%= image_tag(photo_form.object.photo.url(:resized)) %>
+          <%= photo_form.link_to_remove "Remove this photo" %>
+        <% end %>
+      </div>
+    <% end %>  
+    <p><%= f.link_to_add "Add photo", :space_photos %></p>
       <div class="field">
         <%= f.label :name, "Name of space (e.g. first floor west, the red bean bags or relaxed reading space)" %>
         <%= f.text_field :name %>

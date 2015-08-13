@@ -25,11 +25,13 @@ class Space < ActiveRecord::Base
   belongs_to :term_time_hours, class_name: "OpeningHoursWeek", :foreign_key => 'term_time_hours_id', dependent: :destroy
   belongs_to :out_of_term_hours, class_name: "OpeningHoursWeek", :foreign_key => 'out_of_term_hours_id', dependent: :destroy
   
+  has_many :tips
+  has_many :space_photos, dependent: :destroy
+  
   accepts_nested_attributes_for :term_time_hours
   accepts_nested_attributes_for :out_of_term_hours
+  accepts_nested_attributes_for :space_photos, :allow_destroy => true
   
-  has_many :tips
-
   attr_accessor :new_library_name
 
   before_save :create_library_from_name

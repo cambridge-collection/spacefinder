@@ -39,6 +39,7 @@ class SpacesController < ApplicationController
   # GET /spaces/new
   def new
     @space = Space.new
+    space_photo = @space.space_photos.new
     term_time_hours = @space.build_term_time_hours
     out_of_term_hours = @space.build_out_of_term_hours
     OpeningHoursWeek.days.each {|day|
@@ -49,6 +50,8 @@ class SpacesController < ApplicationController
 
   # GET /spaces/1/edit
   def edit
+    
+    space_photo = @space.space_photos.new
   end
 
   # POST /spaces
@@ -120,7 +123,8 @@ class SpacesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def space_params
       params.require(:space).permit(
-        :name, :description, :access_id, :space_type_id, :library_id, :new_library_name, :address, :floor, :lat, :lng, :restricted, :restriction, :disabled_access, :url, :phone_number, :email_address, :twitter_screen_name, :facebook_url, :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise_id, :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets, :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list, 
+        :name, :description, :access_id, :space_type_id, :library_id, :new_library_name, :address, :floor, :lat, :lng, :restricted, :restriction, :disabled_access, :url, :phone_number, :email_address, :twitter_screen_name, :facebook_url, :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise_id, :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets, :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list,
+        space_photos_attributes: [:id, :photo, :_destroy],
         term_time_hours_attributes: [
           Hash[OpeningHoursWeek.days.collect {|day|
             ["#{day}_attributes".to_sym, 

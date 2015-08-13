@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811170659) do
+ActiveRecord::Schema.define(version: 20150812174100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,16 @@ ActiveRecord::Schema.define(version: 20150811170659) do
   add_index "opening_hours_weeks", ["thursday_id"], name: "index_opening_hours_weeks_on_thursday_id", using: :btree
   add_index "opening_hours_weeks", ["tuesday_id"], name: "index_opening_hours_weeks_on_tuesday_id", using: :btree
   add_index "opening_hours_weeks", ["wednesday_id"], name: "index_opening_hours_weeks_on_wednesday_id", using: :btree
+
+  create_table "space_photos", force: :cascade do |t|
+    t.integer  "space_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+  end
 
   create_table "space_types", force: :cascade do |t|
     t.string   "title"
