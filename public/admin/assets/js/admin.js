@@ -1,5 +1,25 @@
+function unload() {
+    window.onbeforeunload = function(e) {
+        return 'You have made changes which have not been saved. Are you sure you wish to leave?';
+    };
+}
+
 $().ready(function () {
     showHolidayTimes = null;
+
+    $('input').on('change', function(event) {
+        event.preventDefault();
+        unload();
+    });
+    $('.remove_nested_fields').click(function(event) {
+        unload();
+    });
+
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+        window.onbeforeunload = null;
+    });
+
     $('.pre-fill input').on('focus', function(event) {
         event.preventDefault();
         $(this).parent().addClass('focus')
