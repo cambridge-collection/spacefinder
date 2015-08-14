@@ -1,371 +1,699 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit</title>
-    <link href="/admin/assets/css/global.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <title>Edit The Snug – Spacefinder</title>
+    <link rel="stylesheet" media="screen" href="/admin/assets/css/global.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+      <script type="text/javascript">
+      showHolidayTimes = false;
+  </script>
 
-    <script type="text/javascript">
-    showHolidayTimes = false;
-    </script>
+
 </head>
-<body>
-    <nav id="top-bar">
-        <a href="javascript:history.back()" class="back"><i class="icon-arrow-left"></i>Back</a><div class="logout"><a href="#">Logout</a></div>
-    </nav>
+<body class="">
 
-    <div class="container edit">
-
-        <form class="new_space" id="new_space" action="/spaces" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="gVt3Oo1aMHIkzD+uqTn7B7QIeuizCjI9t6I4yTU7yU1Xcmg++5HvFh8xkBQeFQBLDStQ8Teia5MYu9wETI1zcQ==" />
-            <div class="header"><span class="title">Basic info</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_name">Name</label>
-                    <input type="text" name="space[name]" id="space_name" />
-                </div>
-                <div class="field">
-                    <label for="space_description">Description</label>
-                    <textarea name="space[description]" id="space_description">
-                    </textarea>
-                </div>
-                <div class="field">
-                    <label for="space_space_type_id">Space type</label>
-                    <select name="space[space_type_id]" id="space_space_type_id"><option value="1">Bar</option>
-                        <option value="2">Café</option>
-                        <option value="3">Lab</option>
-                        <option value="4">Lecture room</option>
-                        <option value="5">Library space</option>
-                        <option value="6">Meeting room</option>
-                        <option value="7">Restaurant</option>
-                        <option value="8">Seminar room</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="space_access_id">Access</label>
-                    <select name="space[access_id]" id="space_access_id"><option value="1">College</option>
-                        <option value="2">Faculty</option>
-                        <option value="3">Members of the University</option>
-                        <option value="4">Anyone (public)</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="space_restricted"><input name="space[restricted]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[restricted]" id="space_restricted" /><i class="icon-tick"></i>Restricted</label>
-                </div>
-                <div class="field">
-                    <label for="space_restriction">Restriction</label>
-                    <input type="text" name="space[restriction]" id="space_restriction" />
-                </div>
-                <div class="field">
-                    <label for="space_disabled_access"><input name="space[disabled_access]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[disabled_access]" id="space_disabled_access" /><i class="icon-tick"></i>Disabled access</label>
-                </div>
-                <div class="field">
-                    <label for="space_expensive">Expensive</label>
-                    <input type="number" name="space[expensive]" id="space_expensive" />
-                </div>
-            </div>
-            <div class="header"><span class="title">Location</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_address">Address</label>
-                    <textarea name="space[address]" id="space_address">
-                    </textarea>
-                </div>
-                <div class="field">
-                    <label for="space_library_id">Library</label>
-                    <select name="space[library_id]" id="space_library_id"><option value="1">Trinity College Library</option>
-                        <option value="2">University Library</option>
-                        <option value="3">Betty and Gordon Moore LIbrary</option>
-                        <option value="4">Cambridge Central Public Library</option>
-                        <option value="5">Jerwood Library, Trinity Hall</option>
-                        <option value="6">English Faculty Library</option>
-                        <option value="7">Education Faculty Library</option>
-                    </select>
-                    or add new library:
-                    <input type="text" name="space[new_library_name]" id="space_new_library_name" />
-                </div>
-                <div class="field">
-                    <label for="space_floor">Floor</label>
-                    <input type="text" name="space[floor]" id="space_floor" />
-                </div>
-                <div class="location">
-                    <div class="field">
-                        <label for="space_lat">Lat</label>
-                        <input type="text" name="space[lat]" id="space_lat" />
-                    </div>
-                    <div class="field">
-                        <label for="space_lng">Lng</label>
-                        <input type="text" name="space[lng]" id="space_lng" />
-                    </div>
-                    <a href="#" class="get-location btn">Use my location</a>
-                </div>
-
-            </div>
-            <div class="header"><span class="title">Opening hours</span></div>
-
-            <div class="section">
-                <h2>Term-time opening hours</h2>
-                <div class="term-times">
-                    <div class="field">
-                        <label for="term_mon_open"><input id="term_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_mon_allday"><input id="term_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_tue_open"><input id="term_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_tue_allday"><input id="term_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_wed_open"><input id="term_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_wed_allday"><input id="term_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_thur_open"><input id="term_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_thur_allday"><input id="term_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_fri_open"><input id="term_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_fri_allday"><input id="term_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_sat_open"><input id="term_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sat_allday"><input id="term_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="term_sun_open"><input id="term_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="term_sun_allday"><input id="term_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                </div>
-                <h2 class="times-label">Out-of-term opening hours</h2>
-                <div class="holiday-times">
-                    <div class="field">
-                        <label for="holiday_mon_open"><input id="holiday_mon_open" type="checkbox" /><i class="icon-tick"></i>Mon</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_mon_allday"><input id="holiday_mon_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_tue_open"><input id="holiday_tue_open" type="checkbox" /><i class="icon-tick"></i>Tue</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_tue_allday"><input id="holiday_tue_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_wed_open"><input id="holiday_wed_open" type="checkbox" /><i class="icon-tick"></i>Wed</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_wed_allday"><input id="holiday_wed_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_thur_open"><input id="holiday_thur_open" type="checkbox" /><i class="icon-tick"></i>Thur</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_thur_allday"><input id="holiday_thur_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_fri_open"><input id="holiday_fri_open" type="checkbox" /><i class="icon-tick"></i>Fri</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_fri_allday"><input id="holiday_fri_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_sat_open"><input id="holiday_sat_open" type="checkbox" /><i class="icon-tick"></i>Sat</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sat_allday"><input id="holiday_sat_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                    <div class="field">
-                        <label for="holiday_sun_open"><input id="holiday_sun_open" type="checkbox" /><i class="icon-tick"></i>Sun</label>
-                    </div>
-                    <div class="closed">closed</div>
-                    <div class="times">
-                        <input type="time" /> <span class="splitter">to</span> <input type="time" /><span class="splitter">or:</span><label for="holiday_sun_allday"><input id="holiday_sun_allday" type="checkbox" /><i class="icon-tick"></i>All day</label>
-                    </div>
-                </div>
-                <a href="#" id="show-holiday-times" class="btn">Show holiday times</a>
-            </div>
-            <div class="header"><span class="title">Contact details</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_url">Url</label>
-                    <input type="text" name="space[url]" id="space_url" />
-                </div>
-                <div class="field">
-                    <label for="space_phone_number">Phone number</label>
-                    <input type="text" name="space[phone_number]" id="space_phone_number" />
-                </div>
-                <div class="field">
-                    <label for="space_twitter_screen_name">Twitter screen name</label>
-                    <div class="pre-fill">
-                        <span>@</span><input type="text" name="space[twitter_screen_name]" id="space_twitter_screen_name" />
-                    </div>
-
-                </div>
-                <div class="field">
-                    <label for="space_facebook_url">Facebook url</label>
-                    <div class="pre-fill">
-                        <span>http://www.facebook.com/</span><input type="text" name="space[facebook_url]" id="space_facebook_url" />
-                    </div>
-                </div>
-            </div>
-            <div class="header"><span class="title">atmosphere</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_atmosphere_disciplined"><input name="space[atmosphere_disciplined]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_disciplined]" id="space_atmosphere_disciplined" /><i class="icon-tick"></i>Atmosphere disciplined</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_relaxed"><input name="space[atmosphere_relaxed]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_relaxed]" id="space_atmosphere_relaxed" /><i class="icon-tick"></i>Atmosphere relaxed</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_historic"><input name="space[atmosphere_historic]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_historic]" id="space_atmosphere_historic" /><i class="icon-tick"></i>Atmosphere historic</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_modern"><input name="space[atmosphere_modern]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_modern]" id="space_atmosphere_modern" /><i class="icon-tick"></i>Atmosphere modern</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_inspiring"><input name="space[atmosphere_inspiring]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_inspiring]" id="space_atmosphere_inspiring" /><i class="icon-tick"></i>Atmosphere inspiring</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_cosy"><input name="space[atmosphere_cosy]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_cosy]" id="space_atmosphere_cosy" /><i class="icon-tick"></i>Atmosphere cosy</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_social"><input name="space[atmosphere_social]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_social]" id="space_atmosphere_social" /><i class="icon-tick"></i>Atmosphere social</label>
-                </div>
-                <div class="field">
-                    <label for="space_atmosphere_friendly"><input name="space[atmosphere_friendly]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_friendly]" id="space_atmosphere_friendly" /><i class="icon-tick"></i>Atmosphere friendly</label>
-                </div>
-            </div>
-
-            <div class="header"><span class="title">Noise levels</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_noise_id">Noise</label>
-                    <select name="space[noise_id]" id="space_noise_id"><option value="1">Strictly silent</option>
-                        <option value="2">Whispers</option>
-                        <option value="3">Background chatter</option>
-                        <option value="4">Animated discussion</option>
-                        <option value="5">Music playing</option>
-                    </select>
-                </div>
-            </div>
-            <div class="header"><span class="title">Facilities</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_facility_food_drink"><input name="space[facility_food_drink]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_food_drink]" id="space_facility_food_drink" /><i class="icon-tick"></i>Facility food drink</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_daylight"><input name="space[facility_daylight]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_daylight]" id="space_facility_daylight" /><i class="icon-tick"></i>Facility daylight</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_views"><input name="space[facility_views]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_views]" id="space_facility_views" /><i class="icon-tick"></i>Facility views</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_large_desks"><input name="space[facility_large_desks]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_large_desks]" id="space_facility_large_desks" /><i class="icon-tick"></i>Facility large desks</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_free_wifi"><input name="space[facility_free_wifi]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_free_wifi]" id="space_facility_free_wifi" /><i class="icon-tick"></i>Facility free wifi</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_no_wifi"><input name="space[facility_no_wifi]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_no_wifi]" id="space_facility_no_wifi" /><i class="icon-tick"></i>Facility no wifi</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_computers"><input name="space[facility_computers]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_computers]" id="space_facility_computers" /><i class="icon-tick"></i>Facility computers</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_laptops_allowed"><input name="space[facility_laptops_allowed]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_laptops_allowed]" id="space_facility_laptops_allowed" /><i class="icon-tick"></i>Facility laptops allowed</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_sockets"><input name="space[facility_sockets]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_sockets]" id="space_facility_sockets" /><i class="icon-tick"></i>Facility sockets</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_signal"><input name="space[facility_signal]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_signal]" id="space_facility_signal" /><i class="icon-tick"></i>Facility signal</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_printers_copiers"><input name="space[facility_printers_copiers]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_printers_copiers]" id="space_facility_printers_copiers" /><i class="icon-tick"></i>Facility printers copiers</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_whiteboards"><input name="space[facility_whiteboards]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_whiteboards]" id="space_facility_whiteboards" /><i class="icon-tick"></i>Facility whiteboards</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_projector"><input name="space[facility_projector]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_projector]" id="space_facility_projector" /><i class="icon-tick"></i>Facility projector</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_outdoor_seating"><input name="space[facility_outdoor_seating]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_outdoor_seating]" id="space_facility_outdoor_seating" /><i class="icon-tick"></i>Facility outdoor seating</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_bookable"><input name="space[facility_bookable]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_bookable]" id="space_facility_bookable" /><i class="icon-tick"></i>Facility bookable</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_toilets"><input name="space[facility_toilets]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_toilets]" id="space_facility_toilets" /><i class="icon-tick"></i>Facility toilets</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_refreshments"><input name="space[facility_refreshments]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_refreshments]" id="space_facility_refreshments" /><i class="icon-tick"></i>Facility refreshments</label>
-                </div>
-                <div class="field">
-                    <label for="space_facility_break"><input name="space[facility_break]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_break]" id="space_facility_break" /><i class="icon-tick"></i>Facility break</label>
-                </div>
-            </div>
-
-            <div class="header"><span class="title">Work environment</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_work_private"><input name="space[work_private]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_private]" id="space_work_private" /><i class="icon-tick"></i>Work private</label>
-                </div>
-                <div class="field">
-                    <label for="space_work_close"><input name="space[work_close]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_close]" id="space_work_close" /><i class="icon-tick"></i>Work close</label>
-                </div>
-                <div class="field">
-                    <label for="space_work_friends"><input name="space[work_friends]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_friends]" id="space_work_friends" /><i class="icon-tick"></i>Work friends</label>
-                </div>
-                <div class="field">
-                    <label for="space_work_group"><input name="space[work_group]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_group]" id="space_work_group" /><i class="icon-tick"></i>Work group</label>
-                </div>
-            </div>
-            <div class="header"><span class="title">Tags</span></div>
-            <div class="section">
-                <div class="field">
-                    <label for="space_tags">Tags</label>
-                    <input value="" type="text" name="space[tag_list]" id="space_tag_list" />
-                </div>
-            </div>
+  <nav id="top-bar">
+      <a class="back" href="/admin">
+        <i class="icon-arrow-left"></i>Back
+</a>    <div class="logout"><a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a></div>
+  </nav>
 
 
+<div class="container edit">
+
+  <form class="edit_space" id="edit_space_1" enctype="multipart/form-data" action="/spaces/1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="q5L5DQCxB2vkD037TQrRZhSOgFcjHfPT5nxs0gxgKxYhcxJWRGIg625nBrHzafyQBvx1qIeY4J6JlSYJgvM5KA==" />
+  <div class="header"><span class="title">Basic info</span></div>
+  <div class="section">
+      <div class="field">
+        <label for="space_name">Name of space (e.g. first floor west, the red bean bags or relaxed reading space)</label>
+        <input type="text" value="The Snug" name="space[name]" id="space_name" />
+      </div>
+      <div class="field">
+        <label for="space_description">Short description</label>
+        <textarea name="space[description]" id="space_description">
+Being a bar expect it to be busy at lunch and in the evenings. They also have cocktail making classes that can be earlier in the day so be aware of raucous parties. Early morning and mid afternoon will be quieter but with a buzz of work and people around you.</textarea>
+      </div>
+      <div class="field">
+        <label for="space_space_type_id">Type</label>
+        <select name="space[space_type_id]" id="space_space_type_id"><option value="1">Bar</option>
+<option value="2">Café</option>
+<option value="3">Lab</option>
+<option value="4">Lecture room</option>
+<option selected="selected" value="5">Library space</option>
+<option value="6">Meeting room</option>
+<option value="7">Restaurant</option>
+<option value="8">Seminar room</option></select>
+      </div>
+      <div class="field">
+        <label for="space_access_id">Who can use this space?</label>
+        <select name="space[access_id]" id="space_access_id"><option value="1">College</option>
+<option value="2">Faculty</option>
+<option value="3">Members of the University</option>
+<option selected="selected" value="4">Anyone (public)</option></select>
+      </div>
+
+
+  <div class="field">
+  <label for="space_restricted">
+    <input name="space[restricted]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[restricted]" id="space_restricted" />
+    <i class="icon-tick"></i>Access restricted
+</label>  </div>
+
+
+      <div class="field">
+        <label for="space_restriction">Description of access restriction  (e.g. Electronic badge entry after 18:00)</label>
+        <input type="text" value="" name="space[restriction]" id="space_restriction" />
+      </div>
+
+
+  <div class="field">
+  <label for="space_disabled_access">
+    <input name="space[disabled_access]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[disabled_access]" id="space_disabled_access" />
+    <i class="icon-tick"></i>Accessible by the disabled
+</label>  </div>
+
+
+      <div class="field">
+        <label for="space_expensive">If this is a café, restaurant or bar how expensive is it?
+        (1 = cheap, 5 = expensive)</label>
+        <input min="1" max="5" type="number" value="3" name="space[expensive]" id="space_expensive" />
+      </div>
+  </div>
+  <div class="header"><span class="title">Photos</span></div>
+  <div class="section">
+    <div class="fields image">
+      <div class="field">
+          <img src="http://uocsf-testing.s3.amazonaws.com/space_photos/photos/000/000/003/resized/6918671064_ee0cc56161_b.jpg?1439538413" alt="6918671064 ee0cc56161 b" />
+          <input type="hidden" value="false" name="space[space_photos_attributes][0][_destroy]" id="space_space_photos_attributes_0__destroy" /><a class="remove_nested_fields" data-association="space_photos" href="javascript:void(0)"><i class="icon-close"></i></a>
+      </div>
+<input type="hidden" value="3" name="space[space_photos_attributes][0][id]" id="space_space_photos_attributes_0_id" /></div><div class="fields image">
+      <div class="field">
+          <img src="http://uocsf-testing.s3.amazonaws.com/space_photos/photos/000/000/004/resized/6322480339_f3d3a72cba_b.jpg?1439540624" alt="6322480339 f3d3a72cba b" />
+          <input type="hidden" value="false" name="space[space_photos_attributes][1][_destroy]" id="space_space_photos_attributes_1__destroy" /><a class="remove_nested_fields" data-association="space_photos" href="javascript:void(0)"><i class="icon-close"></i></a>
+      </div>
+<input type="hidden" value="4" name="space[space_photos_attributes][1][id]" id="space_space_photos_attributes_1_id" /></div><div class="fields">
+      <div class="field">
+          <label for="space_space_photos_attributes_2_photo">Photo</label>
+          <input type="file" name="space[space_photos_attributes][2][photo]" id="space_space_photos_attributes_2_photo" />
+      </div>
+</div>    <p><a class="add_nested_fields btn" data-association="space_photos" data-blueprint-id="space_photos_fields_blueprint" href="javascript:void(0)">Add photo</a></p>
+  </div>
+  <div class="header"><span class="title">Location</span></div>
+  <div class="section">
+      <div class="field">
+        <label for="space_address">Street address</label>
+        <textarea name="space[address]" id="space_address">
+67 Lensfield Road, Cambridge, CB2 1EN</textarea>
+      </div>
+      <div class="field">
+        <label for="space_library_id">In library</label>
+        <select name="space[library_id]" id="space_library_id"><option selected="selected" value="3">Betty and Gordon Moore LIbrary</option>
+<option value="4">Cambridge Central Public Library</option>
+<option value="7">Education Faculty Library</option>
+<option value="6">English Faculty Library</option>
+<option value="5">Jerwood Library, Trinity Hall</option>
+<option value="1">Trinity College Library</option>
+<option value="2">University Library</option></select>
+        or add new library:
+        <input type="text" name="space[new_library_name]" id="space_new_library_name" />
+      </div>
+      <div class="field">
+        <label for="space_floor">Floor</label>
+        <input type="text" value="" name="space[floor]" id="space_floor" />
+      </div>
+      <div class="location">
+        <div class="field">
+          <label for="space_lat">Latitude (decimal coordinates e.g. 52.197949)</label>
+          <input type="text" value="52.197949" name="space[lat]" id="space_lat" />
+        </div>
+        <div class="field">
+          <label for="space_lng">Longitude (decimal coordinates e.g. 0.122951)</label>
+          <input type="text" value="0.122951" name="space[lng]" id="space_lng" />
+        </div>
+        <a href="#" class="get-location btn">Use my location</a>
+      </div>
+
+  </div>
+  <div class="header"><span class="title">Opening hours</span></div>
+
+  <div class="section">
+      <h2>Term-time opening hours</h2>
+
+
+      <div class="term-times">
+        <div class="fields">
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_monday_attributes_open">
+    <input name="space[term_time_hours_attributes][monday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][monday_attributes][open]" id="space_term_time_hours_attributes_monday_attributes_open" />
+    <i class="icon-tick"></i>Mon
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][monday_attributes][from]" id="space_term_time_hours_attributes_monday_attributes_from" /> <span class="splitter">to</span> <input value="23:00" type="time" name="space[term_time_hours_attributes][monday_attributes][to]" id="space_term_time_hours_attributes_monday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_monday_attributes_allday">
+    <input name="space[term_time_hours_attributes][monday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][monday_attributes][allday]" id="space_term_time_hours_attributes_monday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="631" name="space[term_time_hours_attributes][monday_attributes][id]" id="space_term_time_hours_attributes_monday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_tuesday_attributes_open">
+    <input name="space[term_time_hours_attributes][tuesday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][tuesday_attributes][open]" id="space_term_time_hours_attributes_tuesday_attributes_open" />
+    <i class="icon-tick"></i>Tue
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][tuesday_attributes][from]" id="space_term_time_hours_attributes_tuesday_attributes_from" /> <span class="splitter">to</span> <input value="23:00" type="time" name="space[term_time_hours_attributes][tuesday_attributes][to]" id="space_term_time_hours_attributes_tuesday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_tuesday_attributes_allday">
+    <input name="space[term_time_hours_attributes][tuesday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][tuesday_attributes][allday]" id="space_term_time_hours_attributes_tuesday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="632" name="space[term_time_hours_attributes][tuesday_attributes][id]" id="space_term_time_hours_attributes_tuesday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_wednesday_attributes_open">
+    <input name="space[term_time_hours_attributes][wednesday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][wednesday_attributes][open]" id="space_term_time_hours_attributes_wednesday_attributes_open" />
+    <i class="icon-tick"></i>Wed
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][wednesday_attributes][from]" id="space_term_time_hours_attributes_wednesday_attributes_from" /> <span class="splitter">to</span> <input value="23:00" type="time" name="space[term_time_hours_attributes][wednesday_attributes][to]" id="space_term_time_hours_attributes_wednesday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_wednesday_attributes_allday">
+    <input name="space[term_time_hours_attributes][wednesday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][wednesday_attributes][allday]" id="space_term_time_hours_attributes_wednesday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="633" name="space[term_time_hours_attributes][wednesday_attributes][id]" id="space_term_time_hours_attributes_wednesday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_thursday_attributes_open">
+    <input name="space[term_time_hours_attributes][thursday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][thursday_attributes][open]" id="space_term_time_hours_attributes_thursday_attributes_open" />
+    <i class="icon-tick"></i>Thu
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][thursday_attributes][from]" id="space_term_time_hours_attributes_thursday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[term_time_hours_attributes][thursday_attributes][to]" id="space_term_time_hours_attributes_thursday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_thursday_attributes_allday">
+    <input name="space[term_time_hours_attributes][thursday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][thursday_attributes][allday]" id="space_term_time_hours_attributes_thursday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="634" name="space[term_time_hours_attributes][thursday_attributes][id]" id="space_term_time_hours_attributes_thursday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_friday_attributes_open">
+    <input name="space[term_time_hours_attributes][friday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][friday_attributes][open]" id="space_term_time_hours_attributes_friday_attributes_open" />
+    <i class="icon-tick"></i>Fri
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][friday_attributes][from]" id="space_term_time_hours_attributes_friday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[term_time_hours_attributes][friday_attributes][to]" id="space_term_time_hours_attributes_friday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_friday_attributes_allday">
+    <input name="space[term_time_hours_attributes][friday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][friday_attributes][allday]" id="space_term_time_hours_attributes_friday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="635" name="space[term_time_hours_attributes][friday_attributes][id]" id="space_term_time_hours_attributes_friday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_saturday_attributes_open">
+    <input name="space[term_time_hours_attributes][saturday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][saturday_attributes][open]" id="space_term_time_hours_attributes_saturday_attributes_open" />
+    <i class="icon-tick"></i>Sat
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][saturday_attributes][from]" id="space_term_time_hours_attributes_saturday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[term_time_hours_attributes][saturday_attributes][to]" id="space_term_time_hours_attributes_saturday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_saturday_attributes_allday">
+    <input name="space[term_time_hours_attributes][saturday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][saturday_attributes][allday]" id="space_term_time_hours_attributes_saturday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="636" name="space[term_time_hours_attributes][saturday_attributes][id]" id="space_term_time_hours_attributes_saturday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_term_time_hours_attributes_sunday_attributes_open">
+    <input name="space[term_time_hours_attributes][sunday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[term_time_hours_attributes][sunday_attributes][open]" id="space_term_time_hours_attributes_sunday_attributes_open" />
+    <i class="icon-tick"></i>Sun
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="10:00" type="time" name="space[term_time_hours_attributes][sunday_attributes][from]" id="space_term_time_hours_attributes_sunday_attributes_from" /> <span class="splitter">to</span> <input value="22:00" type="time" name="space[term_time_hours_attributes][sunday_attributes][to]" id="space_term_time_hours_attributes_sunday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_term_time_hours_attributes_sunday_attributes_allday">
+    <input name="space[term_time_hours_attributes][sunday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[term_time_hours_attributes][sunday_attributes][allday]" id="space_term_time_hours_attributes_sunday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="637" name="space[term_time_hours_attributes][sunday_attributes][id]" id="space_term_time_hours_attributes_sunday_attributes_id" /></div>
+<input type="hidden" value="91" name="space[term_time_hours_attributes][id]" id="space_term_time_hours_attributes_id" /></div>
+      </div>
+      <h2 class="times-label">Out-of-term opening hours</h2>
+      <div class="holiday-times">
+        <div class="fields">
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_monday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][monday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][monday_attributes][open]" id="space_out_of_term_hours_attributes_monday_attributes_open" />
+    <i class="icon-tick"></i>Mon
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][monday_attributes][from]" id="space_out_of_term_hours_attributes_monday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][monday_attributes][to]" id="space_out_of_term_hours_attributes_monday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_monday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][monday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][monday_attributes][allday]" id="space_out_of_term_hours_attributes_monday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="638" name="space[out_of_term_hours_attributes][monday_attributes][id]" id="space_out_of_term_hours_attributes_monday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_tuesday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][tuesday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][tuesday_attributes][open]" id="space_out_of_term_hours_attributes_tuesday_attributes_open" />
+    <i class="icon-tick"></i>Tue
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][tuesday_attributes][from]" id="space_out_of_term_hours_attributes_tuesday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][tuesday_attributes][to]" id="space_out_of_term_hours_attributes_tuesday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_tuesday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][tuesday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[out_of_term_hours_attributes][tuesday_attributes][allday]" id="space_out_of_term_hours_attributes_tuesday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="639" name="space[out_of_term_hours_attributes][tuesday_attributes][id]" id="space_out_of_term_hours_attributes_tuesday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_wednesday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][wednesday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][wednesday_attributes][open]" id="space_out_of_term_hours_attributes_wednesday_attributes_open" />
+    <i class="icon-tick"></i>Wed
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][wednesday_attributes][from]" id="space_out_of_term_hours_attributes_wednesday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][wednesday_attributes][to]" id="space_out_of_term_hours_attributes_wednesday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_wednesday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][wednesday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][wednesday_attributes][allday]" id="space_out_of_term_hours_attributes_wednesday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="640" name="space[out_of_term_hours_attributes][wednesday_attributes][id]" id="space_out_of_term_hours_attributes_wednesday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_thursday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][thursday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][thursday_attributes][open]" id="space_out_of_term_hours_attributes_thursday_attributes_open" />
+    <i class="icon-tick"></i>Thu
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][thursday_attributes][from]" id="space_out_of_term_hours_attributes_thursday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][thursday_attributes][to]" id="space_out_of_term_hours_attributes_thursday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_thursday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][thursday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[out_of_term_hours_attributes][thursday_attributes][allday]" id="space_out_of_term_hours_attributes_thursday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="641" name="space[out_of_term_hours_attributes][thursday_attributes][id]" id="space_out_of_term_hours_attributes_thursday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_friday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][friday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][friday_attributes][open]" id="space_out_of_term_hours_attributes_friday_attributes_open" />
+    <i class="icon-tick"></i>Fri
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][friday_attributes][from]" id="space_out_of_term_hours_attributes_friday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][friday_attributes][to]" id="space_out_of_term_hours_attributes_friday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_friday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][friday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][friday_attributes][allday]" id="space_out_of_term_hours_attributes_friday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="642" name="space[out_of_term_hours_attributes][friday_attributes][id]" id="space_out_of_term_hours_attributes_friday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_saturday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][saturday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][saturday_attributes][open]" id="space_out_of_term_hours_attributes_saturday_attributes_open" />
+    <i class="icon-tick"></i>Sat
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][saturday_attributes][from]" id="space_out_of_term_hours_attributes_saturday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][saturday_attributes][to]" id="space_out_of_term_hours_attributes_saturday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_saturday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][saturday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][saturday_attributes][allday]" id="space_out_of_term_hours_attributes_saturday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="643" name="space[out_of_term_hours_attributes][saturday_attributes][id]" id="space_out_of_term_hours_attributes_saturday_attributes_id" /></div>
+            <div class="fields">
+
+  <div class="field">
+  <label for="space_out_of_term_hours_attributes_sunday_attributes_open">
+    <input name="space[out_of_term_hours_attributes][sunday_attributes][open]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][sunday_attributes][open]" id="space_out_of_term_hours_attributes_sunday_attributes_open" />
+    <i class="icon-tick"></i>Sun
+</label>  </div>
+
+<div class="closed">closed</div>
+<div class="times">
+    <input value="00:00" type="time" name="space[out_of_term_hours_attributes][sunday_attributes][from]" id="space_out_of_term_hours_attributes_sunday_attributes_from" /> <span class="splitter">to</span> <input value="00:00" type="time" name="space[out_of_term_hours_attributes][sunday_attributes][to]" id="space_out_of_term_hours_attributes_sunday_attributes_to" /><span class="splitter">or:</span>
+  <label for="space_out_of_term_hours_attributes_sunday_attributes_allday">
+    <input name="space[out_of_term_hours_attributes][sunday_attributes][allday]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[out_of_term_hours_attributes][sunday_attributes][allday]" id="space_out_of_term_hours_attributes_sunday_attributes_allday" />
+    <i class="icon-tick"></i>All day
+</label>
+</div>
+
+<input type="hidden" value="644" name="space[out_of_term_hours_attributes][sunday_attributes][id]" id="space_out_of_term_hours_attributes_sunday_attributes_id" /></div>
+<input type="hidden" value="92" name="space[out_of_term_hours_attributes][id]" id="space_out_of_term_hours_attributes_id" /></div>      </div>
+      <a href="#" id="show-holiday-times" class="btn">Show holiday times</a>
+  </div>
+  <div class="header"><span class="title">Contact details</span></div>
+  <div class="section">
+      <div class="field">
+        <label for="space_url">Website URL</label>
+        <input type="text" value="http://www.thesnugbar.co.uk/cambridge-snug-bar/" name="space[url]" id="space_url" />
+      </div>
+      <div class="field">
+        <label for="space_phone_number">Phone number</label>
+        <input type="text" value="01223 367684" name="space[phone_number]" id="space_phone_number" />
+      </div>
+      <div class="field">
+        <label for="space_email_address">Email address</label>
+        <input type="text" value="" name="space[email_address]" id="space_email_address" />
+      </div>
+      <div class="field">
+        <label for="space_twitter_screen_name">Twitter screen name (e.g. &#39;cambridge_uni&#39;)</label>
+        <div class="pre-fill">
+          <span>@</span><input type="text" value="TheSnugTrumps" name="space[twitter_screen_name]" id="space_twitter_screen_name" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="space_facebook_url">Facebook page name (e.g. &#39;thesnugbar&#39; or &#39;pages/Central-Library-Cambridge/106156113195&#39;)</label>
+        <div class="pre-fill">
+          <span>http://www.facebook.com/</span><input type="text" value="thesnugbar" name="space[facebook_url]" id="space_facebook_url" />
+        </div>
+      </div>
+  </div>
+  <div class="header"><span class="title">atmosphere</span></div>
+  <div class="section">
+    <p>Would you describe the atmosphere of this space as…</p>
+
+  <div class="field">
+  <label for="space_atmosphere_disciplined">
+    <input name="space[atmosphere_disciplined]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_disciplined]" id="space_atmosphere_disciplined" />
+    <i class="icon-tick"></i>Disciplined?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_relaxed">
+    <input name="space[atmosphere_relaxed]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[atmosphere_relaxed]" id="space_atmosphere_relaxed" />
+    <i class="icon-tick"></i>Relaxed or informal?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_historic">
+    <input name="space[atmosphere_historic]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_historic]" id="space_atmosphere_historic" />
+    <i class="icon-tick"></i>Historic?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_modern">
+    <input name="space[atmosphere_modern]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_modern]" id="space_atmosphere_modern" />
+    <i class="icon-tick"></i>Modern?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_inspiring">
+    <input name="space[atmosphere_inspiring]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[atmosphere_inspiring]" id="space_atmosphere_inspiring" />
+    <i class="icon-tick"></i>Inspiring or thought provoking?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_cosy">
+    <input name="space[atmosphere_cosy]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[atmosphere_cosy]" id="space_atmosphere_cosy" />
+    <i class="icon-tick"></i>Cosy?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_social">
+    <input name="space[atmosphere_social]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[atmosphere_social]" id="space_atmosphere_social" />
+    <i class="icon-tick"></i>Social?
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_atmosphere_friendly">
+    <input name="space[atmosphere_friendly]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[atmosphere_friendly]" id="space_atmosphere_friendly" />
+    <i class="icon-tick"></i>Friendly or welcoming?
+</label>  </div>
+
+  </div>
+
+  <div class="header"><span class="title">Noise levels</span></div>
+  <div class="section">
+      <div class="field">
+        <label for="space_noise_id">Which best describes the typical noise level in this space?</label>
+        <select name="space[noise_id]" id="space_noise_id"><option value="1">Strictly silent</option>
+<option value="2">Whispers</option>
+<option value="3">Background chatter</option>
+<option value="4">Animated discussion</option>
+<option selected="selected" value="5">Music playing</option></select>
+      </div>
+  </div>
+
+  <div class="header"><span class="title">Facilities</span></div>
+  <div class="section">
+
+  <div class="field">
+  <label for="space_facility_food_drink">
+    <input name="space[facility_food_drink]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_food_drink]" id="space_facility_food_drink" />
+    <i class="icon-tick"></i>Food &amp; drink allowed
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_daylight">
+    <input name="space[facility_daylight]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_daylight]" id="space_facility_daylight" />
+    <i class="icon-tick"></i>Natural daylight
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_views">
+    <input name="space[facility_views]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_views]" id="space_facility_views" />
+    <i class="icon-tick"></i>Attractive views out of the window
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_large_desks">
+    <input name="space[facility_large_desks]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_large_desks]" id="space_facility_large_desks" />
+    <i class="icon-tick"></i>Large desks
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_free_wifi">
+    <input name="space[facility_free_wifi]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_free_wifi]" id="space_facility_free_wifi" />
+    <i class="icon-tick"></i>Free Wifi
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_no_wifi">
+    <input name="space[facility_no_wifi]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_no_wifi]" id="space_facility_no_wifi" />
+    <i class="icon-tick"></i>No WiFi
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_computers">
+    <input name="space[facility_computers]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_computers]" id="space_facility_computers" />
+    <i class="icon-tick"></i>Computers
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_laptops_allowed">
+    <input name="space[facility_laptops_allowed]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_laptops_allowed]" id="space_facility_laptops_allowed" />
+    <i class="icon-tick"></i>Laptops allowed
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_sockets">
+    <input name="space[facility_sockets]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_sockets]" id="space_facility_sockets" />
+    <i class="icon-tick"></i>Plug sockets
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_signal">
+    <input name="space[facility_signal]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_signal]" id="space_facility_signal" />
+    <i class="icon-tick"></i>Phone signal
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_printers_copiers">
+    <input name="space[facility_printers_copiers]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_printers_copiers]" id="space_facility_printers_copiers" />
+    <i class="icon-tick"></i>Printers and copiers
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_whiteboards">
+    <input name="space[facility_whiteboards]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_whiteboards]" id="space_facility_whiteboards" />
+    <i class="icon-tick"></i>Whiteboards
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_projector">
+    <input name="space[facility_projector]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_projector]" id="space_facility_projector" />
+    <i class="icon-tick"></i>Projector
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_outdoor_seating">
+    <input name="space[facility_outdoor_seating]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_outdoor_seating]" id="space_facility_outdoor_seating" />
+    <i class="icon-tick"></i>Outdoor seating
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_bookable">
+    <input name="space[facility_bookable]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[facility_bookable]" id="space_facility_bookable" />
+    <i class="icon-tick"></i>Bookable
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_toilets">
+    <input name="space[facility_toilets]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_toilets]" id="space_facility_toilets" />
+    <i class="icon-tick"></i>Toilets nearby
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_refreshments">
+    <input name="space[facility_refreshments]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_refreshments]" id="space_facility_refreshments" />
+    <i class="icon-tick"></i>Close to refreshments
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_facility_break">
+    <input name="space[facility_break]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="space[facility_break]" id="space_facility_break" />
+    <i class="icon-tick"></i>Close to a place to take a break
+</label>  </div>
+
+  </div>
+
+  <div class="header"><span class="title">Work environment</span></div>
+  <div class="section">
+    <p>Is this a good space to work…</p>
+
+  <div class="field">
+  <label for="space_work_private">
+    <input name="space[work_private]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_private]" id="space_work_private" />
+    <i class="icon-tick"></i>Alone, in private
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_work_close">
+    <input name="space[work_close]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_close]" id="space_work_close" />
+    <i class="icon-tick"></i>Where others are working
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_work_friends">
+    <input name="space[work_friends]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_friends]" id="space_work_friends" />
+    <i class="icon-tick"></i>With friends
+</label>  </div>
+
+
+  <div class="field">
+  <label for="space_work_group">
+    <input name="space[work_group]" type="hidden" value="0" /><input type="checkbox" value="1" name="space[work_group]" id="space_work_group" />
+    <i class="icon-tick"></i>On a group project
+</label>  </div>
+
+  </div>
+  <div class="header"><span class="title">Tags</span></div>
+  <div class="section">
+      <div class="field">
+        <label for="space_tags">Some tags that might be used to describe this space. Try to choose tags that are distinct from the questions above. Please list them separated by a comma. (e.g. dark, bottled water only, busy)</label>
+        <input value="" type="text" name="space[tag_list]" id="space_tag_list" />
+      </div>
+  </div>
 
 
 
 
 
-            <div class="actions">
-                <input type="submit" name="commit" value="Create Space" />
-            </div>
-        </form>
-    </div>
-    <script src="/admin/assets/js/admin.js" type="text/javascript"></script>
+
+
+  <div class="actions">
+    <input type="submit" name="commit" value="Update Space" />
+  </div>
+<div id="space_photos_fields_blueprint" style="display: none" data-blueprint="&lt;div class=&quot;fields&quot;&gt;
+      &lt;div class=&quot;field&quot;&gt;
+          &lt;label for=&quot;space_space_photos_attributes_new_space_photos_photo&quot;&gt;Photo&lt;/label&gt;
+          &lt;input type=&quot;file&quot; name=&quot;space[space_photos_attributes][new_space_photos][photo]&quot; id=&quot;space_space_photos_attributes_new_space_photos_photo&quot; /&gt;
+      &lt;/div&gt;
+&lt;/div&gt;"></div></form>
+
+</div>
+
+
+
+  <script src="/admin/assets/js/admin.js" data-turbolinks-track="true"></script>
 </body>
 </html>

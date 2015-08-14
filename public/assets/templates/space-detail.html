@@ -307,8 +307,8 @@ if(images.length > 1) {
             }
         })
     );
-} else {
-    $space.find('.gallery-container').height(0);
+} else if(images.length == 0) {
+    $space.find('.gallery-container').height($space.find('.title').outerHeight(true));
 }
 //set up tabs
 $space.find('.tabs').tabs({

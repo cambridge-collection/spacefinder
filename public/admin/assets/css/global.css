@@ -250,6 +250,28 @@ body {
   .back i {
     margin-top: -3px; }
 
+img {
+  max-width: 100%; }
+
+.fields.image {
+  max-width: 30%;
+  margin-right: 24px;
+  float: left;
+  clear: none;
+  position: relative; }
+
+a.remove_nested_fields {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 3px 3px 6px;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-decoration: none;
+  color: #FFF; }
+
+.fields {
+  clear: both; }
+
 .event-success {
   text-align: center;
   margin: 12px 0;

@@ -249,7 +249,7 @@
     z-index: 10; }
   .space .gallery-container {
     height: 50vh;
-    max-height: 500px;
+    max-height: 400px;
     position: relative;
     background-color: #b0b0b0; }
   .space .gallery-control {
