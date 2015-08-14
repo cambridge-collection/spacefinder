@@ -25,7 +25,7 @@ class SpacesController < ApplicationController
       :persistence_id => false
     )
     
-    @spaces = @filterrific.find
+    @spaces = @filterrific.find.page(params[:page]).per(params[:limit])
     
   end
 

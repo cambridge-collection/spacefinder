@@ -34,6 +34,7 @@ gem "paranoia", "~> 2.0"
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'nested_form'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
