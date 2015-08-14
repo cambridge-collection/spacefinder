@@ -54,19 +54,30 @@
   </div>
   <div class="header"><span class="title">Photos</span></div>
   <div class="section">
-    <%= f.fields_for :space_photos do |photo_form| %>
-      <div class="field">
-        <% if photo_form.object.new_record? %>
-          <%= photo_form.label :photo %>
-          <%= photo_form.file_field :photo %>
-        <% else %> 
-          <%= image_tag(photo_form.object.photo.url(:resized)) %>
-          <%= photo_form.link_to_remove "Remove this photo" %>
-        <% end %>
-      </div>
+    
+    <%= f.fields_for :space_photos, wrapper: false do |photo_form| %>
+      <% if photo_form.object.new_record? %>
+        <div class="fields">
+          <div class="field">
+            <%= photo_form.label :photo %>
+            <%= photo_form.file_field :photo %>
+          </div>
+        </div>
+      <% else %>
+        <div class="fields image">
+          <div class="field">
+            <%= image_tag(photo_form.object.photo.url(:resized)) %>
+            <%= photo_form.link_to_remove do %>
+              <i class="icon-close"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     <% end %>  
-    <p><%= f.link_to_add "Add photo", :space_photos %></p>
+    
+    <p><%= f.link_to_add "Add another photo", :space_photos, class: "btn" %></p>
   </div>
+
   <div class="header"><span class="title">Location</span></div>
   <div class="section">
       <div class="field">
