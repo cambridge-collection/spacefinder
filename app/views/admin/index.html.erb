@@ -13,8 +13,12 @@
 
 <div id="spaces" style="display:none;">
     <select id="spaces-list">
-      <%= @spaces.each do |id, name| %>
-        <option value="<%= id %>"><%= name %></option>
+      <%= @space_groups.each do |library, spaces| %>
+        <optgroup label="<%= library %>">
+        <%= spaces.each do |id, name, library_id| %>
+          <option value="<%= id %>"><%= name %></option>
+        <% end %>
+        </optgroup>
       <% end %>
     </select>
     <a href="#" id="edit-space" class="btn">Edit Space</a>
