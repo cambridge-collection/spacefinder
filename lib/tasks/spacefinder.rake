@@ -5,7 +5,7 @@ namespace :spacefinder do
     spaces_csv = SmarterCSV.process(args[:csv_path])
     
     spaces_csv.each{|space_csv|
-  
+      #binding.pry
       space = Space.new
       space.name = space_csv[:basic_info]
       
@@ -14,7 +14,7 @@ namespace :spacefinder do
         space.access_id = access.id
       end
       
-      st = SpaceType.find_by_title(space_csv[:type_of_space])
+      st = SpaceType.where("lower(title) = ?", space_csv[:type_of_space].downcase).first
       unless st.nil? then
         space.space_type_id = st.id
       end
@@ -43,7 +43,7 @@ namespace :spacefinder do
       space.url = space_csv[:website_url]
       space.phone_number = space_csv[:phone_number]
       space.twitter_screen_name = (space_csv[:twitter]).to_s.tr('@', '')
-      space.facebook_url = space_csv[:facebook_page]
+      space.facebook_url = space_csv[:facebook_page].nil? ? "" : /(^https:\/\/www.facebook.com\/|^www.facebook.com\/)(.*)/.match(space_csv[:facebook_page])[2] 
       
       term_time_hours = space.build_term_time_hours
       out_of_term_hours = space.build_out_of_term_hours
@@ -85,12 +85,17 @@ namespace :spacefinder do
       space.facility_refreshments = !(space_csv[:close_to_refreshments].nil? or space_csv[:close_to_refreshments].empty?) ? true : false
       space.facility_break = !(space_csv[:close_to_a_place_to_take_a_break].nil? or space_csv[:close_to_a_place_to_take_a_break].empty?) ? true : false
       
+      space.work_private = (space_csv[:"...in_private?"] == "yes") ? true : false
+      space.work_close = (space_csv[:"...close_to_others?"] == "yes") ? true : false
+      space.work_friends = (space_csv[:"...alongside_friends?"] == "yes") ? true : false
+      space.work_group = (space_csv[:"...in_a_group?"] == "yes") ? true : false
+      
       space.expensive = space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"].nil? ? nil : space_csv[:"if_this_is_a_café,_restaurant_or_bar_how_expensive_is_it?(1_=_cheap,_5_=_expensive)"]
       
       space.tag_list = space_csv[:tags]
       
       if space.save then
-        puts "Saved: #{space_csv[:basic_info]}"
+        puts "Saved: #{space_csv[:basic_info]} as #{space.id}"
       else
         puts "------"
         puts "There was a problem saving: #{space_csv[:basic_info]}"

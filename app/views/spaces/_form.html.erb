@@ -22,11 +22,11 @@
       </div>
       <div class="field">
         <%= f.label :space_type_id, "Type" %>
-        <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title, {selected: SpaceType.find_by(title:"Library space").id}) %>
+        <%= f.collection_select(:space_type_id, SpaceType.all, :id, :title, @space.space_type_id ? {} : {selected: SpaceType.find_by(title:"Library space").id}) %>
       </div>
       <div class="field">
         <%= f.label :access_id, "Who can use this space?" %>
-        <%= f.collection_select(:access_id, Access.all, :id, :title, {selected: Access.find_by(title:"Anyone (public)").id }) %>
+        <%= f.collection_select(:access_id, Access.all, :id, :title, @space.access_id ? {} : {selected: Access.find_by(title:"Anyone (public)").id }) %>
       </div>
       
       <%= render partial: "checkbox", locals: {
