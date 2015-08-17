@@ -61,7 +61,7 @@ class SpacesController < ApplicationController
 
     respond_to do |format|
       if @space.save
-        format.html { redirect_to @space, notice: 'Space was successfully created.' }
+        format.html { redirect_to admin_path, notice: 'Space was successfully created.' }
         format.json { render :show, status: :created, location: @space }
       else
         format.html { render :new }
@@ -75,7 +75,7 @@ class SpacesController < ApplicationController
   def update
     respond_to do |format|
       if @space.update(space_params)
-        format.html { redirect_to @space, notice: 'Space was successfully updated.' }
+        format.html { redirect_to admin_path, notice: 'Space was successfully updated.' }
         format.json { render :show, status: :ok, location: @space }
       else
         format.html { render :edit }
