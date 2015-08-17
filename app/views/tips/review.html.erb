@@ -6,6 +6,18 @@
 <% end %>
 
 <div class="container tips">
+  <% #binding.pry %>
+  <% if flash[:notice] then %>
+    <div class="event-success">
+        <i class="icon-tick"></i><p><%= flash[:notice] %></p>
+    </div>
+  <% end %>
+  <% if @tips.empty? then %>
+  
+    <div class="event-success">
+        <i class="icon-tick"></i><p>All tips have been reviewed</p>
+    </div>
+  <% end %>
   <% @tips.each do |tip| %>
     <div class="header"><span class="title"><%= tip.space.name %></span></div>
     <div class="section">
@@ -33,7 +45,7 @@
                 <%= f.submit "Add response", class: "btn-inline respond" %>
               </div>
             <% end %>
-            <div class="buttons">
+            <div class="buttons delete">
               <%= button_to 'Remove tip', space_tip_path(tip.space, tip), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-inline remove" %>
             </div>
         </div>

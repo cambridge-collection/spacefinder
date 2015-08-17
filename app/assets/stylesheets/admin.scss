@@ -109,7 +109,7 @@ h1>small {
     display: block;
 }
 
-.btn, .btn-inline {
+.btn, .btn-inline, input[type="submit"].btn-inline {
     width: 100%;
     text-align: center;
     background: #642c73;
@@ -126,7 +126,7 @@ h1>small {
     }
 }
 
-.btn-inline {
+.btn-inline, input[type="submit"].btn-inline {
     display: inline-block;
     width: auto;
     font-size: 1rem;
@@ -488,6 +488,10 @@ textarea {
             .respond {
                 float: right;
             }
+        }
+        
+        .buttons.delete {
+          padding-top: 0;
         }
     }
 }

@@ -26,7 +26,7 @@ class TipsController < ApplicationController
     
     respond_to do |format|
       if @tip.save
-        format.html { redirect_to @space, notice: 'Tip was successfully created.' }
+        format.html { redirect_to @space }
         format.json { render :json => {status: 'ok'} }
       else
         format.html { render :new }
@@ -39,7 +39,7 @@ class TipsController < ApplicationController
     @tip = Tip.find(params[:id])
     @tip.destroy
     respond_to do |format|
-      format.html { redirect_to admin_review_url, notice: 'Tip was successfully destroyed.' }
+      format.html { redirect_to admin_review_url, notice: 'Tip was successfully removed.' }
       format.json { head :no_content }
     end
   end
@@ -54,7 +54,7 @@ class TipsController < ApplicationController
     @tip.responding_user = User.first # TODO use current admin user
     respond_to do |format|
       if @tip.update(response_params)
-        format.html { redirect_to admin_review_url, notice: 'Tip was successfully updated.' }
+        format.html { redirect_to admin_review_url, notice: 'Your response has been added successfully' }
         format.json { render :show, status: :ok, location: @tip }
       else
         format.html { redirect_to admin_review_url }
