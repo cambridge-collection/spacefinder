@@ -86,7 +86,7 @@
       </div>
       <div class="field">
         <%= f.label :library_id, "In library" %>
-        <%= f.collection_select(:library_id, Library.order('name ASC'), :id, :name) %>
+        <%= f.collection_select(:library_id, Library.order('name ASC'), :id, :name, include_blank: "No Library") %>
         or add new library:
         <%= f.text_field :new_library_name %>
       </div>
