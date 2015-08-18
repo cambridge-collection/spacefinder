@@ -592,3 +592,16 @@ textarea {
       background-color: #000; }
     .tips .tip .buttons .respond {
       float: right; }
+
+.field_with_errors input {
+  border-color: #FF6666; }
+
+#error_explanation {
+  border: 1px solid #FF6666;
+  padding: 0 12px;
+  background-color: #f3f3f3; }
+  #error_explanation h2 {
+    color: #cc0000; }
+  #error_explanation ul {
+    padding-left: 0;
+    list-style: none; }
