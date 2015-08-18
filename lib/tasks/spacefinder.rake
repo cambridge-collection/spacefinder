@@ -52,38 +52,38 @@ namespace :spacefinder do
         out_of_term_hours.send("build_#{day}")
       }
       
-      space.atmosphere_disciplined = !(space_csv[:disciplined?].nil? or space_csv[:disciplined?].empty?) ? true : false
-      space.atmosphere_relaxed = !(space_csv[:relaxed_or_informal?].nil? or space_csv[:relaxed_or_informal?].empty?) ? true : false
-      space.atmosphere_modern = !(space_csv[:modern?].nil? or space_csv[:modern?].empty?) ? true : false
-      space.atmosphere_historic = !(space_csv[:historic?].nil? or space_csv[:historic?].empty?) ? true : false
-      space.atmosphere_inspiring = !(space_csv[:inspiring_or_thought_provoking?].nil? or space_csv[:inspiring_or_thought_provoking?].empty?) ? true : false
-      space.atmosphere_cosy = !(space_csv[:cosy?].nil? or space_csv[:cosy?].empty?)? true : false
-      space.atmosphere_social = !(space_csv[:social?].nil? or space_csv[:social?].empty?) ? true : false
-      space.atmosphere_friendly = !(space_csv[:friendly_or_welcoming?].nil? or space_csv[:friendly_or_welcoming?].empty?) ? true : false
+      space.atmosphere_disciplined = !(space_csv[:disciplined?].nil? or space_csv[:disciplined?].strip.empty?) ? true : false
+      space.atmosphere_relaxed = !(space_csv[:relaxed_or_informal?].nil? or space_csv[:relaxed_or_informal?].strip.empty?) ? true : false
+      space.atmosphere_modern = !(space_csv[:modern?].nil? or space_csv[:modern?].strip.empty?) ? true : false
+      space.atmosphere_historic = !(space_csv[:historic?].nil? or space_csv[:historic?].strip.empty?) ? true : false
+      space.atmosphere_inspiring = !(space_csv[:inspiring_or_thought_provoking?].nil? or space_csv[:inspiring_or_thought_provoking?].strip.empty?) ? true : false
+      space.atmosphere_cosy = !(space_csv[:cosy?].nil? or space_csv[:cosy?].strip.empty?)? true : false
+      space.atmosphere_social = !(space_csv[:social?].nil? or space_csv[:social?].strip.empty?) ? true : false
+      space.atmosphere_friendly = !(space_csv[:friendly_or_welcoming?].nil? or space_csv[:friendly_or_welcoming?].strip.empty?) ? true : false
       
       noise = Noise.find_by_title(space_csv[:which_best_describes_the_typical_noise_level_in_this_space?])
       unless noise.nil? then
         space.noise_id = noise.id
       end
       
-      space.facility_food_drink = !(space_csv[:"food_&_drink_allowed"].nil? or space_csv[:"food_&_drink_allowed"].empty?) ? true : false
-      space.facility_daylight = !(space_csv[:natural_daylight].nil? or space_csv[:natural_daylight].empty?) ? true : false
-      space.facility_views = !(space_csv[:attractive_views_out_of_the_window].nil? or space_csv[:attractive_views_out_of_the_window].empty?) ? true : false
-      space.facility_large_desks = !(space_csv[:large_desks].nil? or space_csv[:large_desks].empty?) ? true : false
-      space.facility_free_wifi = !(space_csv[:free_wifi].nil? or space_csv[:free_wifi].empty?) ? true : false
-      space.facility_no_wifi = !(space_csv[:no_wifi].nil? or space_csv[:no_wifi].empty?) ? true : false
-      space.facility_computers = !(space_csv[:computers].nil? or space_csv[:computers].empty?) ? true : false
-      space.facility_laptops_allowed = !(space_csv[:laptops_allowed].nil? or space_csv[:laptops_allowed].empty?) ? true : false
-      space.facility_sockets = !(space_csv[:plug_sockets].nil? or space_csv[:plug_sockets].empty?) ? true : false
-      space.facility_signal = !(space_csv[:phone_signal] .nil? or space_csv[:phone_signal] .empty?) ? true : false
-      space.facility_printers_copiers = !(space_csv[:printers_and_copiers].nil? or space_csv[:printers_and_copiers].empty?) ? true : false
-      space.facility_whiteboards = !(space_csv[:whiteboards].nil? or space_csv[:whiteboards].empty?) ? true : false
-      space.facility_projector = !(space_csv[:projector].nil? or space_csv[:projector].empty?) ? true : false
-      space.facility_outdoor_seating = !(space_csv[:outdoor_seating].nil? or space_csv[:outdoor_seating].empty?) ? true : false
-      space.facility_bookable = !(space_csv[:bookable].nil? or space_csv[:bookable].empty?) ? true : false
-      space.facility_toilets = !(space_csv[:toilets_nearby].nil? or space_csv[:toilets_nearby].empty?) ? true : false
-      space.facility_refreshments = !(space_csv[:close_to_refreshments].nil? or space_csv[:close_to_refreshments].empty?) ? true : false
-      space.facility_break = !(space_csv[:close_to_a_place_to_take_a_break].nil? or space_csv[:close_to_a_place_to_take_a_break].empty?) ? true : false
+      space.facility_food_drink = !(space_csv[:"food_&_drink_allowed"].nil? or space_csv[:"food_&_drink_allowed"].strip.empty?) ? true : false
+      space.facility_daylight = !(space_csv[:natural_daylight].nil? or space_csv[:natural_daylight].strip.empty?) ? true : false
+      space.facility_views = !(space_csv[:attractive_views_out_of_the_window].nil? or space_csv[:attractive_views_out_of_the_window].strip.empty?) ? true : false
+      space.facility_large_desks = !(space_csv[:large_desks].nil? or space_csv[:large_desks].strip.empty?) ? true : false
+      space.facility_free_wifi = !(space_csv[:free_wifi].nil? or space_csv[:free_wifi].strip.empty?) ? true : false
+      space.facility_no_wifi = !(space_csv[:no_wifi].nil? or space_csv[:no_wifi].strip.empty?) ? true : false
+      space.facility_computers = !(space_csv[:computers].nil? or space_csv[:computers].strip.empty?) ? true : false
+      space.facility_laptops_allowed = !(space_csv[:laptops_allowed].nil? or space_csv[:laptops_allowed].strip.empty?) ? true : false
+      space.facility_sockets = !(space_csv[:plug_sockets].nil? or space_csv[:plug_sockets].strip.empty?) ? true : false
+      space.facility_signal = !(space_csv[:phone_signal] .nil? or space_csv[:phone_signal] .strip.empty?) ? true : false
+      space.facility_printers_copiers = !(space_csv[:printers_and_copiers].nil? or space_csv[:printers_and_copiers].strip.empty?) ? true : false
+      space.facility_whiteboards = !(space_csv[:whiteboards].nil? or space_csv[:whiteboards].strip.empty?) ? true : false
+      space.facility_projector = !(space_csv[:projector].nil? or space_csv[:projector].strip.empty?) ? true : false
+      space.facility_outdoor_seating = !(space_csv[:outdoor_seating].nil? or space_csv[:outdoor_seating].strip.empty?) ? true : false
+      space.facility_bookable = !(space_csv[:bookable].nil? or space_csv[:bookable].strip.empty?) ? true : false
+      space.facility_toilets = !(space_csv[:toilets_nearby].nil? or space_csv[:toilets_nearby].strip.empty?) ? true : false
+      space.facility_refreshments = !(space_csv[:close_to_refreshments].nil? or space_csv[:close_to_refreshments].strip.empty?) ? true : false
+      space.facility_break = !(space_csv[:close_to_a_place_to_take_a_break].nil? or space_csv[:close_to_a_place_to_take_a_break].strip.empty?) ? true : false
       
       space.work_private = (space_csv[:"...in_private?"] == "yes") ? true : false
       space.work_close = (space_csv[:"...close_to_others?"] == "yes") ? true : false
