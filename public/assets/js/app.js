@@ -21,6 +21,8 @@ currentZoom = 14,
 currentLoc = loc,
 systemEvent = false,
 spacesRequest = null,
+totalSpaceCount = 0,
+queryLimit = 9999,
 mapOptions = {
     center: loc,
     zoom: 20,
@@ -498,13 +500,16 @@ function resetViews() {
 function loadSpaces(options) {
     var defaults = {
         queryString:'',
-        reset:false
+        reset:false,
+        keepData:false
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
 
-    resetViews();
-    console.log(spacesRequest);
+    defaults.queryString += '&limit=' + queryLimit;
+
+    if(!defaults.keepData) resetViews();
+
     if (spacesRequest  && spacesRequest.readyState != 4) {
         console.log('abort request');
         spacesRequest.abort();
@@ -516,8 +521,15 @@ function loadSpaces(options) {
         data:defaults.queryString
     }).done(function(data) {
         //$.getJSON('/assets/data/points.json').done(function(data) {
-        points = data,
+        if (!!defaults.keepData) {
+            points = cleanData(points.concat(data.results))
+        } else {
+            points = data.results;
+        }
+
         distCount = 0;
+
+        totalSpaceCount = data.total_count;
 
         if(points.length == 0) {
             loadMap();
@@ -584,8 +596,21 @@ function loadSpaces(options) {
             }
         }
 
-
     });
+}
+
+function cleanData(data) {
+    var foundIds =[],
+        ret = [];
+
+    for (var i = 0; i < data.length; i++) {
+        if(foundIds.indexOf(data[i].id) == -1) {
+            ret.push(data[i]);
+            foundIds.push(data[i].id);
+        }
+    }
+
+    return ret;
 }
 
 function showLoginScreen(container, data) {
@@ -654,7 +679,7 @@ function loadMap(options) {
 
     $.each( points, function( key ) {
         if(points[key].marker !== undefined) return true;
-
+        console.log('add new point');
         if(points[key].lat == null || points[key].lng == null) {
             return true;
         }
@@ -764,12 +789,35 @@ function loadList(options) {
         return true;
     }
     $.each( points, function( key ) {
-        var space = parseTemplate('list', points[key]);
-
-        $list.append(space);
+        //check if space already exists, if not add it
+        if ($list.find('[data-id=' + points[key].id + ']').length == 0) {
+            console.log(key);
+            var space = parseTemplate('list', points[key]);
+            $list.append(space);
+        }
 
     });
-
+    if (points.length !== totalSpaceCount) {
+        $list.append(
+            $('<a href="#">Load more spaces</a>').on('click', function(event) {
+                event.preventDefault();
+                console.log('pages = ', Math.ceil(totalSpaceCount/queryLimit));
+                console.log('current page = ', points.length/queryLimit);
+                if($.type(prepSearch) == 'function') {
+                    var search = prepSearch();
+                    search += '&page=' + (points.length/queryLimit + 1);
+                    console.log(search);
+                    loadSpaces(
+                        {
+                            queryString: search,
+                            keepData: true,
+                            "reset": true
+                        }
+                    )
+                }
+            })
+        );
+    }
     $('.list-space>h2>.library').each(function(index, el) {
         var $address = $(this).next('.address');
         if($(this).html() == "")  {
