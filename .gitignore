@@ -18,3 +18,5 @@
 
 *.codekit
 *.sass-cache/*
+
+*.scssc
