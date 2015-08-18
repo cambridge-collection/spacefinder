@@ -493,9 +493,18 @@ textarea {
 }
 
 .field_with_errors {
-    input {
-        border-color: #FF6666;
+    width: 100%;
+    input, textarea, select {
+        border: 1px solid #FF6666;
     }
+}
+
+.pre-fill.field_with_errors {
+  border: 1px solid #FF6666;
+  
+  input {
+    border: none;
+  }
 }
 
 #error_explanation {
@@ -510,3 +519,4 @@ textarea {
         list-style: none;
     }
 }
+

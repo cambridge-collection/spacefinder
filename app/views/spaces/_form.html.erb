@@ -155,13 +155,13 @@
       </div>
       <div class="field">
         <%= f.label :twitter_screen_name, "Twitter screen name (e.g. 'cambridge_uni')" %>
-        <div class="pre-fill">
+        <div class="pre-fill <%= @space.errors[:twitter_screen_name].any? ? "field_with_errors" : "" %>">
           <span>@</span><%= f.text_field :twitter_screen_name %>
         </div>
       </div>
       <div class="field">
         <%= f.label :facebook_url, "Facebook page name (e.g. 'thesnugbar' or 'pages/Central-Library-Cambridge/106156113195')" %>
-        <div class="pre-fill">
+        <div class="pre-fill <%= @space.errors[:facebook_url].any? ? "field_with_errors" : "" %>">
           <span>http://www.facebook.com/</span><%= f.text_field :facebook_url %>
         </div>
       </div>
