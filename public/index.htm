@@ -19,6 +19,10 @@
         <a href="#/search" id="search-btn"><i class="icon-search"></i><span class="hidden">Search</span></a>
         <a href="#/list"><i class="icon-list"></i><span>List</span></a>
         <a href="#/map"><i class="icon-marker"></i><span>Map</span></a>
+        <div class="large-nav">
+            <a href="#/list">List</a>
+            |<a href="#/map">Map</a>
+        </div>
     </nav>
 
     <div id="search" class="view-container hidden"></div>
@@ -29,36 +33,12 @@
     <div class="loading-cover">
         <div class="svg-container">
             <svg preserveAspectRatio="xMinYMin meet" class="svg-content" viewBox="0 0 350 500">
-                <defs>
-                    <clipPath id="myClip">
-                        <path d="M316.332812,0.30078125 L0.795214844,185.412109 L181.373828,234.106445 L316.332812,0.30078125 Z" id="Path-1" fill="#000"></path>
-                        <path d="M453.938613,72.9885175 L156.46601,284.130333 L339.666412,317.891975 L453.938613,72.9885175 Z" id="Path-1-Copy" fill="#000" transform="translate(305.202312, 195.440246) scale(-1, 1) rotate(-55.000000) translate(-305.202312, -195.440246) "></path>
-                    </clipPath>
-                    <pattern id="pattern" x="0" y="-200" width="300%" height="150%" patternUnits="userSpaceOnUse">
-                        <rect x="0" y="0" width="150%" height="100%" fill="url(#gradient)" fill-opacity="1" transform="rotate(30)">
-                            <animate attributeType="XML"
-                            attributeName="x"
-                            from="0" to="150%"
-                            dur="8s"
-                            repeatCount="indefinite"/>
-                        </rect>
-                        <rect x="-150%" y="0" width="150%" height="100%" fill="url(#gradient)" fill-opacity="1" transform="rotate(30)">
-                            <animate attributeType="XML"
-                            attributeName="x"
-                            from="-150%" to="0"
-                            dur="8s"
-                            repeatCount="indefinite"/>
-                        </rect>
-                    </pattern>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0">
-                        <stop offset="25%" style="stop-color:#000;"/>
-                        <stop offset="50%" style="stop-color:#fff;"/>
-                        <stop offset="75%" style="stop-color:#000;"/>
-                    </linearGradient>
-                </defs>
-                <rect x="0" y="0" width="100%" height="100%" clip-path="url(#myClip)" fill="url(#pattern)" fill-opacity="0.08"/>
+                <path d="M316.332812,0.30078125 L0.795214844,185.412109 L181.373828,234.106445 L316.332812,0.30078125 Z" id="Path-1" fill="#00B1C1"></path>
+                <path d="M453.938613,72.9885175 L156.46601,284.130333 L339.666412,317.891975 L453.938613,72.9885175 Z" id="Path-1-Copy" fill="#197580" transform="translate(305.202312, 195.440246) scale(-1, 1) rotate(-55.000000) translate(-305.202312, -195.440246) "></path>
             </svg>
         </div>
+        <i class="icon-loading"></i>
+        <div class="logo"></div>
     </div>
 
     <script src="/assets/js/min/icon-map-min.js" type="text/javascript"></script>

@@ -1059,6 +1059,8 @@
       width: 100%;
       padding: 6px;
       margin: 12px 0; }
+    .login-screen input.error {
+      border-color: #AA3333; }
     .login-screen input[type=submit] {
       font-family: "Myriad Pro", verdana, sans-serif;
       font-weight: lighter; }
@@ -1156,6 +1158,9 @@ h2 {
 
 .loading-cover {
   background-color: #F3F3F3;
+  background-image: url("/assets/img/cambridge-background.jpg");
+  background-size: cover;
+  background-position: center;
   color: #FFF;
   font-size: 2rem;
   text-transform: uppercase;
@@ -1166,22 +1171,26 @@ h2 {
   height: 100%;
   z-index: 50;
   text-align: center;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out; }
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out; }
+  .loading-cover .logo {
+    background-image: url("/assets/img/spacefinder.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    height: 50px;
+    margin-top: 5vmin; }
   .loading-cover.loaded {
-    background-color: transparent; }
-    .loading-cover.loaded .svg-container {
-      top: 0vh;
-      width: 100vmin;
-      height: 110vmin;
-      opacity: 0; }
+    opacity: 0; }
   .loading-cover .icon-loading {
     margin-top: 20vh;
     display: block;
     font-size: 3rem;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    color: #106470; }
   .loading-cover .svg-container {
     display: inline-block;
     position: relative;
@@ -1220,7 +1229,20 @@ h2 {
   overflow: hidden;
   height: 100vh; }
   .large_view #top-bar {
-    position: absolute; }
+    position: absolute;
+    background-image: url("/assets/img/spacefinder.svg");
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .large_view #top-bar .large-nav {
+      display: block;
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
+      text-align: right;
+      margin-top: 6px;
+      color: #FFF; }
+      .large_view #top-bar .large-nav a {
+        display: inline-block;
+        margin: 12px; }
   .large_view .view-container {
     min-height: 0;
     height: calc(100% - 50px);

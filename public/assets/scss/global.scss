@@ -100,6 +100,9 @@ h2 {
 
 .loading-cover {
     background-color: $lightBackgroundColor;
+	background-image: url('/assets/img/cambridge-background.jpg');
+	background-size: cover;
+	background-position: center;
     color: #FFF;
     font-size: 2rem;
     text-transform: uppercase;
@@ -110,20 +113,21 @@ h2 {
     height: 100%;
     z-index: 50;
     text-align: center;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+	.logo {
+		background-image: url('/assets/img/spacefinder.svg');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		width: 100%;
+		height: 50px;
+		margin-top: 5vmin;
+	}
     &.loaded {
-        background-color: transparent;
-        .svg-container {
-            top: 0vh;
-            width: 100vmin;
-            height: 110vmin;
-            opacity: 0;
-
-        }
+        opacity: 0;
     }
 
     .icon-loading {
@@ -131,6 +135,7 @@ h2 {
         display: block;
         font-size: 3rem;
         margin-bottom: 20px;
+		color: $barColor;
     }
     .svg-container {
         display: inline-block;

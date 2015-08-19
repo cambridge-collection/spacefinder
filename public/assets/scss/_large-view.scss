@@ -8,6 +8,22 @@
 
     #top-bar {
         position: absolute;
+        background-image: url('/assets/img/spacefinder.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        .large-nav {
+            display: block;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            text-align: right;
+            margin-top: 6px;
+            color: #FFF;
+            a {
+                display: inline-block;
+                margin: 12px;
+            }
+        }
     }
 
     .view-container {

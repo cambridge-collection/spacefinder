@@ -16,20 +16,19 @@
 <div class="user-details" style="display:none;">
     Thanks for logging in. It looks like this is the first time you have logged in so we need a few more details from you before you can continue.
 
-    <form id="update-user-details">
-        <div class="user-avatar-container">
-            <div class="user-avatar"></div>
-            <a href="#" class="avatar-upload-button btn">Change image</a>
 
-        </div>
-        <form>
-            <input type="file" class="avatar-upload" style="visibility:hidden;"/>
-            <input type="hidden" name="image_data" />
-            <input placeholder="Display name" type="text" name="name" />
-            <input placeholder="Discipline of study" type="text" name="discipline" />
-            <input placeholder="email" type="text" name="email" />
-            <input type="submit" value="Update details" />
-        </form>
+    <div class="user-avatar-container">
+        <div class="user-avatar"></div>
+        <a href="#" class="avatar-upload-button btn">Change image</a>
+
+    </div>
+    <form id="update-user-details">
+        <input type="file" class="avatar-upload" style="visibility:hidden;"/>
+        <input type="hidden" name="image_data" />
+        <input placeholder="Display name *" type="text" name="name" />
+        <input placeholder="Discipline of study *" type="text" name="discipline" />
+        <input placeholder="email *" type="text" name="email" />
+        <input type="submit" value="Update details" />
     </form>
 
 </div>
@@ -40,6 +39,23 @@ $login.find('#update-user-details').submit(function(event) {
     event.preventDefault();
     console.log('submit details update');
     console.log($(this).serialize());
+    var error = false;
+    if ($login.find('input[name="name"]').val() == '') {
+        error = true;
+        $login.find('input[name="name"]').addClass('error');
+    }
+    if ($login.find('input[name="discipline"]').val() == '') {
+        error = true;
+        $login.find('input[name="discipline"]').addClass('error');
+    }
+    if ($login.find('input[name="email"]').val() == '') {
+        error = true;
+        $login.find('input[name="email"]').addClass('error');
+    }
+    if (!!error) {
+        return false;
+    }
+    $login.find('input[type=submit]').html('<i class="icon-loading"></i>')
     $.ajax({
         url: 'https://uoc-spacefinder.herokuapp.com/user?callback=?',
         //url: '/assets/data/login.json',
@@ -47,6 +63,7 @@ $login.find('#update-user-details').submit(function(event) {
         data: $(this).serialize()
     })
     .done(function(data) {
+        $login.find('input[type=submit]').html('Update details')
         if(data.status == "ok") {
             $.extend(userDetails, data);
             if(!userDetails.details_needed) {

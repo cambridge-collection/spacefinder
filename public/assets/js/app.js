@@ -364,9 +364,10 @@ function switchView(newView, modal) {
         }
     }
     if($('.loading-cover').length > 0 && !!$('html').hasClass('flexbox')) {
-        $('.loading-cover').addClass('loaded').delay(500).fadeOut(300, function() {
-            $(this).remove();
-        });
+        $('.loading-cover').addClass('loaded');
+        window.setTimeout(function() {
+            $('.loading-cover').remove();
+        }, 500);
     } else {
         $('.loading-cover').html("<p>It appears you are using an outdated browser. If possible switch to a newer one as some things may not look as they should or are missing. To continue into the app please click below</p><p><a href=\"#\" id=\"old-continue\">Continue</a></p>")
         $('#old-continue').on('click', function(event) {
@@ -455,6 +456,7 @@ function closeSpaces() {
         for (var i = 0; i < openPoints.length; i++) {
             if(points[openPoints[i]].mapSummary !== undefined) points[openPoints[i]].mapSummary.close();
             points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+            points[openPoints[i]].marker.setZIndex(0);
             points[openPoints[i]].marker.setMap(map);
             openPoints.splice(i, 1);
         }
@@ -740,6 +742,7 @@ function loadMap(options) {
                 for (var i = 0; i < openPoints.length; i++) {
                     points[openPoints[i]].mapSummary.close();
                     points[openPoints[i]].marker.icon.fillColor = inactiveColor;
+                    points[openPoints[i]].marker.setZIndex(0);
                     points[openPoints[i]].marker.setMap(map);
                     openPoints.splice(i, 1);
                 }
@@ -763,11 +766,13 @@ function loadMap(options) {
 
             infowindow.open(map,marker);
             this.icon.fillColor = defaults.activeColor;
+            this.setZIndex(100);
             this.setMap(map);
             openPoints.push(key);
         });
         google.maps.event.addListener(infowindow,'closeclick',function(){
             marker.icon.fillColor = defaults.inactiveColor;
+            marker.setZIndex(0);
             marker.setMap(map);
             openPoints = [];
         });
@@ -841,6 +846,7 @@ function loadList(options) {
                 var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
                 if(space.marker !== undefined && space.marker.icon !== undefined) {
                     space.marker.icon.fillColor = activeColor;
+                    space.marker.setZIndex(10000);
                     space.marker.setMap(map);
                 }
             }
@@ -855,6 +861,7 @@ function loadList(options) {
                 if(!$(this).hasClass('clicked')) {
                     if(space.marker !== undefined && space.marker.icon !== undefined) {
                         space.marker.icon.fillColor = inactiveColor;
+                        space.marker.setZIndex(0);
                         space.marker.setMap(map);
                     }
                 }
