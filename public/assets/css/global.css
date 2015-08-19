@@ -10,6 +10,8 @@
   display: flex;
   border-bottom: 2px solid black;
   padding: 8px 4px 0; }
+  #top-bar .large-nav {
+    display: none; }
   #top-bar a {
     border-radius: 4px 4px 0 0;
     height: 100%;

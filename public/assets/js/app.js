@@ -274,7 +274,7 @@ function resizeForMobile() {
 function resizeForDesktop() {
     currView = 'large';
     $('body').addClass('large_view')
-    $('#top-bar').find('a[href!="#/search"]').hide(0);
+    $('#top-bar').find('> a[href!="#/search"]').hide(0);
     $('#map').show(0);
     $('#search-btn').addClass('active');
     $('#search').show();
