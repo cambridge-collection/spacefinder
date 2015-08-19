@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
+  rolify
   devise :registerable,
          :rememberable, :trackable, :omniauthable
   
-  has_many :tips
+  has_many :tips, dependent: :destroy
+  has_many :identities, dependent: :destroy
   
   def self.find_for_oauth(auth, signed_in_resource = nil)
 

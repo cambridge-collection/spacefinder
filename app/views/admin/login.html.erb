@@ -1,0 +1,9 @@
+<% content_for :title, "Spacefinder Administration Login" %>
+<% content_for :body_class, "small-page" %>
+
+<div class="container login">
+    <h1>SPACEFINDER<small>Admin Portal</small></h1>
+
+    <%= image_tag('raven-logo.gif', alt: 'Raven') %>
+    <%= link_to 'Login', user_omniauth_authorize_path(:facebook), class: 'btn' %>
+</div>

@@ -2,7 +2,7 @@ class SpacesController < ApplicationController
   protect_from_forgery except: :add_tag
   before_filter :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update]
   before_filter :check_user_details_set, only: :add_tag
-  before_action :set_space, only: [:show, :edit, :update, :destroy, :add_tag]
+  before_action :set_space, only: [:show, :edit, :update, :add_tag]
   after_action :jsonp_callback, only: [:index, :show, :filters]
   layout "admin"
 
@@ -38,6 +38,7 @@ class SpacesController < ApplicationController
 
   # GET /spaces/new
   def new
+    authorize! :manage, Space
     @space = Space.new
     space_photo = @space.space_photos.new
     term_time_hours = @space.build_term_time_hours
@@ -50,13 +51,14 @@ class SpacesController < ApplicationController
 
   # GET /spaces/1/edit
   def edit
-    
+    authorize! :manage, Space
     space_photo = @space.space_photos.new
   end
 
   # POST /spaces
   # POST /spaces.json
   def create
+    authorize! :manage, Space
     @space = Space.new(space_params)
 
     respond_to do |format|
@@ -73,6 +75,7 @@ class SpacesController < ApplicationController
   # PATCH/PUT /spaces/1
   # PATCH/PUT /spaces/1.json
   def update
+    authorize! :manage, Space
     respond_to do |format|
       if @space.update(space_params)
         format.html { redirect_to admin_path}
@@ -81,16 +84,6 @@ class SpacesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @space.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /spaces/1
-  # DELETE /spaces/1.json
-  def destroy
-    @space.destroy
-    respond_to do |format|
-      format.html { redirect_to spaces_url }
-      format.json { head :no_content }
     end
   end
   

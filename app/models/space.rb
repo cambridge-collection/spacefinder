@@ -1,4 +1,6 @@
 class Space < ActiveRecord::Base
+  resourcify
+  
   acts_as_taggable
   acts_as_taggable_on :user_tags
   

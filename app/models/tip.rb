@@ -1,4 +1,5 @@
 class Tip < ActiveRecord::Base
+  resourcify
   acts_as_paranoid
   belongs_to :space
   belongs_to :user

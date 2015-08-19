@@ -36,6 +36,7 @@ class TipsController < ApplicationController
   end
   
   def destroy
+    authorize! :manage, Tip
     @tip = Tip.find(params[:id])
     @tip.destroy
     respond_to do |format|
@@ -45,13 +46,15 @@ class TipsController < ApplicationController
   end
 
   def review
+    authorize! :manage, Tip
     @tips = Tip.order('updated_at DESC').where(:response => nil)
     render layout: "admin"
   end
   
   def update
+    authorize! :manage, Tip
     @tip = Tip.find(params[:id])
-    @tip.responding_user = User.first # TODO use current admin user
+    @tip.responding_user = current_user
     respond_to do |format|
       if @tip.update(response_params)
         format.html { redirect_to admin_review_url, notice: 'Your response has been added successfully' }

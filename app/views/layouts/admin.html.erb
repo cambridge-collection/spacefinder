@@ -4,20 +4,22 @@
     <title><%= yield :title %></title>
     <%= stylesheet_link_tag "admin" %>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
+    <%= csrf_meta_tags %>
     <%= yield :javascripts %>
     
 </head>
 <body class="<%= yield :body_class %>">
   
-  <nav id="top-bar">
-    <% unless @disable_back_button then %>
-      <%= link_to admin_path, class: "back" do %>
-        <i class="icon-arrow-left"></i>Back
+  <% if user_signed_in? then %>
+    <nav id="top-bar">
+      <% unless @disable_back_button then %>
+        <%= link_to admin_path, class: "back" do %>
+          <i class="icon-arrow-left"></i>Back
+        <% end %>
       <% end %>
-    <% end %>
-    <div class="logout"><%= link_to('Logout', users_sign_out_path, :method => :delete) %></div>
-  </nav>
+      <div class="logout"><%= link_to('Logout', users_sign_out_path, :method => :delete) %></div>
+    </nav>
+  <% end %>
   
   <%= yield %>
   

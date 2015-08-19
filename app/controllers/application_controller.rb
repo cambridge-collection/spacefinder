@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
   
   private
   
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { render nothing: true, status: :forbidden }
+      format.html { redirect_to admin_login_url }
+    end
+  end
+  
   def jsonp_callback
     if params[:callback] && params[:format].to_s == 'json'
       response['Content-Type'] = 'application/javascript'
