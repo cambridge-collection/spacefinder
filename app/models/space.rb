@@ -3,6 +3,7 @@ class Space < ActiveRecord::Base
   
   acts_as_taggable
   acts_as_taggable_on :user_tags
+  acts_as_mappable
   
   validates_inclusion_of :expensive, :in => 1..5, :allow_blank => true
   validates :term_time_hours, presence: true
@@ -62,7 +63,9 @@ class Space < ActiveRecord::Base
     available_filters: [
       :with_noise_ids,
       :with_tag_names,
-      :search_query
+      :search_query,
+      :nearest, 
+      :bounds
     ].concat(atmospheres.collect{ |atmosphere| 
       atmosphere.to_sym
     }).concat(facilities.collect{ |facility| 
@@ -82,6 +85,15 @@ class Space < ActiveRecord::Base
     return nil if query.blank?
     
     where("LOWER(name) LIKE ?", "%#{query.downcase}%")
+  }
+  
+  scope :nearest, ->(origin) {
+    by_distance(origin: origin.split(','))
+  }
+  
+  scope :bounds, ->(bounds) {
+    return nil if (bounds.sw.nil? || bounds.ne.nil?)
+    in_bounds([bounds.sw.split(','), bounds.ne.split(',')])
   }
   
   atmospheres.each do |atmosphere|

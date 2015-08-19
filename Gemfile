@@ -36,6 +36,8 @@ gem 'nested_form'
 gem 'kaminari'
 gem 'cancancan'
 gem 'rolify'
+gem 'geokit-rails'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

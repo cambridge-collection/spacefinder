@@ -8,53 +8,7 @@
 <h1>Listing Spaces</h1>
 
 
-<%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' }  do |f| %>
 
-  Search for a space, keyword or tag
-  <div>
-    
-      <%= text_field_tag("filters[search_query]") %>
-      <br>
-  </div>
-
-  Noise levels
-  <div>
-    <% @filterrific.select_options[:with_noise_ids].each do |noise, id| %>
-      <%= check_box_tag("filters[with_noise_ids][]", id) %>
-      <%=h noise %>
-      <br>
-    <% end %>
-  </div>
-  
-  Atmosphere
-  <div>
-    <% @filterrific.select_options[:with_atmosphere].each do |atmosphere| %>
-      <%= check_box_tag("filters[#{atmosphere}]", "true") %>
-      <%=h atmosphere %>
-      <br>
-    <% end %>
-  </div>
-
-  Facilities
-  <div>
-    <% @filterrific.select_options[:with_facility].each do |facility| %>
-      <%= check_box_tag("filters[#{facility}]", "true") %>
-      <%=h facility %>
-      <br>
-    <% end %>
-  </div>
-  
-  Tags
-  <div>
-    <% @filterrific.select_options[:with_tags].each do |tag, id| %>
-      <%= check_box_tag("filters[with_tag_names][]", tag) %>
-      <%=h tag %>
-      <br>
-    <% end %>
-  </div>
-  
-  <%= f.submit 'Filter' %>
-<% end %>
 
 <table>
   <thead>
