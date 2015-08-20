@@ -91,4 +91,12 @@
         color: darken($lowlight, 40%);
         text-align: center;
     }
+
+    .more-spaces-link {
+        @extend .btn;
+        width: 100%;
+        background: $lowlight!important;
+        color: $fontColor!important;
+        padding: 16px!important;
+    }
 }

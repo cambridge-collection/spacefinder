@@ -37,6 +37,7 @@
     $('.filter-option').on('click', function(event) {
         event.preventDefault();
         $(this).toggleClass('active');
+        systemEvent = true;
         $('.search-button').click();
     });
 

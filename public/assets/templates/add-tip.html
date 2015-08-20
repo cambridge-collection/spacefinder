@@ -60,7 +60,7 @@ $tips.find('.tip-submit').on('click', function(event) {
             }
             data[$(this).data('id')] = value;
         });
-        $.post('https://uoc-spacefinder.herokuapp.com/spaces/#{id}/tips', data)
+        $.post(domain + 'spaces/#{id}/tips', data)
             .done(function(data) {
                 $tips.find('.close-view').trigger('click');
                 $(window).trigger('event_success', {

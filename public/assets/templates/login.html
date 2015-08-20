@@ -57,7 +57,7 @@ $login.find('#update-user-details').submit(function(event) {
     }
     $login.find('input[type=submit]').html('<i class="icon-loading"></i>')
     $.ajax({
-        url: 'https://uoc-spacefinder.herokuapp.com/user?callback=?',
+        url: domain + 'user?callback=?',
         //url: '/assets/data/login.json',
         method: 'POST',
         data: $(this).serialize()
@@ -113,14 +113,14 @@ $login.find('.avatar-upload').on('change', function(event) {
 
 $('.raven-login-button').on('click', function(event) {
     event.preventDefault();
-    var url = "https://uoc-spacefinder.herokuapp.com/users/auth/raven";
+    var url = domain + "users/auth/raven";
     //window.open(url, "Raven login", "width=980,height=600");
     $login.find('.login').fadeOut(300);
     $login.find('.user-details').data('from-login', 'true').fadeIn(300);
 });
 $('.facebook-login-button').on('click', function(event) {
     event.preventDefault();
-    var url = "/assets/data/login-popup.html";
+    var url = domain + "users/auth/facebook";
     loginWindow = window.open(url, "Facebook login", "width=400,height=300");
 });
 

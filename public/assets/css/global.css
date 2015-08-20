@@ -205,6 +205,11 @@
     margin: 12px;
     color: #828282;
     text-align: center; }
+  #list .more-spaces-link {
+    width: 100%;
+    background: #e8e8e8 !important;
+    color: #212121 !important;
+    padding: 16px !important; }
 
 .space-container {
   min-height: 100vh;
@@ -907,7 +912,7 @@
               color: #FFF; }
             .new-tip-container .parts-container .questions li .control a:first-child {
               margin-right: 6px; }
-    .new-tip-container .parts-container .btn, .new-tip-container .parts-container .login-screen input[type=submit], .login-screen .new-tip-container .parts-container input[type=submit] {
+    .new-tip-container .parts-container .btn, .new-tip-container .parts-container #list .more-spaces-link, #list .new-tip-container .parts-container .more-spaces-link, .new-tip-container .parts-container .login-screen input[type=submit], .login-screen .new-tip-container .parts-container input[type=submit] {
       width: 100%;
       font-size: 1.4rem;
       padding: 12px; }
@@ -1068,7 +1073,7 @@
 .user-avatar-container {
   width: 150px;
   margin: 24px auto 0; }
-  .user-avatar-container .btn, .user-avatar-container .login-screen input[type=submit], .login-screen .user-avatar-container input[type=submit] {
+  .user-avatar-container .btn, .user-avatar-container #list .more-spaces-link, #list .user-avatar-container .more-spaces-link, .user-avatar-container .login-screen input[type=submit], .login-screen .user-avatar-container input[type=submit] {
     font-size: 1rem;
     bottom: 0;
     width: 100%; }
@@ -1131,7 +1136,7 @@ h2 {
   color: #106470;
   margin-top: 0; }
 
-.btn, .login-screen input[type=submit], .btn-inline {
+.btn, #list .more-spaces-link, .login-screen input[type=submit], .btn-inline {
   width: 100%;
   text-align: center;
   background: #642c73;
@@ -1143,9 +1148,9 @@ h2 {
   display: inline-block;
   border: none;
   cursor: pointer; }
-  .btn.disabled, .login-screen input.disabled[type=submit], .btn-inline.disabled {
+  .btn.disabled, #list .disabled.more-spaces-link, .login-screen input.disabled[type=submit], .btn-inline.disabled {
     background: #e8e8e8; }
-  .btn.secondary, .login-screen input.secondary[type=submit], .btn-inline.secondary {
+  .btn.secondary, #list .secondary.more-spaces-link, .login-screen input.secondary[type=submit], .btn-inline.secondary {
     background: #FFF;
     border: 1px solid #e8e8e8;
     color: #212121; }
@@ -1231,8 +1236,9 @@ h2 {
   .large_view #top-bar {
     position: absolute;
     background-image: url("/assets/img/spacefinder.svg");
-    background-position: center center;
-    background-repeat: no-repeat; }
+    background-position: center 12px;
+    background-repeat: no-repeat;
+    background-size: auto 70%; }
     .large_view #top-bar .large-nav {
       display: block;
       -webkit-flex-grow: 1;
@@ -1285,7 +1291,7 @@ h2 {
   .large_view .space-container {
     min-height: 0;
     margin-top: 50px;
-    height: calc(100% - 50px);
+    height: 100%;
     width: 50%;
     -webkit-overflow-scrolling: touch;
     max-width: 510px;

@@ -368,14 +368,17 @@ if(currView == 'large') {
         map.setZoom(18);
         systemEvent = true;
         map.setCenter({'lat':lat, 'lng':lng});
-        space.marker.icon.fillColor = activeColor;
+        if(space.marker !== undefined) {
+            space.marker.icon.fillColor = activeColor;
+        }
+
     }
 }
 
 //load current tips
 function loadTips() {
     $.ajax({
-        url: 'https://uoc-spacefinder.herokuapp.com/spaces/#{id}/tips.json?callback=?',
+        url: domain + 'spaces/#{id}/tips.json?callback=?',
         cache:false,
         dataType:'json',
         method:'GET'

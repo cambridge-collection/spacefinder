@@ -9,9 +9,9 @@
     #top-bar {
         position: absolute;
         background-image: url('/assets/img/spacefinder.svg');
-        background-position: center center;
+        background-position: center 12px;
         background-repeat: no-repeat;
-
+        background-size: auto 70%;
         .large-nav {
             display: block;
             -webkit-flex-grow: 1;
@@ -86,7 +86,7 @@
     .space-container {
         min-height: 0;
         margin-top: $navHeight;
-        height: calc(100% - #{$navHeight});
+        height: 100%;
         //overflow: auto;
         width: 50%;
         -webkit-overflow-scrolling: touch;

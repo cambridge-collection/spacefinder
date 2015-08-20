@@ -1,6 +1,6 @@
 /* Modernizr 2.8.3 (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-flexbox-cssclasses-testprop-testallprops-domprefixes
- */
+* Build: http://modernizr.com/download/#-flexbox-cssclasses-testprop-testallprops-domprefixes
+*/
 ;window.Modernizr=function(a,b,c){function x(a){j.cssText=a}function y(a,b){return x(prefixes.join(a+";")+(b||""))}function z(a,b){return typeof a===b}function A(a,b){return!!~(""+a).indexOf(b)}function B(a,b){for(var d in a){var e=a[d];if(!A(e,"-")&&j[e]!==c)return b=="pfx"?e:!0}return!1}function C(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:z(f,"function")?f.bind(d||b):f}return!1}function D(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),e=(a+" "+n.join(d+" ")+d).split(" ");return z(b,"string")||z(b,"undefined")?B(e,b):(e=(a+" "+o.join(d+" ")+d).split(" "),C(e,b,c))}var d="2.8.3",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k,l={}.toString,m="Webkit Moz O ms",n=m.split(" "),o=m.toLowerCase().split(" "),p={},q={},r={},s=[],t=s.slice,u,v={}.hasOwnProperty,w;!z(v,"undefined")&&!z(v.call,"undefined")?w=function(a,b){return v.call(a,b)}:w=function(a,b){return b in a&&z(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=t.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(t.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(t.call(arguments)))};return e}),p.flexbox=function(){return D("flexWrap")};for(var E in p)w(p,E)&&(u=E.toLowerCase(),e[u]=p[E](),s.push((e[u]?"":"no-")+u));return e.addTest=function(a,b){if(typeof a=="object")for(var d in a)w(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" "+(b?"":"no-")+a),e[a]=b}return e},x(""),i=k=null,e._version=d,e._domPrefixes=o,e._cssomPrefixes=n,e.testProp=function(a){return B([a])},e.testAllProps=D,g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+s.join(" "):""),e}(this,this.document);
 
 //app code below this point
@@ -9,7 +9,6 @@ $list = $('#list'),
 openPoints = [],
 loc = {'lat':52.205575, 'lng':0.121682},
 userLoc = {'lat':0, 'lng':0}, //52.2050683,0.1077597
-userDetails = null,
 getLocation = true,
 centerOnLocation = false,
 points = [],
@@ -22,7 +21,7 @@ currentLoc = loc,
 systemEvent = false,
 spacesRequest = null,
 totalSpaceCount = 0,
-queryLimit = 9999,
+queryLimit = 20,
 mapOptions = {
     center: loc,
     zoom: 20,
@@ -94,6 +93,7 @@ var multiMarkerSymbol = {
 };
 $().ready(function() {
     //alert($(body).hasClass('flexbox'));
+    resetViews();
     if (!$('html').hasClass('flexbox')) {
         $('head').append('<link  rel="stylesheet" type="text/css" href="/assets/css/old.css" />');
     }
@@ -174,6 +174,7 @@ $().ready(function() {
                     //set the center of the map on users current location
 
                     loadSpaces({
+                        location:userLoc,
                         callback:function() {
                             switchView(startView);
                         }
@@ -181,6 +182,7 @@ $().ready(function() {
                 }, function () {
                     getLocation = false;
                     loadSpaces({
+                        location:loc,
                         callback:function() {
                             switchView(startView);
                         }
@@ -192,6 +194,7 @@ $().ready(function() {
                 });
             } else {
                 loadSpaces({
+                    location:loc,
                     callback:function() {
                         switchView(startView);
                     }
@@ -340,13 +343,18 @@ function switchView(newView, modal) {
                 },
                 progress : function() {
                     if (newView == 'list') {
+                        systemEvent = true;
                         $(window).scrollTop(listScroll);
+                        map.setZoom(currentZoom);
+                        pointsInView();
                     }
                     if (newView == 'map') {
                         if(openPoints.length > 0) {
+                            systemEvent = true;
                             new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
                             systemEvent = true;
                             map.setZoom(currentZoom);
+                            pointsInView();
                         }
                     }
                 }
@@ -377,6 +385,7 @@ function switchView(newView, modal) {
             });
         });
     }
+    pointsInView();
     /*if(!mapViewed) {
     mapViewed == true;
     if(!!centerOnLocation) {
@@ -431,7 +440,6 @@ function showSpace(data) {
     .insertAfter('#list')
     //.fadeIn(300)
 
-
     if(currView == 'large') {
         //$('#list').css('display', 'none');
         space.width($list.width()).css('left', $list.offset().left);
@@ -469,6 +477,7 @@ function closeSpaces() {
 }
 
 function resetViews() {
+    systemEvent = true;
     mapOptions.center = currentLoc;
     mapOptions.zoom = currentZoom;
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -490,6 +499,11 @@ function resetViews() {
         if(!systemEvent && $('div[id^=space-]').length == 0) {
             //console.log('non system event fired - bounds');
             currentZoom = map.getZoom();
+            var center = map.getCenter();
+            window.setTimeout(function() {
+                loadSpaces({keepData:true,"reset": true, location:{lat:center.lat(), lng:center.lng()}});
+            }, 300);
+
             pointsInView();
         }
         setTimeout(function() {
@@ -501,71 +515,71 @@ function resetViews() {
 
 function loadSpaces(options) {
     var defaults = {
+        location:'',
         queryString:'',
         reset:false,
-        keepData:false
+        keepData:false,
+        boundToMap:true
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
 
     defaults.queryString += '&limit=' + queryLimit;
+    /*if(defaults.location !== '') {
+    defaults.queryString += '&filters[nearest]=' + defaults.location.lat + ',' + defaults.location.lng;
+}*/
+defaults.queryString += '&filters[nearest]=' + userLoc.lat + ',' + userLoc.lng;
+if(!!defaults.boundToMap && map !== undefined) {
+    var bounds = map.getBounds();
+    var ne = bounds.getNorthEast();
+    var sw = bounds.getSouthWest();
+    defaults.queryString += '&filters[bounds][sw]=' + sw.lat() + ',' + sw.lng();
+    defaults.queryString += '&filters[bounds][ne]=' + ne.lat() + ',' + ne.lng();
+}
 
-    if(!defaults.keepData) resetViews();
+if(!defaults.keepData) resetViews();
 
-    if (spacesRequest  && spacesRequest.readyState != 4) {
-        console.log('abort request');
-        spacesRequest.abort();
+if (spacesRequest  && spacesRequest.readyState != 4) {
+    console.log('abort request');
+    spacesRequest.abort();
+}
+spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
+    cache:false,
+    dataType:'json',
+    method:'GET',
+    data:defaults.queryString
+}).complete(function() {
+    if(typeof(defaults.callback) == 'function') {
+        defaults.callback();
     }
-    spacesRequest = $.ajax('https://uoc-spacefinder.herokuapp.com/spaces.json?callback=?', {
-        cache:false,
-        dataType:'json',
-        method:'GET',
-        data:defaults.queryString
-    }).done(function(data) {
-        //$.getJSON('/assets/data/points.json').done(function(data) {
-        if (!!defaults.keepData) {
-            points = cleanData(points.concat(data.results))
-        } else {
-            points = data.results;
-        }
+}).success(function(data) {
+    //$.getJSON('/assets/data/points.json').done(function(data) {
 
-        distCount = 0;
+    if (!!defaults.keepData) {
+        points = cleanData(points.concat(data.results))
+    } else {
+        points = data.results;
+    }
 
-        totalSpaceCount = data.total_count;
+    distCount = 0;
 
-        if(points.length == 0) {
-            loadMap();
-            loadList();
+    totalSpaceCount = data.total_count;
 
-            if(typeof(defaults.callback) == 'function') {
-                defaults.callback();
-            }
-            return false;
-        }
+    if(points.length == 0) {
+        loadMap();
+        loadList();
 
-        if(!!getLocation) {
-            //console.log('get distance');
-            $.each(points, function(key, value) {
 
-                if(points[key].lat !== null && points[key].lng !== null) {
-                    getDistance(userLoc, {lat:Number(points[key].lat),lng:Number(points[key].lng)}, function(dist) {
-                        points[key].distance = dist;
-                        distCount++;
-                        if (distCount == points.length) {
-                            if(!defaults.reset) {
-                                loadSearch();
+        return false;
+    }
 
-                            }
-                            orderSpaces();
-                            loadMap();
-                            loadList();
+    if(!!getLocation) {
+        //console.log('get distance');
+        $.each(points, function(key, value) {
 
-                            if(typeof(defaults.callback) == 'function') {
-                                defaults.callback();
-                            }
-                        }
-                    });
-                } else {
+            if(points[key].lat !== null && points[key].lng !== null) {
+                getDistance(userLoc, {lat:Number(points[key].lat),lng:Number(points[key].lng)}, function(dist) {
+                    points[key].distance = dist;
                     distCount++;
                     if (distCount == points.length) {
                         if(!defaults.reset) {
@@ -575,44 +589,58 @@ function loadSpaces(options) {
                         orderSpaces();
                         loadMap();
                         loadList();
-                        if(typeof(defaults.callback) == 'function') {
-                            defaults.callback();
-                        }
+
                     }
+                });
+            } else {
+                distCount++;
+                if (distCount == points.length) {
+                    if(!defaults.reset) {
+                        loadSearch();
+
+                    }
+                    orderSpaces();
+                    loadMap();
+                    loadList();
                 }
-                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
-            });
-        } else {
-            $.each(points, function(key, value) {
-                points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
-            });
-            if(!defaults.reset) {
-                loadSearch();
+            }
+            points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+        });
+    } else {
+        $.each(points, function(key, value) {
+            points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
+        });
+        if(!defaults.reset) {
+            loadSearch();
 
-            }
-            orderSpaces();
-            loadMap();
-            loadList();
-            if(typeof(defaults.callback) == 'function') {
-                defaults.callback();
-            }
         }
+        orderSpaces();
+        loadMap();
+        loadList();
+    }
 
-    });
+});
 }
 
 function cleanData(data) {
     var foundIds =[],
-        ret = [];
-
+    ret = [],
+    allIds = [];
+    console.log('clean data', data.sort(sortNumber), data.length);
     for (var i = 0; i < data.length; i++) {
+        allIds.push(data[i].id);
         if(foundIds.indexOf(data[i].id) == -1) {
             ret.push(data[i]);
             foundIds.push(data[i].id);
         }
     }
-
+    console.log('all ids', allIds.sort(sortNumber), allIds.length);
+    console.log('cleaned data', ret.length);
     return ret;
+}
+
+function sortNumber(a,b) {
+    return a - b;
 }
 
 function showLoginScreen(container, data) {
@@ -629,7 +657,7 @@ function showLoginScreen(container, data) {
 }
 
 function loadSearch() {
-    $.ajax('https://uoc-spacefinder.herokuapp.com/spaces/filters.json?callback=?', {
+    $.ajax(domain + 'spaces/filters.json?callback=?', {
         cache:false,
         dataType:'json',
         method:'GET'
@@ -697,7 +725,8 @@ function loadMap(options) {
 
         var marker = new google.maps.Marker({
             position: {'lat':Number(points[key].lat),'lng':Number(points[key].lng)},
-            icon: (isMultiMarker ? multiMarkerSymbol : markerSymbol)
+            icon: (isMultiMarker ? multiMarkerSymbol : markerSymbol),
+            animation: google.maps.Animation.DROP
         });
         for (var i = 0; i < markers.spaces.length; i++) {
             points[markers.spaces[i]._jsid].marker = marker;
@@ -734,6 +763,7 @@ function loadMap(options) {
             arrowStyle: 0
         });
         points[key].mapSummary = infowindow;
+
         marker.setMap(map);
 
         google.maps.event.addListener(marker, 'click', function() {
@@ -777,6 +807,9 @@ function loadMap(options) {
             openPoints = [];
         });
     });
+    if(openPoints.length == 1) {
+        points[openPoints[0]].marker.icon.fillColor = activeColor;
+    }
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
     }
@@ -802,15 +835,17 @@ function loadList(options) {
         }
 
     });
-    if (points.length !== totalSpaceCount) {
+    $('.more-spaces-link').remove();
+    if (pointsInView().length < totalSpaceCount) {
         $list.append(
-            $('<a href="#">Load more spaces</a>').on('click', function(event) {
+            $('<a href="#" class="more-spaces-link">Load more spaces</a>').on('click', function(event) {
+                $(this).html('<i class="icon-loading"></i>');
                 event.preventDefault();
                 console.log('pages = ', Math.ceil(totalSpaceCount/queryLimit));
-                console.log('current page = ', points.length/queryLimit);
+                console.log('current page = ', Math.floor(pointsInView().length/queryLimit));
                 if($.type(prepSearch) == 'function') {
                     var search = prepSearch();
-                    search += '&page=' + (points.length/queryLimit + 1);
+                    search += '&page=' + Math.floor(pointsInView().length/queryLimit + 1);
                     console.log(search);
                     loadSpaces(
                         {
@@ -879,7 +914,7 @@ function loadList(options) {
             /* Act on the event */
         });;
     })
-
+    pointsInView();
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
     }
@@ -1170,6 +1205,7 @@ function orderSpaces() {
 
 function pointsInView() {
     var mapBounds = map.getBounds(),
+    ret = [],
     bounds = [
         new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.G),
         new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.G),
@@ -1199,10 +1235,12 @@ function pointsInView() {
             var contains = google.maps.geometry.poly.containsLocation(latlng, poly);
             if (!!contains) {
                 $list.find('[data-id=' + points[i].id + ']').slideDown(300);
+                ret.push(points[i]);
             } else {
                 $list.find('[data-id=' + points[i].id + ']').slideUp(300);
             }
         }
 
     }
+    return ret;
 }
