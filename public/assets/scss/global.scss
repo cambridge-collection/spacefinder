@@ -131,12 +131,16 @@ h2 {
     }
 
     .icon-loading {
-        margin-top: 20vh;
+        margin-top: 45vh;
         display: block;
         font-size: 3rem;
         margin-bottom: 20px;
 		color: $barColor;
     }
+	.message {
+		text-transform: lowercase;
+		font-size: 1rem;
+	}
     .svg-container {
         display: inline-block;
         position: relative;

@@ -1191,11 +1191,14 @@ h2 {
   .loading-cover.loaded {
     opacity: 0; }
   .loading-cover .icon-loading {
-    margin-top: 20vh;
+    margin-top: 45vh;
     display: block;
     font-size: 3rem;
     margin-bottom: 20px;
     color: #106470; }
+  .loading-cover .message {
+    text-transform: lowercase;
+    font-size: 1rem; }
   .loading-cover .svg-container {
     display: inline-block;
     position: relative;
@@ -1246,7 +1249,7 @@ h2 {
       text-align: right;
       margin-top: 6px;
       color: #FFF; }
-      .large_view #top-bar .large-nav a {
+      .large_view #top-bar .large-nav a, .large_view #top-bar .large-nav span {
         display: inline-block;
         margin: 12px; }
   .large_view .view-container {

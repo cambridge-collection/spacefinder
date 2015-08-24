@@ -162,17 +162,18 @@ $().ready(function() {
         view = view.substr(1);
         startView = view;
     }
-
+    $('.current-status').html('templates');
     loadTemplates({
         data: templates,
         callback: function() {
             if ("geolocation" in navigator && !!getLocation && userLoc.lat == 0 && userLoc.lng == 0) {
                 //console.log('get user location');
+                $('.current-status').html('location');
                 navigator.geolocation.getCurrentPosition(function(position) {
                     userLoc.lat = position.coords.latitude;
                     userLoc.lng = position.coords.longitude;
                     //set the center of the map on users current location
-
+                    $('.current-status').html('spaces');
                     loadSpaces({
                         location:userLoc,
                         callback:function() {
@@ -181,6 +182,7 @@ $().ready(function() {
                     });
                 }, function () {
                     getLocation = false;
+                    $('.current-status').html('spaces');
                     loadSpaces({
                         location:loc,
                         callback:function() {
@@ -193,6 +195,7 @@ $().ready(function() {
                     maximumAge: 0
                 });
             } else {
+                $('.current-status').html('spaces');
                 loadSpaces({
                     location:loc,
                     callback:function() {
@@ -320,7 +323,7 @@ function switchView(newView, modal) {
             $('.view-container').css('display', 'none');
             $('a').removeClass('active');
             $('a[href="#/' + newView + '"]').addClass('active');
-
+            $('.current-status').html('initial view');
             $('#' + newView).fadeIn({
                 duration: 300,
                 start:function () {
@@ -371,6 +374,7 @@ function switchView(newView, modal) {
             })
         }
     }
+    $('.loading-cover .message').html('finalising');
     if($('.loading-cover').length > 0 && !!$('html').hasClass('flexbox')) {
         $('.loading-cover').addClass('loaded');
         window.setTimeout(function() {
@@ -700,6 +704,7 @@ function findMarkers(data, checks) {
 }
 /*---------- map --------------*/
 function loadMap(options) {
+    $('.current-status').html('map');
     var defaults = {
         inactiveColor:inactiveColor,
         activeColor:activeColor
@@ -816,6 +821,7 @@ function loadMap(options) {
 }
 
 function loadList(options) {
+    $('.current-status').html('list');
     var defaults = {
         inactiveColor:'rgba(0,0,0,0.6)',
         activeColor:'#e2637c'
