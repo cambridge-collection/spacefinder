@@ -94,6 +94,26 @@ var multiMarkerSymbol = {
 $().ready(function() {
     //alert($(body).hasClass('flexbox'));
     resetViews();
+
+    $(window).on('initialLoadComplete', function(event) {
+        event.preventDefault();
+        $('.loading-cover .message').html('finalising');
+        if($('.loading-cover').length > 0 && !!$('html').hasClass('flexbox')) {
+            $('.loading-cover').addClass('loaded');
+            window.setTimeout(function() {
+                $('.loading-cover').remove();
+            }, 500);
+        } else {
+            $('.loading-cover').html("<p>It appears you are using an outdated browser. If possible switch to a newer one as some things may not look as they should or are missing. To continue into the app please click below</p><p><a href=\"#\" id=\"old-continue\">Continue</a></p>")
+            $('#old-continue').on('click', function(event) {
+                event.preventDefault();
+                $('.loading-cover').addClass('loaded').fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+        }
+    });
+
     if (!$('html').hasClass('flexbox')) {
         $('head').append('<link  rel="stylesheet" type="text/css" href="/assets/css/old.css" />');
     }
@@ -320,15 +340,16 @@ function switchView(newView, modal) {
     if(newView.indexOf('/') == -1 && $('#' + newView).length > 0) {
         if(currView == 'small') {
             console.log(newView);
-            $('.view-container').css('display', 'none');
+            $('.view-container').css({'z-index':'0', 'max-height':'90%', 'overflow':'hidden'});
             $('a').removeClass('active');
             $('a[href="#/' + newView + '"]').addClass('active');
             $('.current-status').html('initial view');
-            $('#' + newView).fadeIn({
+            $('#' + newView).css({'z-index':'1', 'max-height':'', 'overflow':'auto'}).fadeIn({
                 duration: 300,
                 start:function () {
 
                     if (newView == 'map') {
+                        systemEvent = true;
                         google.maps.event.trigger(map, 'resize');
                         $(window).scrollTop(0);
 
@@ -348,16 +369,16 @@ function switchView(newView, modal) {
                     if (newView == 'list') {
                         systemEvent = true;
                         $(window).scrollTop(listScroll);
-                        map.setZoom(currentZoom);
-                        pointsInView();
+                        //map.setZoom(currentZoom);
+                        //pointsInView();
                     }
                     if (newView == 'map') {
                         if(openPoints.length > 0) {
                             systemEvent = true;
                             new google.maps.event.trigger( points[openPoints[0]].marker, 'click' );
                             systemEvent = true;
-                            map.setZoom(currentZoom);
-                            pointsInView();
+                            //map.setZoom(currentZoom);
+                            //pointsInView();
                         }
                     }
                 }
@@ -373,23 +394,11 @@ function switchView(newView, modal) {
                 'name': parts[2].replace('-', ' ')
             })
         }
+        //pointsInView();
     }
-    $('.loading-cover .message').html('finalising');
-    if($('.loading-cover').length > 0 && !!$('html').hasClass('flexbox')) {
-        $('.loading-cover').addClass('loaded');
-        window.setTimeout(function() {
-            $('.loading-cover').remove();
-        }, 500);
-    } else {
-        $('.loading-cover').html("<p>It appears you are using an outdated browser. If possible switch to a newer one as some things may not look as they should or are missing. To continue into the app please click below</p><p><a href=\"#\" id=\"old-continue\">Continue</a></p>")
-        $('#old-continue').on('click', function(event) {
-            event.preventDefault();
-            $('.loading-cover').addClass('loaded').fadeOut(300, function() {
-                $(this).remove();
-            });
-        });
-    }
-    pointsInView();
+
+
+
     /*if(!mapViewed) {
     mapViewed == true;
     if(!!centerOnLocation) {
@@ -399,6 +408,7 @@ map.setCenter(loc);
 }
 }*/
 }
+
 
 function loadSpace(options) {
     var defaults = {
@@ -473,11 +483,13 @@ function closeSpaces() {
             openPoints.splice(i, 1);
         }
     }
+    if (currView == 'large') {
+        systemEvent = true;
+        map.setZoom(currentZoom);
+        systemEvent = true;
+        map.setCenter(currentLoc);
+    }
 
-    systemEvent = true;
-    map.setZoom(currentZoom);
-    systemEvent = true;
-    map.setCenter(currentLoc);
 }
 
 function resetViews() {
@@ -527,7 +539,7 @@ function loadSpaces(options) {
     };
     $.extend(defaults, options);
     /*----load spaces-----*/
-
+    $('#top-bar a[href*=map] i').removeClass('icon-marker').addClass('icon-loading');
     defaults.queryString += '&limit=' + queryLimit;
     /*if(defaults.location !== '') {
     defaults.queryString += '&filters[nearest]=' + defaults.location.lat + ',' + defaults.location.lng;
@@ -556,9 +568,10 @@ spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
     }
+    $('#top-bar a[href*=map] i').addClass('icon-marker').removeClass('icon-loading');
 }).success(function(data) {
     //$.getJSON('/assets/data/points.json').done(function(data) {
-
+    console.log('spaces loaded', defaults.queryString, data.results.length);
     if (!!defaults.keepData) {
         points = cleanData(points.concat(data.results))
     } else {
@@ -578,7 +591,7 @@ spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
     }
 
     if(!!getLocation) {
-        //console.log('get distance');
+        console.log('get distance');
         $.each(points, function(key, value) {
 
             if(points[key].lat !== null && points[key].lng !== null) {
@@ -1210,6 +1223,7 @@ function orderSpaces() {
 }
 
 function pointsInView() {
+    var mapHidden = false;
     var mapBounds = map.getBounds(),
     ret = [],
     bounds = [
@@ -1218,7 +1232,7 @@ function pointsInView() {
         new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.j),
         new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.j)
     ];
-
+    console.log(mapBounds);
     /*//console.log(mapBounds.Ia.G, mapBounds.Ca.G);
     //console.log(mapBounds.Ia.j, mapBounds.Ca.G)
     //console.log(mapBounds.Ia.j, mapBounds.Ca.j)
@@ -1247,6 +1261,10 @@ function pointsInView() {
             }
         }
 
+    }
+    console.log('points in view', ret);
+    if (ret.length > 0 && $('.loading-cover').length > 0) {
+        $(window).trigger('initialLoadComplete')
     }
     return ret;
 }

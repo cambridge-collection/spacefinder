@@ -5,7 +5,7 @@
   width: 100%;
   height: 50px;
   background: #106470;
-  z-index: 1;
+  z-index: 10;
   display: -webkit-flex;
   display: flex;
   border-bottom: 2px solid black;
@@ -595,8 +595,15 @@ textarea {
     .tips .tip .buttons .respond {
       float: right; }
 
-.field_with_errors input {
-  border-color: #FF6666; }
+.field_with_errors {
+  width: 100%; }
+  .field_with_errors input, .field_with_errors textarea, .field_with_errors select {
+    border: 1px solid #FF6666; }
+
+.pre-fill.field_with_errors {
+  border: 1px solid #FF6666; }
+  .pre-fill.field_with_errors input {
+    border: none; }
 
 #error_explanation {
   border: 1px solid #FF6666;

@@ -27,6 +27,7 @@
     }
 
     .view-container {
+        position: relative;
         min-height: 0;
         height: calc(100% - #{$navHeight});
         width: 50%;

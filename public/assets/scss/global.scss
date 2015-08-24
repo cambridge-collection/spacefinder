@@ -47,6 +47,7 @@ strong {
     font-weight: normal;
 }
 .view-container {
+	position: absolute;
     display: flex;
     min-height: calc(100vh - #{$navHeight});
     width: 100%;

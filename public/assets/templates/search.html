@@ -37,8 +37,11 @@
     $('.filter-option').on('click', function(event) {
         event.preventDefault();
         $(this).toggleClass('active');
-        systemEvent = true;
-        $('.search-button').click();
+        if(currView == 'large') {
+            systemEvent = true;
+            $('.search-button').click();
+        }
+
     });
 
     $("#clear-search").on('click', function(event) {
