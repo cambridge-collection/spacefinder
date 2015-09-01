@@ -503,8 +503,8 @@ function resetViews() {
         if(!systemEvent && $('div[id^=space-]').length == 0) {
             //console.log('non system event fired - center');
             var newCenter = map.getCenter();
-            currentLoc.lat = newCenter.G;
-            currentLoc.lng = newCenter.K;
+            currentLoc.lat = newCenter.lat();
+            currentLoc.lng = newCenter.lng();
         }
 
         setTimeout(function() {
@@ -1226,11 +1226,13 @@ function pointsInView() {
     var mapHidden = false;
     var mapBounds = map.getBounds(),
     ret = [],
+    ne = mapBounds.getNorthEast(),
+    sw = mapBounds.getSouthWest(),
     bounds = [
-        new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.G),
-        new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.G),
-        new google.maps.LatLng(mapBounds.Ia.j, mapBounds.Ca.j),
-        new google.maps.LatLng(mapBounds.Ia.G, mapBounds.Ca.j)
+        new google.maps.LatLng(ne.lat(), sw.lng()),
+        new google.maps.LatLng(ne.lat(), ne.lng()),
+        new google.maps.LatLng(sw.lat(), ne.lng()),
+        new google.maps.LatLng(sw.lat(), sw.lng())
     ];
     console.log(mapBounds);
     /*//console.log(mapBounds.Ia.G, mapBounds.Ca.G);
