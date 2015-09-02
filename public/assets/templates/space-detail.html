@@ -46,11 +46,11 @@
             <section class="lowlight section-contact">
                 <h2>Contact</h2>
                 <dl>
-                    <dt>Website:</dt><dd><a href="#{url}" title="#{name}">#{url}</a></dd>
-                    <dt>Phone:</dt><dd><a href="tel:#{phone_number}" title="call now">#{phone_number}</a></dd>
+                    <dt>Website:</dt><dd><a class="url" href="#{url}" title="#{name}">#{url}</a></dd>
+                    <dt>Phone:</dt><dd><a class="phone" href="tel:#{phone_number}" title="call now">#{phone_number}</a></dd>
                     <dt>Email:</dt><dd><a class="email-address" href="mailto:#{email_address}">#{email_address}</a></dd>
-                    <dt>Twitter:</dt><dd><a href="https://twitter.com/#{twitter_screen_name}" title="#{twitter_screen_name}">@#{twitter_screen_name}</a></dd>
-                    <dt>Facebook:</dt><dd><a href="https://facebook.com/#{facebook_url}" title="#{facebook_url}">#{facebook_url}</a></dd>
+                    <dt>Twitter:</dt><dd><a class="twitter" href="https://twitter.com/#{twitter_screen_name}" title="#{twitter_screen_name}">@#{twitter_screen_name}</a></dd>
+                    <dt>Facebook:</dt><dd><a  class="facebook" href="https://facebook.com/#{facebook_url}" title="#{facebook_url}">#{facebook_url}</a></dd>
                 </dl>
             </section>
         </div>
@@ -76,8 +76,20 @@ if ($space.find('.space-address').html() == '') {
     $space.find('.space-address').parent().remove();
 }
 
+if ($space.find('.url').html() == '') {
+    $space.find('.url').parent().prev().remove().end().remove();
+}
+if ($space.find('.phone').html() == '') {
+    $space.find('.phone').parent().prev().remove().end().remove();
+}
 if ($space.find('.email-address').html() == '') {
     $space.find('.email-address').parent().prev().remove().end().remove();
+}
+if ($space.find('.twitter').html() == '@') {
+    $space.find('.twitter').parent().prev().remove().end().remove();
+}
+if ($space.find('.facebook').html() == '') {
+    $space.find('.facebook').parent().prev().remove().end().remove();
 }
 
 $('li.tag').off('click').on('click', function(event) {
