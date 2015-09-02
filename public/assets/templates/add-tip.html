@@ -52,6 +52,7 @@ $tips.find('.tip-submit').on('click', function(event) {
         $(this).addClass('disabled').html('<i class="icon-loading"></i>');
         var data = {};
         data.space = $tips.data('space-id');
+        data[$('meta[name="csrf-param"]').attr('content')] = $('meta[name="csrf-token"]').attr('content');
         data['tip[comment]'] = $tips.find('.part-1>textarea').val();
         $tips.find('.questions li').each(function(index, el) {
             var value = null;

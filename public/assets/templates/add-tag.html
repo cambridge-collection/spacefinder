@@ -102,6 +102,7 @@ $tags.find('.tag-submit').on('click', function(event) {
         $(this).addClass('disabled');
         var data = '';
         data += 'space=' + $tags.data('space-id');
+        data += '&' + $('meta[name="csrf-param"]').attr('content') + '=' + $('meta[name="csrf-token"]').attr('content');
         $tags.find('.new-tags-list li').each(function(index, el) {
             data += '&tags[]=' + $(this).data('tag-value');
         });

@@ -28,12 +28,15 @@
         <input placeholder="Display name *" type="text" name="name" />
         <input placeholder="Discipline of study *" type="text" name="discipline" />
         <input placeholder="email *" type="text" name="email" />
+        <input type="hidden" id="csrf" />
         <input type="submit" value="Update details" />
     </form>
 
 </div>
 <script type="text/javascript">
 $login = $('.login-screen');
+
+$login.find('#csrf').attr('name', $('meta[name="csrf-param"]').attr('content')).val($('meta[name="csrf-token"]').attr('content'));
 
 $login.find('#update-user-details').submit(function(event) {
     event.preventDefault();
