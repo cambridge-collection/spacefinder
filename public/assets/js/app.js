@@ -1,3 +1,4 @@
+if (typeof console == "undefined") var console = { log: function() {} }; 
 /* Modernizr 2.8.3 (Custom Build) | MIT & BSD
 * Build: http://modernizr.com/download/#-flexbox-cssclasses-testprop-testallprops-domprefixes
 */
@@ -336,10 +337,16 @@ function switchView(newView, modal) {
     if(newView == undefined) newView = initialView;
     closeSpaces();
     if(currView == 'small') $('.view-container').css('position', '');
-    //console.log('new view = ' + newView);
+    if (typeof ga !== "undefined") {
+        ga('set', 'page', '/' + newView);
+        if (userDetails !== null && userDetails.id > 0) {
+            ga('set', 'userId', userDetails.id);
+        }
+        ga('send', 'pageview');
+    }
     if(newView.indexOf('/') == -1 && $('#' + newView).length > 0) {
         if(currView == 'small') {
-            console.log(newView);
+
             $('.view-container').css({'z-index':'0', 'max-height':'90%', 'overflow':'hidden'});
             $('a').removeClass('active');
             $('a[href="#/' + newView + '"]').addClass('active');
@@ -559,6 +566,14 @@ if (spacesRequest  && spacesRequest.readyState != 4) {
     console.log('abort request');
     spacesRequest.abort();
 }
+
+if (typeof ga !== "undefined") {
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('set', 'page', '/search?' + $.serialize(defaults.queryString));
+}
+
 spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
     cache:false,
     dataType:'json',

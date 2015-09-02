@@ -33,6 +33,13 @@
 
 <script type="text/javascript">
 $tags = $('#tag-#{id}');
+if (typeof ga !== "undefined") {
+    ga('set', 'page', '/new-tag/#{id}');
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('send', 'pageview');
+}
 $space = $('#space-' + $tags.data('space-id'));
 $space.scrollTop(0);
 
@@ -48,6 +55,13 @@ $tags.find('.close-view').on('click', function(event) {
     $tags.fadeOut('300', function() {
         $(this).remove();
     });
+    if (typeof ga !== "undefined") {
+        ga('set', 'page', window.location.hash.substr(1));
+        if (userDetails !== null && userDetails.id > 0) {
+            ga('set', 'userId', userDetails.id);
+        }
+        ga('send', 'pageview');
+    }
 });
 
 $tags.find('#new-tag').on('keyup', function(event) {

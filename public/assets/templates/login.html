@@ -36,6 +36,14 @@
 <script type="text/javascript">
 $login = $('.login-screen');
 
+if (typeof ga !== "undefined") {
+    ga('set', 'page', '/login');
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('send', 'pageview');
+}
+
 $login.find('#csrf').attr('name', $('meta[name="csrf-param"]').attr('content')).val($('meta[name="csrf-token"]').attr('content'));
 
 $login.find('#update-user-details').submit(function(event) {

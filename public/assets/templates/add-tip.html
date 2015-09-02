@@ -34,6 +34,13 @@
 </div>
 <script type="text/javascript">
 $tips = $('#tip-#{id}');
+if (typeof ga !== "undefined") {
+    ga('set', 'page', '/new-tip/#{id}');
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('send', 'pageview');
+}
 $space = $('#space-' + $tips.data('space-id'));
 console.log($space);
 $tips.find('.part-1, .part-2').hide('0');
@@ -43,6 +50,13 @@ $tips.find('.close-view').on('click', function(event) {
     $tips.fadeOut('300', function() {
         $(this).remove();
     });
+    if (typeof ga !== "undefined") {
+        ga('set', 'page', window.location.hash.substr(1));
+        if (userDetails !== null && userDetails.id > 0) {
+            ga('set', 'userId', userDetails.id);
+        }
+        ga('send', 'pageview');
+    }
 });
 
 $tips.find('.tip-submit').on('click', function(event) {
