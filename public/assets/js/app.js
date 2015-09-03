@@ -571,7 +571,15 @@ if (typeof ga !== "undefined") {
     if (userDetails !== null && userDetails.id > 0) {
         ga('set', 'userId', userDetails.id);
     }
-    ga('set', 'page', '/search?' + $.serialize(defaults.queryString));
+    var qs = defaults.queryString;
+    try {
+        if ($.type(defaults.queryString) == 'object') {
+            qs = $.serialize(defaults.queryString);
+        }
+    } catch (e) {
+
+    }
+    ga('set', 'page', '/search?' + qs);
 }
 
 spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
