@@ -218,17 +218,13 @@
 .icon-wifi:before {
   content: "\e61a"; }
 
-@font-face {
-  font-family: 'MyriadPro-Light';
-  src: url("/assets/fonts/MyriadPro-Light.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/MyriadPro-Light.otf") format("opentype"), url("/assets/fonts/MyriadPro-Light.woff") format("woff"), url("/assets/fonts/MyriadPro-Light.ttf") format("truetype"), url("/assets/fonts/MyriadPro-Light.svg#MyriadPro-Light") format("svg");
-  font-weight: normal;
-  font-style: normal; }
 body, html {
   padding: 0;
   margin: 0;
   background: #2e2e2e;
   font-size: 14px;
-  font-family: 'MyriadPro-Light', verdana, sans-serif; }
+  font-family: 'MyriadPro-Light', verdana, sans-serif;
+  font-weight: lighter; }
 
 body * {
   box-sizing: border-box; }
