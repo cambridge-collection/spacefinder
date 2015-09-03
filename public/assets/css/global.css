@@ -137,7 +137,9 @@
       border: none; }
 
 #list {
-  background: #FFF; }
+  background: #FFF;
+  -webkit-flex-direction: column;
+  flex-direction: column; }
   #list h1 {
     font-size: 2rem;
     width: 100%;
@@ -708,6 +710,8 @@
 #search {
   background: #F3F3F3;
   padding-bottom: 60px; }
+  #search .search-options-container {
+    width: 100%; }
   #search .search-text {
     background-color: #F3F3F3;
     border-bottom: 1px solid #e8e8e8;

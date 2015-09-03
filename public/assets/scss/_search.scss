@@ -1,6 +1,9 @@
 #search {
     background: $lightBackgroundColor;
     padding-bottom: 60px;
+    .search-options-container {
+        width: 100%;
+    }
     .search-text {
         background-color: $lightBackgroundColor;
         border-bottom: 1px solid $lowlight;

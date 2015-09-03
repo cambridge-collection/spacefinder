@@ -1,5 +1,7 @@
 #list {
     background: #FFF;
+    -webkit-flex-direction:column;
+    flex-direction:column;
     h1 {
         a {
             color: $barColor;
