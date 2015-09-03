@@ -131,7 +131,7 @@ $tips.find('.control a').on('click', function(event) {
 });
 
 //checked logged in status
-if(userDetails == null) {
+if(userDetails == null || userDetails.details_needed == true  || userDetails.details_needed == 'true') {
     showLoginScreen($tips);
     $(window).on('login_success', showPart1)
 } else {
