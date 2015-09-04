@@ -7,7 +7,7 @@ body, html {
     margin: 0;
     background: $backgroundColor;
     font-size: 14px;
-    font-family: 'MyriadPro-Light', verdana, sans-serif;
+    font-family: 'Myriad Pro', verdana, sans-serif;
     font-weight: lighter;
 }
 body * {
@@ -111,7 +111,7 @@ h1>small {
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'MyriadPro-Light';
+    font-family: 'Myriad Pro', verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;
@@ -377,7 +377,7 @@ textarea {
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'MyriadPro-Light';
+    font-family: 'Myriad Pro', verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;

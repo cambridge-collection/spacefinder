@@ -223,7 +223,7 @@ body, html {
   margin: 0;
   background: #2e2e2e;
   font-size: 14px;
-  font-family: 'MyriadPro-Light', verdana, sans-serif;
+  font-family: 'Myriad Pro', verdana, sans-serif;
   font-weight: lighter; }
 
 body * {
@@ -307,7 +307,7 @@ h1 > small {
   padding: 8px 6px 4px;
   font-size: 1.4rem;
   display: inline-block;
-  font-family: 'MyriadPro-Light';
+  font-family: 'Myriad Pro', verdana, sans-serif;
   border: none; }
   .btn.disabled, .btn-inline.disabled {
     background: #e8e8e8; }
@@ -511,7 +511,7 @@ textarea {
   padding: 8px 6px 4px;
   font-size: 1.4rem;
   display: inline-block;
-  font-family: 'MyriadPro-Light';
+  font-family: 'Myriad Pro', verdana, sans-serif;
   border: none; }
   .btn.disabled, input[type="submit"].disabled, button.disabled, .btn-inline.disabled {
     background: #e8e8e8; }
