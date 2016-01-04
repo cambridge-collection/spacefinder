@@ -27,6 +27,8 @@
                 <ul>
                     <li><i class="icon-marker"></i><span class="space-address">#{address}</span></li>
                     <li class="opening-times"><i class="icon-time-short"></i><span class="open_now"></span></li>
+                    <li class=" disabled-access" data-disabled-access="#{disabled_access}"><i class="icon-disabled"></i><span>Disabled access</span></li>
+                    <li class="restricted-access" data-restricted-access="#{disabled_access}"><i class="icon-access"></i><span>Access restrictions - #{restriction}</span></li>
                 </ul>
             </section>
             <section class="lowlight section-facilities">
@@ -91,7 +93,16 @@ if ($space.find('.twitter').html() == '@') {
 if ($space.find('.facebook').html() == '') {
     $space.find('.facebook').parent().prev().remove().end().remove();
 }
+if ($space.find('.disabled-access').attr('data-disabled-access') !== 'true') {
+    $space.find('.disabled-access').remove();
+}
 
+if ($space.find('.restricted-access').attr('data-restricted-access') !== 'true') {
+    $space.find('.restricted-access').remove();
+}
+if ($space.find('.restriction').html() == '()') {
+    $space.find('.restriction').remove();
+}
 $('li.tag').off('click').on('click', function(event) {
     event.preventDefault();
     $this = $(this);
@@ -154,7 +165,7 @@ function getFullHours() {
     var incHolidays = (!!isClosed(holidayHours) ? false : true);
     if(!!incHolidays) {
         //show term time header
-        ret.append('<div />').find('div:last').append($('<strong />').html ('Term opening hours'));
+        ret.append('<div />').find('div:last').append($('<strong style="font-size:0.9rem;" />').html ('Term opening hours'));
         ret.find('div:last').append($('<div />').append(loopWeek(termHours)));
     } else {
         ret.append($('<div />').append(loopWeek(termHours)));
@@ -163,7 +174,7 @@ function getFullHours() {
 
 
     if(incHolidays) {
-        ret.append('<div />').find('div:last').append($('<strong />').html ('Out-of-term opening hours'));
+        ret.append('<div />').find('div:last').append($('<strong style="font-size:0.9rem;" />').html ('Out-of-term opening hours'));
         ret.find('div:last').append($('<div />').append(loopWeek(holidayHours)));
     }
 

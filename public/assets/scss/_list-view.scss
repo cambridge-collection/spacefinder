@@ -101,4 +101,20 @@
         color: $fontColor!important;
         padding: 16px!important;
     }
+
+    .list-footer {
+        text-align: right;
+        background-color: $backgroundColor;
+        padding: 24px;
+        color: #FFF;
+
+        & > span {
+            float: left;
+        }
+
+        a {
+            color: #FFF;
+            text-decoration: none;
+        }
+    }
 }

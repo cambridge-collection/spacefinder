@@ -6,6 +6,7 @@
     left: 0;
     width: 100%;
     z-index: 30;
+    -webkit-overflow-scrolling: touch;
 }
 .space {
     background: #FFF;
@@ -133,6 +134,12 @@
                         display: block;
                         margin-left: 1.8rem;
                     }
+                    &.inline {
+                        & > * {
+                            display: inline!important;
+                            margin-left: 0;
+                        }
+                    }
                 }
                 [class^="icon-"] {
                     width: 1.6rem;
@@ -161,6 +168,7 @@
                     width: 68px;
                     margin-right: 6px;
                     font-weight: normal;
+                    text-transform: capitalize;
                 }
                 dd {
                     -webkit-flex-grow:1;

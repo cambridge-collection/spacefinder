@@ -212,6 +212,16 @@
     background: #e8e8e8 !important;
     color: #212121 !important;
     padding: 16px !important; }
+  #list .list-footer {
+    text-align: right;
+    background-color: #2e2e2e;
+    padding: 24px;
+    color: #FFF; }
+    #list .list-footer > span {
+      float: left; }
+    #list .list-footer a {
+      color: #FFF;
+      text-decoration: none; }
 
 .space-container {
   min-height: 100vh;
@@ -220,7 +230,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 30; }
+  z-index: 30;
+  -webkit-overflow-scrolling: touch; }
 
 .space {
   background: #FFF;
@@ -313,6 +324,9 @@
         .space .tabs section.section-facts li span {
           display: block;
           margin-left: 1.8rem; }
+        .space .tabs section.section-facts li.inline > * {
+          display: inline !important;
+          margin-left: 0; }
       .space .tabs section.section-facts [class^="icon-"] {
         width: 1.6rem;
         max-width: 1.6rem;
@@ -337,7 +351,8 @@
         text-align: left;
         width: 68px;
         margin-right: 6px;
-        font-weight: normal; }
+        font-weight: normal;
+        text-transform: capitalize; }
       .space .tabs section.section-facts dd {
         -webkit-flex-grow: 1;
         flex-grow: 1;
@@ -589,6 +604,15 @@
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+.icon-access:before {
+  content: "\e800"; }
+
+.icon-disabled:before {
+  content: "\e801"; }
+
+.icon-drink:before {
+  content: "\e802"; }
+
 .icon-pencil:before {
   content: "\e621"; }
 
@@ -643,9 +667,6 @@
 
 .icon-desk:before {
   content: "\e605"; }
-
-.icon-drink:before {
-  content: "\e606"; }
 
 .icon-laptop:before {
   content: "\e607"; }

@@ -1,0 +1,162 @@
+@import '_variables';
+@import '_top-bar';
+@import '_map';
+@import '_list-view';
+@import '_space';
+@import '_icons';
+@import '_search';
+@import '_tips';
+@import '_tags';
+@import '_login';
+
+
+body, html {
+    padding: 0;
+    margin: 0;
+    background: $backgroundColor;
+    font-size: 14px;
+    height: 100vh;
+    font-family: "myriad-pro-n3", "myriad-pro", myriad, verdana, arial, sans-serif;
+    font-weight: lighter;
+}
+* {
+    box-sizing: border-box;
+}
+strong {
+    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-weight: normal;
+}
+.view-container {
+	position: absolute;
+    display: flex;
+    min-height: calc(100vh - #{$navHeight});
+    width: 100%;
+    margin-top: $navHeight;
+    left: 0;
+}
+
+.hidden {
+    display: none;
+}
+h1 {
+    font-weight: lighter;
+}
+h2 {
+    border-bottom: 1px solid $lowlight;
+    font-size: 1.25rem;
+    font-weight: lighter;
+    color: $barColor;
+    margin-top: 0;
+}
+
+.btn, .btn-inline {
+    width: 100%;
+    text-align: center;
+    background: #642c73;
+    color: #FFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 6px 4px;
+    font-size: 1.4rem;
+    display: inline-block;
+    border: none;
+	cursor: pointer;
+    &.disabled {
+        background: $lowlight;
+    }
+
+	&.secondary {
+		background: #FFF;
+		border: 1px solid $lowlight;
+		color: $fontColor;
+	}
+}
+
+.btn-inline {
+    display: inline-block;
+    width: auto;
+    font-size: 1rem;
+    padding: 9px 6px 3px;
+}
+
+.loading-cover {
+    background-color: $lightBackgroundColor;
+	background-image: image-url('cambridge-background.jpg');
+	background-size: cover;
+	background-position: center;
+    color: #FFF;
+    font-size: 2rem;
+    text-transform: uppercase;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    text-align: center;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+	.logo {
+		background-image: image-url('spacefinder-logo.svg');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		width: 100%;
+		height: 50px;
+		margin-top: 5vmin;
+	}
+    &.loaded {
+        opacity: 0;
+    }
+
+    .icon-loading {
+        margin-top: 45vh;
+        display: block;
+        font-size: 3rem;
+        margin-bottom: 20px;
+		color: $barColor;
+    }
+	.message {
+		text-transform: lowercase;
+		font-size: 1rem;
+	}
+    .svg-container {
+        display: inline-block;
+        position: relative;
+        top: 20vh;
+        width: 30vmin;
+        height: 35vmin;
+        margin: 0 auto;
+        vertical-align: middle;
+        overflow: hidden;
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+        animation-duration: 0.8s;
+        animation-name: pulse;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+
+    }
+    .shadow {
+        cursor:crosshair;
+        -moz-box-shadow: -5px -5px 5px #888;
+        -webkit-box-shadow: -5px -5px 5px #888;
+        box-shadow: -5px -5px 5px #888;
+    }
+    svg {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        g {
+            width: 100%;
+        }
+    }
+}
+
+
+@import '_large-view';

@@ -1,4 +1,4 @@
-if (typeof console == "undefined") var console = { log: function() {} }; 
+if (typeof console == "undefined") var console = { log: function() {} };
 /* Modernizr 2.8.3 (Custom Build) | MIT & BSD
 * Build: http://modernizr.com/download/#-flexbox-cssclasses-testprop-testallprops-domprefixes
 */
@@ -75,6 +75,7 @@ templates = {
 inactiveColor = 'rgba(0,0,0,1)',
 activeColor = '#00b1c1',
 initialView = 'map',
+cancelGeoLocation = false,
 view = '',
 mapViewed = false;
 var markerSymbol = {
@@ -191,30 +192,51 @@ $().ready(function() {
                 //console.log('get user location');
                 $('.current-status').html('location');
                 navigator.geolocation.getCurrentPosition(function(position) {
-                    userLoc.lat = position.coords.latitude;
-                    userLoc.lng = position.coords.longitude;
-                    //set the center of the map on users current location
-                    $('.current-status').html('spaces');
-                    loadSpaces({
-                        location:userLoc,
-                        callback:function() {
-                            switchView(startView);
-                        }
-                    });
+                    if(cancelGeoLocation == false) {
+                        cancelGeoLocation = null;
+                        userLoc.lat = position.coords.latitude;
+                        userLoc.lng = position.coords.longitude;
+                        //set the center of the map on users current location
+                        $('.current-status').html('spaces');
+                        loadSpaces({
+                            location:userLoc,
+                            callback:function() {
+                                switchView(startView);
+                            }
+                        });
+                    }
+
                 }, function () {
-                    getLocation = false;
-                    $('.current-status').html('spaces');
-                    loadSpaces({
-                        location:loc,
-                        callback:function() {
-                            switchView(startView);
-                        }
-                    });
+                    if(cancelGeoLocation == false) {
+                        cancelGeoLocation = null;
+                        getLocation = false;
+                        $('.current-status').html('spaces');
+                        loadSpaces({
+                            location:loc,
+                            callback:function() {
+                                switchView(startView);
+                            }
+                        });
+                    }
                 }, {
                     enableHighAccuracy: false,
                     timeout: 5000,
                     maximumAge: 0
                 });
+                window.setTimeout(function () {
+                    if (cancelGeoLocation !== null) {
+                        getLocation = false;
+                        cancelGeoLocation = true;
+                        $('.current-status').html('spaces');
+                        loadSpaces({
+                            location:loc,
+                            callback:function() {
+                                switchView(startView);
+                            }
+                        });
+                    }
+
+                }, 8000)
             } else {
                 $('.current-status').html('spaces');
                 loadSpaces({
@@ -551,7 +573,7 @@ function loadSpaces(options) {
     /*if(defaults.location !== '') {
     defaults.queryString += '&filters[nearest]=' + defaults.location.lat + ',' + defaults.location.lng;
 }*/
-defaults.queryString += '&filters[nearest]=' + userLoc.lat + ',' + userLoc.lng;
+//defaults.queryString += '&filters[nearest]=' + userLoc.lat + ',' + userLoc.lng;
 if(!!defaults.boundToMap && map !== undefined) {
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast();
@@ -900,6 +922,15 @@ function loadList(options) {
             })
         );
     }
+    $('.list-footer').remove();
+    if (currView == "small") {
+        $list.append('<div class="list-footer"><span>&copy; <span class="year"></span> Cambridge University Library </span><a href="/terms.html">Terms &amp; Feedback</a></div>');
+        var d = new Date();
+        var n = d.getFullYear();
+        $('.list-footer .year').html(n);
+    }
+
+
     $('.list-space>h2>.library').each(function(index, el) {
         var $address = $(this).next('.address');
         if($(this).html() == "")  {
