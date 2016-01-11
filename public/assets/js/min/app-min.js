@@ -7,10 +7,11 @@ if (typeof console == "undefined") var console = { log: function() {} };
 //app code below this point
 var map,
 $list = $('#list'),
+$map = $('#map'),
 openPoints = [],
 loc = {'lat':52.205575, 'lng':0.121682},
 userLoc = {'lat':0, 'lng':0}, //52.2050683,0.1077597
-getLocation = true,
+getLocation = false,
 centerOnLocation = false,
 points = [],
 listScroll = 0,
@@ -22,7 +23,12 @@ currentLoc = loc,
 systemEvent = false,
 spacesRequest = null,
 totalSpaceCount = 0,
-queryLimit = 20,
+queryLimit = 35,
+lastQuery = '',
+exclude = {
+    'exclusions':[],
+    'total':0
+},
 mapOptions = {
     center: loc,
     zoom: 20,
@@ -188,96 +194,104 @@ $().ready(function() {
     loadTemplates({
         data: templates,
         callback: function() {
-            if ("geolocation" in navigator && !!getLocation && userLoc.lat == 0 && userLoc.lng == 0) {
-                //console.log('get user location');
-                $('.current-status').html('location');
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    if(cancelGeoLocation == false) {
-                        cancelGeoLocation = null;
-                        userLoc.lat = position.coords.latitude;
-                        userLoc.lng = position.coords.longitude;
-                        //set the center of the map on users current location
-                        $('.current-status').html('spaces');
-                        loadSpaces({
-                            location:userLoc,
-                            callback:function() {
-                                switchView(startView);
-                            }
-                        });
-                    }
-
-                }, function () {
-                    if(cancelGeoLocation == false) {
-                        cancelGeoLocation = null;
-                        getLocation = false;
-                        $('.current-status').html('spaces');
-                        loadSpaces({
-                            location:loc,
-                            callback:function() {
-                                switchView(startView);
-                            }
-                        });
-                    }
-                }, {
-                    enableHighAccuracy: false,
-                    timeout: 5000,
-                    maximumAge: 0
-                });
-                window.setTimeout(function () {
-                    if (cancelGeoLocation !== null) {
-                        getLocation = false;
-                        cancelGeoLocation = true;
-                        $('.current-status').html('spaces');
-                        loadSpaces({
-                            location:loc,
-                            callback:function() {
-                                switchView(startView);
-                            }
-                        });
-                    }
-
-                }, 8000)
-            } else {
-                $('.current-status').html('spaces');
-                loadSpaces({
-                    location:loc,
-                    callback:function() {
-                        switchView(startView);
-                    }
-                });
-            }
-        }
-    })
-    moment.locale('en', {
-        relativeTime : {
-            future: "in %s",
-            past:   "%s",
-            s:  "seconds",
-            m:  "a minute",
-            mm: "%d m",
-            h:  "an hour",
-            hh: "%d h",
-            d:  "a day",
-            dd: "%d d",
-            M:  "a month",
-            MM: "%d m",
-            y:  "a year",
-            yy: "%d y"
+            $('.current-status').html('spaces');
+            loadSpaces({
+                //location:loc,
+                callback:function() {
+                    //$('.current-status').html('switch view');
+                    switchView(startView);
+                }
+            });
+            /*if ("geolocation" in navigator && !!getLocation && userLoc.lat == 0 && userLoc.lng == 0) {
+            //console.log('get user location');
+            $('.current-status').html('location');
+            navigator.geolocation.getCurrentPosition(function(position) {
+            if(cancelGeoLocation == false) {
+            cancelGeoLocation = null;
+            userLoc.lat = position.coords.latitude;
+            userLoc.lng = position.coords.longitude;
+            //set the center of the map on users current location
+            $('.current-status').html('spaces');
+            loadSpaces({
+            location:userLoc,
+            callback:function() {
+            switchView(startView);
         }
     });
+}
 
-    $(window).on('resize orientationchange', resize);
+}, function () {
+if(cancelGeoLocation == false) {
+cancelGeoLocation = null;
+getLocation = false;
+$('.current-status').html('spaces');
+loadSpaces({
+location:loc,
+callback:function() {
+switchView(startView);
+}
+});
+}
+}, {
+enableHighAccuracy: false,
+timeout: 5000,
+maximumAge: 0
+});
+window.setTimeout(function () {
+if (cancelGeoLocation !== null) {
+getLocation = false;
+cancelGeoLocation = true;
+$('.current-status').html('spaces');
+loadSpaces({
+location:loc,
+callback:function() {
+switchView(startView);
+}
+});
+}
 
-    $(window).trigger('resize');
+}, 8000)
+} else {
+$('.current-status').html('spaces');
+loadSpaces({
+location:loc,
+callback:function() {
+switchView(startView);
+}
+});
+}*/
+}
+})
+moment.locale('en', {
+    relativeTime : {
+        future: "in %s",
+        past:   "%s",
+        s:  "seconds",
+        m:  "a minute",
+        mm: "%d m",
+        h:  "an hour",
+        hh: "%d h",
+        d:  "a day",
+        dd: "%d d",
+        M:  "a month",
+        MM: "%d m",
+        y:  "a year",
+        yy: "%d y"
+    }
+});
+
+$(window).on('resize orientationchange', resize);
+
+$(window).trigger('resize');
 
 
-    $(window).on('login_success', function(event) {
-        event.preventDefault();
-        //console.log('login successful');
-        $('.login-screen').fadeOut(300, function() {
-            $(this).remove();
-        });
+$(window).on('login_success', function(event) {
+    event.preventDefault();
+    //console.log('login successful');
+    $('.login-screen').fadeOut(300, function() {
+        $(this).remove();
     });
+});
 });
 function resize(event) {
     systemEvent = true;
@@ -306,8 +320,8 @@ function resize(event) {
             var $this = $(this);
             //$this.height($(window).height() - ($('#top-bar').height()+ 60));
         });
-
     }
+    $list.find('.list-meta').width($list.width());
 }
 function resizeForMobile() {
     currView = 'small';
@@ -525,7 +539,15 @@ function resetViews() {
     systemEvent = true;
     mapOptions.center = currentLoc;
     mapOptions.zoom = currentZoom;
+    $map.empty();
+    //if (map == undefined || map == null) {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    //}
+    for (var i = 0; i < points.length; i++) {
+        points[i].marker.setMap(null);
+    }
+    //points = []
+
     $('#list').html('');
 
     google.maps.event.addListener(map, 'center_changed', function(e) {
@@ -542,11 +564,16 @@ function resetViews() {
     });
     google.maps.event.addListener(map, 'bounds_changed', function() {
         if(!systemEvent && $('div[id^=space-]').length == 0) {
-            //console.log('non system event fired - bounds');
+            console.log('non system event fired - bounds');
             currentZoom = map.getZoom();
             var center = map.getCenter();
+
             window.setTimeout(function() {
-                loadSpaces({keepData:true,"reset": true, location:{lat:center.lat(), lng:center.lng()}});
+                exclude = {
+                    'exclusions':[],
+                    'total':0
+                }
+                $('.search-button').trigger('click');
             }, 300);
 
             pointsInView();
@@ -559,14 +586,20 @@ function resetViews() {
 }
 
 function loadSpaces(options) {
+    $('.current-status').html('load spaces');
     var defaults = {
         location:'',
-        queryString:'',
+        queryString:(typeof prepSearch == 'function'  ? prepSearch() : ''),
         reset:false,
         keepData:false,
-        boundToMap:true
+        boundToMap:true,
+        expanded:{
+            'exclusions':[],
+            'total':0
+        }
     };
     $.extend(defaults, options);
+    console.log('load spaces, exclude:' + defaults.expanded.exclusions.join(','));
     /*----load spaces-----*/
     $('#top-bar a[href*=map] i').removeClass('icon-marker').addClass('icon-loading');
     defaults.queryString += '&limit=' + queryLimit;
@@ -574,15 +607,31 @@ function loadSpaces(options) {
     defaults.queryString += '&filters[nearest]=' + defaults.location.lat + ',' + defaults.location.lng;
 }*/
 //defaults.queryString += '&filters[nearest]=' + userLoc.lat + ',' + userLoc.lng;
-if(!!defaults.boundToMap && map !== undefined) {
-    var bounds = map.getBounds();
-    var ne = bounds.getNorthEast();
-    var sw = bounds.getSouthWest();
-    defaults.queryString += '&filters[bounds][sw]=' + sw.lat() + ',' + sw.lng();
-    defaults.queryString += '&filters[bounds][ne]=' + ne.lat() + ',' + ne.lng();
+$('.current-status').html('reset');
+//if(!defaults.keepData) resetViews();
+$('.current-status').html('complete reset');
+//$('.current-status').html(typeof map.getBounds);
+if (!!defaults.clearSpaces) {
+    for (var i = 0; i < points.length; i++) {
+        points[i].marker.setMap(null);
+    }
+    //points = [];
+    $list.html('');
+    exclude = {
+        'exclusions':[],
+        'total':0
+    }
 }
+if(!!defaults.boundToMap && typeof map !== 'undefined') {
+    var bounds = map.getBounds();
+    if (bounds !== undefined) {
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+        defaults.queryString += '&filters[bounds][sw]=' + sw.lat() + ',' + sw.lng();
+        defaults.queryString += '&filters[bounds][ne]=' + ne.lat() + ',' + ne.lng();
+    }
 
-if(!defaults.keepData) resetViews();
+}
 
 if (spacesRequest  && spacesRequest.readyState != 4) {
     console.log('abort request');
@@ -603,7 +652,7 @@ if (typeof ga !== "undefined") {
     }
     ga('set', 'page', '/search?' + qs);
 }
-
+lastQuery = defaults.queryString;
 spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
     cache:false,
     dataType:'json',
@@ -618,14 +667,35 @@ spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
     //$.getJSON('/assets/data/points.json').done(function(data) {
     console.log('spaces loaded', defaults.queryString, data.results.length);
     if (!!defaults.keepData) {
-        points = cleanData(points.concat(data.results))
+        var temp = points;
+        for (var i = 0; i < data.results.length; i++) {
+            data.results[i].excluded = defaults.expanded.exclusions;
+        }
+        points = cleanData(points.concat(data.results));
     } else {
         points = data.results;
     }
 
     distCount = 0;
-
     totalSpaceCount = data.total_count;
+    if(typeof checkExpansions == 'function') {
+        checkExpansions();
+        expandSearch();
+
+        if (defaults.expansionCount == undefined) {
+            defaults.expansionCount = 0;
+        }
+        console.log('-----------------------------expanded:', defaults.expanded, exclude, defaults.expansionCount);
+        if (points.length <= 0 && exclude.total > 0 && defaults.expansionCount <= exclude.total && defaults.queryString.indexOf('page') == -1) {
+            loadSpaces({
+                "queryString": prepSearch(),
+                "keepData":true,
+                "expanded":exclude,
+                "expansionCount": ++defaults.expansionCount
+            })
+        }
+    }
+
 
     if(points.length == 0) {
         loadMap();
@@ -657,7 +727,7 @@ spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
             } else {
                 distCount++;
                 if (distCount == points.length) {
-                    if(!defaults.reset) {
+                    if(!!defaults.reset) {
                         loadSearch();
 
                     }
@@ -672,11 +742,11 @@ spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
         $.each(points, function(key, value) {
             points[key].link = '#/space/' + points[key].id + '/' + (points[key].name).replace(' ', '-');
         });
-        if(!defaults.reset) {
+        if($('#search').html() == '') {
             loadSearch();
 
         }
-        orderSpaces();
+        //orderSpaces();
         loadMap();
         loadList();
     }
@@ -873,6 +943,36 @@ function loadMap(options) {
     if(openPoints.length == 1) {
         points[openPoints[0]].marker.icon.fillColor = activeColor;
     }
+    $map.find('.map-meta').remove();
+    if (currView == 'small') {
+        $map.prepend(
+            $('<div class="map-meta" />').append('<span class="spaces-count">' + pointsInView().length + '/' + totalSpaceCount + '</span>')
+        );
+        if (pointsInView().length < totalSpaceCount) {
+            console.info($map.find('.map-meta'))
+            $map.find('.map-meta').append(
+                $('<a href="#" class="map-load-spaces-link">Load ' + ((totalSpaceCount - pointsInView().length) > queryLimit ? queryLimit : totalSpaceCount - pointsInView().length) + ' more</a>').on('click', function(event) {
+                    $(this).html('<i class="icon-loading"></i>');
+                    event.preventDefault();
+                    console.log('pages = ', Math.ceil(totalSpaceCount/queryLimit));
+                    console.log('current page = ', Math.floor(pointsInView().length/queryLimit));
+                    if($.type(prepSearch) == 'function') {
+                        var search = prepSearch();
+                        search += '&page=' + Math.floor(pointsInView().length/queryLimit + 1);
+                        console.log(search);
+                        loadSpaces(
+                            {
+                                queryString: search,
+                                keepData: true,
+                                "reset": true
+                            }
+                        )
+                    }
+                })
+            );
+        }
+    }
+
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
     }
@@ -886,6 +986,8 @@ function loadList(options) {
     };
     $.extend(defaults, options);
     if(points.length == 0) {
+        //$list.empty();
+        $list.find('.empty-list').remove();
         $list.append($('<div />').html('There are no spaces to show with the current search criteria.').addClass('empty-list'));
 
         return true;
@@ -900,28 +1002,7 @@ function loadList(options) {
 
     });
     $('.more-spaces-link').remove();
-    if (pointsInView().length < totalSpaceCount) {
-        $list.append(
-            $('<a href="#" class="more-spaces-link">Load more spaces</a>').on('click', function(event) {
-                $(this).html('<i class="icon-loading"></i>');
-                event.preventDefault();
-                console.log('pages = ', Math.ceil(totalSpaceCount/queryLimit));
-                console.log('current page = ', Math.floor(pointsInView().length/queryLimit));
-                if($.type(prepSearch) == 'function') {
-                    var search = prepSearch();
-                    search += '&page=' + Math.floor(pointsInView().length/queryLimit + 1);
-                    console.log(search);
-                    loadSpaces(
-                        {
-                            queryString: search,
-                            keepData: true,
-                            "reset": true
-                        }
-                    )
-                }
-            })
-        );
-    }
+
     $('.list-footer').remove();
     if (currView == "small") {
         $list.append('<div class="list-footer"><span>&copy; <span class="year"></span> Cambridge University Library </span><a href="/terms.html">Terms &amp; Feedback</a></div>');
@@ -944,6 +1025,17 @@ function loadList(options) {
     });
     $('.list-space').each(function () {
         var desc = $(this).find('.description').html();
+        if($(this).find('.exclude-array').html() == '') {
+            $(this).find('.excluded-search').remove();
+        } else if ($(this).find('.exclude-array').length > 0 && $(this).attr('data-expanded') == undefined) {
+            var str = '' + $(this).find('.excluded-value:last').html();
+            if (str !== '') {
+                str = str.substring(0, str.length - 1);
+                $(this).find('.excluded-value:last').html(str);
+            }
+            $(this).attr('data-expanded', $(this).find('.excluded-value').length);
+        }
+
         //console.log(desc);
         //$(this).find('.description').html(desc.substr(0, desc.lastIndexOf(' ')) + '...');
         $(this).hover(function(event) {
@@ -987,7 +1079,43 @@ function loadList(options) {
             /* Act on the event */
         });;
     })
+    for (var i = 0; i < exclude.total; i++) {
+        console.log('add title', i, $list.find('.list-space[data-expanded="' + (i+1) + '"]:first'));
+        if ($list.find('.list-space[data-expanded="' + (i+1) + '"]:first').prev('div').is('.extended-description')) {
+            continue;
+        }
+        $list.find('.list-space[data-expanded="' + (i+1) + '"]:first').before('<div class="extended-description">the extended list of search results starts here. Not including ' + $list.find('.list-space[data-expanded="' + (i+1) + '"]:first').find('.exclude-array').html() + '</div>');
+    }
+    //$list.find('.exclude-array:first')
     pointsInView();
+    $list.find('.list-meta').remove();
+    $list.prepend(
+        $('<div class="list-meta" />').append('<span class="spaces-count">Showing ' + pointsInView().length + ' of ' + totalSpaceCount + ' results.</span>')
+    );
+    if (pointsInView().length < totalSpaceCount) {
+        $list.find('.list-meta').append(
+            $('<a href="#" class="more-spaces-link">Load ' + ((totalSpaceCount - pointsInView().length) > queryLimit ? queryLimit : totalSpaceCount - pointsInView().length) + ' more</a>').on('click', function(event) {
+                $(this).html('<i class="icon-loading"></i>');
+                event.preventDefault();
+                console.log('pages = ', Math.ceil(totalSpaceCount/queryLimit));
+                console.log('current page = ', Math.floor(pointsInView().length/queryLimit));
+                if($.type(prepSearch) == 'function') {
+                    var search = lastQuery;
+                    search += '&page=' + Math.floor(pointsInView().length/queryLimit + 1);
+                    console.log(search);
+                    loadSpaces(
+                        {
+                            queryString: search,
+                            keepData: true,
+                            expanded: exclude
+                            //clearSpaces:true
+                        }
+                    )
+                }
+            })
+        );
+    }
+    $list.find('.list-meta').width($list.width());
     if(typeof(defaults.callback) == 'function') {
         defaults.callback();
     }
@@ -1277,6 +1405,7 @@ function orderSpaces() {
 }
 
 function pointsInView() {
+    if(map == undefined) return [];
     var mapHidden = false;
     var mapBounds = map.getBounds(),
     ret = [],

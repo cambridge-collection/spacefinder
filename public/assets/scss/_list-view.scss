@@ -2,6 +2,7 @@
     background: #FFF;
     -webkit-flex-direction:column;
     flex-direction:column;
+    padding-top: 50px;
     h1 {
         a {
             color: $barColor;
@@ -47,7 +48,6 @@
     .list-space {
         padding: 18px 12px 24px 12px;
         border-bottom: 1px solid $lowlight;
-
         &.hover {
             background-color: $lightBackgroundColor;
         }
@@ -92,14 +92,17 @@
         margin: 12px;
         color: darken($lowlight, 40%);
         text-align: center;
+
     }
 
     .more-spaces-link {
-        @extend .btn;
-        width: 100%;
+        @extend .btn-inline;
+        //width: 100%;
         background: $lowlight!important;
         color: $fontColor!important;
         padding: 16px!important;
+        float: right;
+
     }
 
     .list-footer {
@@ -116,5 +119,35 @@
             color: #FFF;
             text-decoration: none;
         }
+    }
+
+    .list-meta {
+        border-bottom: 1px solid $lowlight;
+        position:fixed;
+        top: 50px;
+        @extend #list;
+        padding: 0!important;
+        background-color: #FFF;
+        width: 26%;
+        &:after {
+            content: '';
+            clear: both;
+            display: block;
+            width: 100%;
+        }
+        .spaces-count {
+            padding:16px;
+            float: left;
+        }
+
+        a {
+            font-weight: normal;
+        }
+    }
+    .extended-description {
+        border-bottom: 1px solid $lowlight;
+        text-align: center;
+        padding: 16px;
+        background: $lightBackgroundColor
     }
 }

@@ -136,11 +136,36 @@
     .multipoint ul li:last-child {
       border: none; }
 
-#list {
+.map-meta {
+  z-index: 20;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background-color: white;
+  text-align: center;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.2); }
+  .map-meta span {
+    display: inline-block;
+    padding: 10px; }
+
+.map-load-spaces-link {
+  color: #000 !important;
+  font-weight: normal !important;
+  border-left: 1px solid #e8e8e8;
+  padding: 10px;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-transform: uppercase; }
+
+#list, #list .list-meta {
   background: #FFF;
   -webkit-flex-direction: column;
-  flex-direction: column; }
-  #list h1 {
+  flex-direction: column;
+  padding-top: 50px; }
+  #list h1, #list .list-meta h1 {
     font-size: 2rem;
     width: 100%;
     margin-bottom: 12px;
@@ -149,18 +174,18 @@
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row; }
-    #list h1 a {
+    #list h1 a, #list .list-meta h1 a {
       color: #106470;
       text-decoration: none;
       -webkit-flex-grow: 1;
       flex-grow: 1; }
-  #list h2 > small {
+  #list h2 > small, #list .list-meta h2 > small {
     font-size: 1rem;
     text-transform: capitalize; }
-  #list h1 + h2 {
+  #list h1 + h2, #list .list-meta h1 + h2 {
     margin-top: -12px;
     margin-bottom: 18px; }
-  #list h2 {
+  #list h2, #list .list-meta h2 {
     border-bottom: none;
     color: #b5b5b5;
     font-size: 1rem;
@@ -169,7 +194,7 @@
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row; }
-    #list h2 span {
+    #list h2 span, #list .list-meta h2 span {
       -webkit-flex-grow: 1;
       flex-grow: 1; }
   #list .list-space {
@@ -208,20 +233,42 @@
     color: #828282;
     text-align: center; }
   #list .more-spaces-link {
-    width: 100%;
     background: #e8e8e8 !important;
     color: #212121 !important;
-    padding: 16px !important; }
+    padding: 16px !important;
+    float: right; }
   #list .list-footer {
     text-align: right;
     background-color: #2e2e2e;
     padding: 24px;
     color: #FFF; }
-    #list .list-footer > span {
+    #list .list-footer > span, #list .list-meta .list-footer > span {
       float: left; }
     #list .list-footer a {
       color: #FFF;
       text-decoration: none; }
+  #list .list-meta {
+    border-bottom: 1px solid #e8e8e8;
+    position: fixed;
+    top: 50px;
+    padding: 0 !important;
+    background-color: #FFF;
+    width: 26%; }
+    #list .list-meta:after {
+      content: '';
+      clear: both;
+      display: block;
+      width: 100%; }
+    #list .list-meta .spaces-count {
+      padding: 16px;
+      float: left; }
+    #list .list-meta a {
+      font-weight: normal; }
+  #list .extended-description {
+    border-bottom: 1px solid #e8e8e8;
+    text-align: center;
+    padding: 16px;
+    background: #F3F3F3; }
 
 .space-container {
   min-height: 100vh;
@@ -937,7 +984,7 @@
               color: #FFF; }
             .new-tip-container .parts-container .questions li .control a:first-child {
               margin-right: 6px; }
-    .new-tip-container .parts-container .btn, .new-tip-container .parts-container #list .more-spaces-link, #list .new-tip-container .parts-container .more-spaces-link, .new-tip-container .parts-container .login-screen input[type=submit], .login-screen .new-tip-container .parts-container input[type=submit] {
+    .new-tip-container .parts-container .btn, .new-tip-container .parts-container .login-screen input[type=submit], .login-screen .new-tip-container .parts-container input[type=submit] {
       width: 100%;
       font-size: 1.4rem;
       padding: 12px; }
@@ -1024,7 +1071,7 @@
     display: -webkit-flex;
     -webkit-flex-direction: row;
     flex-direction: row; }
-    .new-tag-container .section-new .btn-inline {
+    .new-tag-container .section-new .btn-inline, .new-tag-container .section-new #list .more-spaces-link, #list .new-tag-container .section-new .more-spaces-link {
       padding-left: 12px;
       padding-right: 12px;
       margin-left: 12px; }
@@ -1098,7 +1145,7 @@
 .user-avatar-container {
   width: 150px;
   margin: 24px auto 0; }
-  .user-avatar-container .btn, .user-avatar-container #list .more-spaces-link, #list .user-avatar-container .more-spaces-link, .user-avatar-container .login-screen input[type=submit], .login-screen .user-avatar-container input[type=submit] {
+  .user-avatar-container .btn, .user-avatar-container .login-screen input[type=submit], .login-screen .user-avatar-container input[type=submit] {
     font-size: 1rem;
     bottom: 0;
     width: 100%; }
@@ -1150,7 +1197,7 @@ h2 {
   color: #106470;
   margin-top: 0; }
 
-.btn, #list .more-spaces-link, .login-screen input[type=submit], .btn-inline {
+.btn, .login-screen input[type=submit], .btn-inline, #list .more-spaces-link {
   width: 100%;
   text-align: center;
   background: #642c73;
@@ -1162,14 +1209,14 @@ h2 {
   display: inline-block;
   border: none;
   cursor: pointer; }
-  .btn.disabled, #list .disabled.more-spaces-link, .login-screen input.disabled[type=submit], .btn-inline.disabled {
+  .btn.disabled, .login-screen input.disabled[type=submit], .btn-inline.disabled, #list .disabled.more-spaces-link {
     background: #e8e8e8; }
-  .btn.secondary, #list .secondary.more-spaces-link, .login-screen input.secondary[type=submit], .btn-inline.secondary {
+  .btn.secondary, .login-screen input.secondary[type=submit], .btn-inline.secondary, #list .secondary.more-spaces-link {
     background: #FFF;
     border: 1px solid #e8e8e8;
     color: #212121; }
 
-.btn-inline {
+.btn-inline, #list .more-spaces-link {
   display: inline-block;
   width: auto;
   font-size: 1rem;
@@ -1279,15 +1326,15 @@ h2 {
     .large_view #map .infoBubble {
       min-width: 0vw;
       max-width: 90%; }
-  .large_view #list, .large_view #search .search-options-container, .large_view #map {
+  .large_view #list, .large_view #list .list-meta, #list .large_view .list-meta, .large_view #search .search-options-container, .large_view #map {
     display: block;
     max-height: 100vh;
     overflow: auto; }
-  .large_view #list {
+  .large_view #list, .large_view #list .list-meta, #list .large_view .list-meta {
     background-color: #FFF;
     max-width: 510px;
     min-width: 425px; }
-    .large_view #list .list-space {
+    .large_view #list .list-space, #list .large_view .list-meta .list-space {
       padding: 18px 18px 24px 18px; }
   .large_view #search {
     min-width: 256px;

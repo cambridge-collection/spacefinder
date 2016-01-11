@@ -27,13 +27,14 @@
                 <ul>
                     <li><i class="icon-marker"></i><span class="space-address">#{address}</span></li>
                     <li class="opening-times"><i class="icon-time-short"></i><span class="open_now"></span></li>
-                    <li class=" disabled-access" data-disabled-access="#{disabled_access}"><i class="icon-disabled"></i><span>Disabled access</span></li>
-                    <li class="restricted-access" data-restricted-access="#{disabled_access}"><i class="icon-access"></i><span>Access restrictions - #{restriction}</span></li>
+
+                    <li class="restricted-access" data-restricted-access="#{disabled_access}"><i class="icon-access"></i><span>Open to #{access} <i class="access-detail">- #{restriction}</i></span></li>
                 </ul>
             </section>
             <section class="lowlight section-facilities">
                 <h2>Facilities</h2>
                 <ul>
+                    <li class=" disabled-access" data-disabled-access="#{disabled_access}"><i class="icon-disabled"></i><span>Wheelchair accessible</span></li>
                     #{facilities[<li class="facility #{attr}"><i class="#{icon}"></i>#{value}</li>]}
                 </ul>
             </section>
@@ -100,8 +101,8 @@ if ($space.find('.disabled-access').attr('data-disabled-access') !== 'true') {
 if ($space.find('.restricted-access').attr('data-restricted-access') !== 'true') {
     $space.find('.restricted-access').remove();
 }
-if ($space.find('.restriction').html() == '()') {
-    $space.find('.restriction').remove();
+if ($space.find('.access-detail').html() == '- ') {
+    $space.find('.access-detail').remove();
 }
 $('li.tag').off('click').on('click', function(event) {
     event.preventDefault();

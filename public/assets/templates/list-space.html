@@ -3,7 +3,7 @@
     <h2><span class="library">#{library}</span><span class="address hidden">#{address}</span><small>#{distance}</small></h2>
 
     <div class="space-details">
-        #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+        #{images[<div style="background-image:url(http://spacefinder.lib.cam.ac.uk/#{value})" class="space-image"></div>](limit="1")}
         <div>
             <p class="description">#{description}</p>
 
@@ -12,4 +12,5 @@
         </div>
 
     </div>
+    <div class="excluded-search">Search terms not included: <span class="exclude-array">#{excluded[<span class="excluded-value">#{value},</span> ]}</span></div>
 </div>
