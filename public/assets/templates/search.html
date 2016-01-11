@@ -88,6 +88,7 @@ $('.search-button').on('click', function(event) {
         'exclusions':[],
         'total':0
     };
+    closeSpaces();
     $('.active[data-ignore="true"]').removeAttr('data-ignore');
     console.log(event);
     var $search = $(this);
