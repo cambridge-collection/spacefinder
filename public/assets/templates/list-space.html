@@ -1,6 +1,7 @@
 <div class="list-space" data-id="#{id}" data-link="#{link}">
+
     <h1><a href="#{link}">#{name}</a></h1>
-    <h2><span class="library">#{library}</span><span class="address hidden">#{address}</span><small>#{distance}</small></h2>
+    <h2><span class="space-type #{space_type(attr="-" transform="lowercase")}"><i class="icon-marker"></i>#{space_type} - </span><span class="library">#{library}</span><span class="address hidden">#{address}</span><small>#{distance}</small></h2>
 
     <div class="space-details">
         #{images[<div style="background-image:url(http://spacefinder.lib.cam.ac.uk/#{value})" class="space-image"></div>](limit="1")}
@@ -8,7 +9,7 @@
             <p class="description">#{description}</p>
 
             #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>](limit="5")}
-            <!--a href="#{link}" title="#{name}">View details</a-->
+
         </div>
 
     </div>

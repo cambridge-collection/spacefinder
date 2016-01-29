@@ -101,13 +101,13 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 .icon-access:before {
-  content: "\e800"; }
+  content: "\e802"; }
 
 .icon-disabled:before {
   content: "\e801"; }
 
 .icon-drink:before {
-  content: "\e802"; }
+  content: "\e800"; }
 
 .icon-pencil:before {
   content: "\e621"; }
@@ -223,6 +223,9 @@
 
 .icon-wifi:before {
   content: "\e61a"; }
+
+.icon-public:before {
+  content: "\e900"; }
 
 body, html {
   padding: 0;

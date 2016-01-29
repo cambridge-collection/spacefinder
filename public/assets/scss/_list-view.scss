@@ -48,11 +48,25 @@
     .list-space {
         padding: 18px 12px 24px 12px;
         border-bottom: 1px solid $lowlight;
+        position: relative;
         &.hover {
             background-color: $lightBackgroundColor;
         }
 
     }
+
+    .space-type {
+        -webkit-flex-grow: 0;
+        flex-grow: 0;
+        margin-right: 5px;
+        &.lab, &.lecture-room, &.library-space, &.meeting-room, &.seminar-room {
+            color: #00B1C1;
+        }
+        &.bar, &.café, &.restaurant {
+            color: #EA7125;
+        }
+    }
+
     .space-details {
         display: -webkit-flex;
         display: flex;
@@ -67,7 +81,7 @@
     }
 
     .space-image {
-        min-width: 100px;
+        min-width: 200px;
         height: 100px;
         background-size: cover;
         background-position: center;
@@ -124,6 +138,7 @@
     .list-meta {
         border-bottom: 1px solid $lowlight;
         position:fixed;
+        z-index: 2;
         top: 50px;
         @extend #list;
         padding: 0!important;

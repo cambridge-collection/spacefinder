@@ -56,6 +56,62 @@
         max-height: 400px;
         position: relative;
         background-color: $bodyColor;
+
+        .fullscreen-btn {
+            position: absolute;
+            right: 18px;
+            top: 60px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+
+            svg .st0 {
+                fill:#FFFFFF;
+            }
+        }
+
+        &.fullscreen {
+            .fullscreen-btn {
+                svg {
+                    display: none;
+                }
+                &:before, &:after {
+                    content: '';
+                    display: block;
+                    width: 3px;
+                    height: 20px;
+                    background-color: #FFF;
+                    position: absolute;
+                    -webkit-transform:rotate(45deg);
+                    top: 10px;
+                    left: 18px;
+                }
+                &:after {
+                    //left: 20px;
+                    -webkit-transform:rotate(-45deg);
+                }
+            }
+            height: 100vh;
+            max-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #000;
+            width: 100vw;
+            .gallery-control {
+                display: none!important;
+            }
+            .gallery {
+
+                .image {
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    transition: all 0.3s linear;
+                }
+            }
+
+        }
     }
 
     .gallery-control {
@@ -76,6 +132,7 @@
         &.disabled {
             opacity: 0.4;
         }
+
         &.back {
 
         }
@@ -83,6 +140,7 @@
             -webkit-justify-content: flex-end;
             justify-content:flex-end;
             right: 0;
+
         }
     }
 

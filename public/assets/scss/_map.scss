@@ -1,7 +1,8 @@
 .infoBubble {
     padding-bottom: 6px;
     min-width: 25vw;
-    max-width: 90vw;
+    max-width: 500px;
+
     font-family: "Myriad Pro", verdana, sans-serif;
     font-weight: lighter;
     .icon-close {
@@ -21,6 +22,8 @@
     line-height: 1.3rem;
     font-weight: normal;
     width: 100%;
+    overflow-y: auto;
+    max-height: 50vh;
     p {
         margin-bottom: 0;
     }

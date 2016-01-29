@@ -11,7 +11,7 @@
         background-image: url('/assets/img/spacefinder.svg');
         background-position: center 12px;
         background-repeat: no-repeat;
-        background-size: auto 70%;
+        background-size: auto 60%;
         .large-nav {
             display: block;
             -webkit-flex-grow: 1;
@@ -41,7 +41,7 @@
 
         .infoBubble {
             min-width: 0vw;
-            max-width: 90%;
+            //max-width: 90%;
         }
     }
 
@@ -106,6 +106,9 @@
         }
         .gallery-container {
             margin-top: -50px;
+        }
+        .fullscreen-btn {
+            display: none;
         }
         .lowlight {
             background:$lightBackgroundColor;

@@ -1,7 +1,9 @@
 <div class="search-options-container">
     <div class="search-text">
-        <input type="text" id="search_query" name="filters[search_query]" placeholder="Search for a space or keyword" />
+        <input type="hidden" id="search_query" name="filters[search_query]" placeholder="Search for a space or keyword" />
         <a id="clear-search" class="btn secondary">Clear all</a>
+        <a href="#" id="near-me-btn" class="btn secondary"><i class="icon-marker"></i>Use my location</a>
+
     </div>
     <ul>
         <li><div class="header"><span class="title">I want to work...</span></div>
@@ -34,6 +36,37 @@
 <a class="btn search-button"><i class="icon-search"></i>Search</a>
 
 <script type="text/javascript">
+$('#near-me-btn').on('click', function(event) {
+    event.preventDefault();
+    $(this).toggleClass('active');
+    console.log('near me - ' + $(this).hasClass('active'));
+    if ($(this).hasClass('active')) {
+        //getLocation = true;
+        $(this).find('i').removeAttr('class').addClass('icon-loading');
+        if ("geolocation" in navigator) {
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                cancelGeoLocation = null;
+                userLoc.lat = position.coords.latitude;
+                userLoc.lng = position.coords.longitude;
+                $('#near-me-btn').find('i').removeAttr('class').addClass('icon-marker');
+                if(currView == 'large') {
+                    systemEvent = true;
+                    $('.search-button').click();
+                }
+            });
+        }
+    } else {
+        if(currView == 'large') {
+            systemEvent = true;
+            $('.search-button').click();
+        }
+    }
+
+
+});
+
 $('.filter-option').on('click', function(event) {
     event.preventDefault();
     $(this).toggleClass('active');
@@ -47,6 +80,7 @@ $('.filter-option').on('click', function(event) {
 $("#clear-search").on('click', function(event) {
     event.preventDefault();
     $('#search_query').val('');
+    $('#near-me-btn').removeClass('active');
     $('.filter-option').removeClass('active');
     $('.search-button').click();
 });
@@ -88,7 +122,7 @@ $('.search-button').on('click', function(event) {
         'exclusions':[],
         'total':0
     };
-    closeSpaces();
+    //window.location.hash = '/search';
     $('.active[data-ignore="true"]').removeAttr('data-ignore');
     console.log(event);
     var $search = $(this);
@@ -124,25 +158,32 @@ function checkExpansions() {
     if($('#search-noise .active').length > 0) {
         totalExpansions += 1;
     }
+    if($('#search-work .active').length > 0) {
+        totalExpansions += 1;
+    }
     if($('#search-atmosphere .active').length > 0) {
         totalExpansions += 1;
     }
     exclude.total = totalExpansions;
     console.info('-------------------------', totalExpansions)
 }
-function expandSearch() {
+function expandSearch(count) {
     console.log('expand search');
     var tempExclude = [];
-    if($('#search-noise .active').length > 0 && exclude.exclusions.length >= 0) {
-        $('#search-noise .active').attr('data-ignore', true);
-        tempExclude.push('noise');
+
+    if($('#search-work .active').length > 0 && tempExclude.length !== count+1) {
+        $('#search-work .active').attr('data-ignore', true);
+        tempExclude.push('work');
     }
 
-    if(($('#search-atmosphere .active').length > 0 && $('#search-atmosphere .active[data-ignore="true"]').length == 0 && exclude.exclusions.length >= 1) || ($('#search-noise .active').length == 0 && exclude.exclusions.length >= 0)) {
+    if($('#search-atmosphere .active').length > 0 && tempExclude.length !== count+1) {
         $('#search-atmosphere .active').attr('data-ignore', true);
-        console.log('ignore atmosphere filters');
-        console.log('prep search - ' + prepSearch(['noise, atmosphere']));
         tempExclude.push('atmosphere');
+    }
+
+    if($('#search-noise .active').length > 0 && tempExclude.length !== count+1) {
+        $('#search-noise .active').attr('data-ignore', true);
+        tempExclude.push('noise');
     }
 
     exclude.exclusions = tempExclude;
@@ -152,10 +193,11 @@ function prepSearch() {
     var query = '';
 
     console.info(exclude, exclude.exclusions.indexOf('atmosphere'));
-    $('#search-work .active').each(function(index, el) {
-        query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
-    });
-
+    if (exclude.exclusions.indexOf('work') == -1) {
+        $('#search-work .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+    }
     if (exclude.exclusions.indexOf('atmosphere') == -1) {
         $('#search-atmosphere .active').each(function(index, el) {
             query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
@@ -175,6 +217,11 @@ function prepSearch() {
     });
 
     query += '&filters[search_query]=' + $('#search_query').val();
+
+    if ($('#near-me-btn').hasClass('active')) {
+        query += '&filters[nearest]=' + userLoc.lat + ',' + userLoc.lng;
+    }
+
     console.info(query.substr(1));
     return query.substr(1);
 }

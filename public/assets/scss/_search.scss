@@ -134,9 +134,16 @@
 
     }
 
-    #clear-search {
+    #clear-search, #near-me-btn {
         font-size: 0.9rem;
         margin-top: 6px;
+        i {
+            margin-right: 6px;
+        }
+        &.active {
+            color: #FFF;
+            background-color: $barColor;
+        }
     }
 
     .search-button {

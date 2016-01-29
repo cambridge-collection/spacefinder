@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #top-bar {
   position: fixed;
   top: 0;
@@ -64,7 +65,7 @@
 .infoBubble {
   padding-bottom: 6px;
   min-width: 25vw;
-  max-width: 90vw;
+  max-width: 500px;
   font-family: "Myriad Pro", verdana, sans-serif;
   font-weight: lighter; }
   .infoBubble .icon-close {
@@ -80,7 +81,9 @@
   font-size: 0.9rem;
   line-height: 1.3rem;
   font-weight: normal;
-  width: 100%; }
+  width: 100%;
+  overflow-y: auto;
+  max-height: 50vh; }
   .map-info-bubble p {
     margin-bottom: 0; }
   .map-info-bubble a {
@@ -199,9 +202,18 @@
       flex-grow: 1; }
   #list .list-space {
     padding: 18px 12px 24px 12px;
-    border-bottom: 1px solid #e8e8e8; }
+    border-bottom: 1px solid #e8e8e8;
+    position: relative; }
     #list .list-space.hover {
       background-color: #F3F3F3; }
+  #list .space-type {
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+    margin-right: 5px; }
+    #list .space-type.lab, #list .space-type.lecture-room, #list .space-type.library-space, #list .space-type.meeting-room, #list .space-type.seminar-room {
+      color: #00B1C1; }
+    #list .space-type.bar, #list .space-type.café, #list .space-type.restaurant {
+      color: #EA7125; }
   #list .space-details {
     display: -webkit-flex;
     display: flex;
@@ -212,7 +224,7 @@
     height: 5rem;
     overflow: hidden; }
   #list .space-image {
-    min-width: 100px;
+    min-width: 200px;
     height: 100px;
     background-size: cover;
     background-position: center;
@@ -250,6 +262,7 @@
   #list .list-meta {
     border-bottom: 1px solid #e8e8e8;
     position: fixed;
+    z-index: 2;
     top: 50px;
     padding: 0 !important;
     background-color: #FFF;
@@ -319,6 +332,44 @@
     max-height: 400px;
     position: relative;
     background-color: #b0b0b0; }
+    .space .gallery-container .fullscreen-btn {
+      position: absolute;
+      right: 18px;
+      top: 60px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px; }
+      .space .gallery-container .fullscreen-btn svg .st0 {
+        fill: #FFFFFF; }
+    .space .gallery-container.fullscreen {
+      height: 100vh;
+      max-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #000;
+      width: 100vw; }
+      .space .gallery-container.fullscreen .fullscreen-btn svg {
+        display: none; }
+      .space .gallery-container.fullscreen .fullscreen-btn:before, .space .gallery-container.fullscreen .fullscreen-btn:after {
+        content: '';
+        display: block;
+        width: 3px;
+        height: 20px;
+        background-color: #FFF;
+        position: absolute;
+        -webkit-transform: rotate(45deg);
+        top: 10px;
+        left: 18px; }
+      .space .gallery-container.fullscreen .fullscreen-btn:after {
+        -webkit-transform: rotate(-45deg); }
+      .space .gallery-container.fullscreen .gallery-control {
+        display: none !important; }
+      .space .gallery-container.fullscreen .gallery .image {
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: all 0.3s linear; }
   .space .gallery-control {
     position: absolute;
     top: 0;
@@ -652,13 +703,13 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 .icon-access:before {
-  content: "\e800"; }
+  content: "\e802"; }
 
 .icon-disabled:before {
   content: "\e801"; }
 
 .icon-drink:before {
-  content: "\e802"; }
+  content: "\e800"; }
 
 .icon-pencil:before {
   content: "\e621"; }
@@ -775,6 +826,9 @@
 .icon-wifi:before {
   content: "\e61a"; }
 
+.icon-public:before {
+  content: "\e900"; }
+
 #search {
   background: #F3F3F3;
   padding-bottom: 60px; }
@@ -872,9 +926,14 @@
       margin: 0; }
     #search .filter-option > div p::first-letter {
       text-transform: uppercase; }
-  #search #clear-search {
+  #search #clear-search, #search #near-me-btn {
     font-size: 0.9rem;
     margin-top: 6px; }
+    #search #clear-search i, #search #near-me-btn i {
+      margin-right: 6px; }
+    #search #clear-search.active, #search #near-me-btn.active {
+      color: #FFF;
+      background-color: #106470; }
   #search .search-button {
     cursor: pointer;
     position: fixed;
@@ -1160,6 +1219,72 @@
   background-position: center;
   position: relative; }
 
+.ui-helper-hidden {
+  display: none; }
+
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.ui-helper-reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 1.3;
+  text-decoration: none;
+  font-size: 100%;
+  list-style: none; }
+
+.ui-helper-clearfix:before, .ui-helper-clearfix:after {
+  content: "";
+  display: table;
+  border-collapse: collapse; }
+
+.ui-helper-clearfix:after {
+  clear: both; }
+
+.ui-helper-clearfix {
+  min-height: 0; }
+
+.ui-helper-zfix {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  filter: Alpha(Opacity=0); }
+
+.ui-front {
+  z-index: 100; }
+
+.ui-state-disabled {
+  cursor: default !important; }
+
+.ui-icon {
+  display: block;
+  text-indent: -99999px;
+  overflow: hidden;
+  background-repeat: no-repeat; }
+
+.ui-widget-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.ui-draggable-handle {
+  -ms-touch-action: none;
+  touch-action: none; }
+
 body, html {
   padding: 0;
   margin: 0;
@@ -1302,7 +1427,7 @@ h2 {
     background-image: url("/assets/img/spacefinder.svg");
     background-position: center 12px;
     background-repeat: no-repeat;
-    background-size: auto 70%; }
+    background-size: auto 60%; }
     .large_view #top-bar .large-nav {
       display: block;
       -webkit-flex-grow: 1;
@@ -1324,8 +1449,7 @@ h2 {
   .large_view #map {
     width: 100%; }
     .large_view #map .infoBubble {
-      min-width: 0vw;
-      max-width: 90%; }
+      min-width: 0vw; }
   .large_view #list, .large_view #list .list-meta, #list .large_view .list-meta, .large_view #search .search-options-container, .large_view #map {
     display: block;
     max-height: 100vh;
@@ -1371,6 +1495,8 @@ h2 {
       background: rgba(0, 0, 0, 0.8); }
     .large_view .space .gallery-container {
       margin-top: -50px; }
+    .large_view .space .fullscreen-btn {
+      display: none; }
     .large_view .space .lowlight {
       background: #F3F3F3;
       padding: 12px;
