@@ -20,3 +20,5 @@
 *.sass-cache/*
 
 *.scssc
+
+public/admin/assets/img/trash.svg
