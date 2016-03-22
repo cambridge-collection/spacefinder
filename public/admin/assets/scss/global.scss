@@ -93,6 +93,8 @@ a.remove_nested_fields {
     max-width: 800px;
     background-color: #FFF;
     padding: 12px;
+    padding-bottom: 0;
+    margin-bottom: 12px;
 }
 h1 {
     font-weight: normal;
@@ -509,5 +511,79 @@ textarea {
     ul {
         padding-left: 0;
         list-style: none;
+    }
+}
+
+.header.admin-dark {
+    margin-top: 20px;
+    background-color: #AB7171;
+    margin-bottom: 0;
+    border-bottom-color: darken(#AB7171, 20%);
+
+    a.section-collapse {
+        border-color: darken(#AB7171, 20%);
+    }
+}
+
+.btn.delete {
+    background-color: #bd4848;
+    margin: 10px 0;
+}
+
+.delete-space-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+
+    .delete-space-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .dialog-box {
+            width: 75vw;
+            max-width: 600px;
+            height: 50vh;
+            min-height: 250px;
+            max-height: 300px;
+            padding: 30px;
+            background: #FFF;
+            position: relative;
+            .space-name {
+                font-weight: bold;
+            }
+            .buttons {
+                position: absolute;
+                bottom: 30px;
+                width: calc(100% - 60px);
+                display: flex;
+                flex-direction: row;
+
+                .right {
+                    flex-grow: 1;
+                    text-align: right;
+                }
+
+                a {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    color: #FFF;
+                    background-color: #333;
+
+                    &.confirm-delete {
+                        background-color: #bd4848;
+                    }
+                }
+            }
+        }
     }
 }

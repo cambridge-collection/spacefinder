@@ -689,6 +689,19 @@ Being a bar expect it to be busy at lunch and in the evenings. They also have co
   <div class="actions">
     <input type="submit" name="commit" value="Update Space" />
   </div>
+
+
+  <div class="header admin-dark"><span class="title">Delete space</span></div>
+  <div class="section admin-dark">
+      <div class="field">
+        <p>The button below will delete the space from the Spacefinder. This action is irreversible so please tread lightly beyond this point.</p>
+        <a href="#" id="delete-space" class="btn delete">Delete space</a>
+      </div>
+  </div>
+
+
+
+
 <div id="space_photos_fields_blueprint" style="display: none" data-blueprint="&lt;div class=&quot;fields&quot;&gt;
       &lt;div class=&quot;field&quot;&gt;
           &lt;label for=&quot;space_space_photos_attributes_new_space_photos_photo&quot;&gt;Photo&lt;/label&gt;
@@ -698,6 +711,24 @@ Being a bar expect it to be busy at lunch and in the evenings. They also have co
 
 </div>
 
+<div class="delete-space-overlay">
+    <div class="delete-space-container">
+        <div class="dialog-box">
+            <h2>Delete space</h2>
+            <p>
+                You are about to delete <span class="space-name">name of space</span> from spacefinder. This action cannot be reversed. If you are sure you wish to continue please click the "delete space" button below. Otherwise click cancel to return to the edit screen.
+            </p>
+            <div class="buttons">
+                <div class="left">
+                    <a href="#" class="cancel-delete">Cancel</a>
+                </div>
+                <div class="right">
+                    <a href="/needs-url" class="confirm-delete">Delete space</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
   <script src="/admin/assets/js/admin.js" data-turbolinks-track="true"></script>

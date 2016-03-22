@@ -65,6 +65,23 @@ $().ready(function () {
 
         })
     );
+    $('.header .title').on('click', function(event) {
+        event.preventDefault();
+        $(this).parent('.header').find('a.section-collapse').trigger('click');
+    });
+
+    $('.header.admin-dark a.section-collapse').trigger('click');
+
+    $('#delete-space').on('click', function(event) {
+        event.preventDefault();
+        $('.delete-space-overlay .space-name').html($('#space_name').val());
+        $('.delete-space-overlay').fadeIn('300');
+    });
+
+    $('.delete-space-overlay a.cancel-delete').on('click', function(event) {
+        event.preventDefault();
+        $('.delete-space-overlay').fadeOut('300');
+    });
 
     $('.get-location').on('click', function(event) {
         event.preventDefault();
