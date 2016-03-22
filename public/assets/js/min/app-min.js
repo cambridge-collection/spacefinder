@@ -1098,7 +1098,7 @@ function loadList(options) {
                 var space = findMarkers(points, {'id':$(this).data('id')}).spaces[0];
                 if (currView !== 'small') {
                     for (var i = 0; i < points.length; i++) {
-                        points[i].marker.setOptions({'opacity': 0.0});
+                        points[i].marker.setOptions({'opacity': 0.25});
                         points[i].marker.setMap(map);
                     }
                 }

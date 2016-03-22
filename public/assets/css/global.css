@@ -206,6 +206,8 @@
     position: relative; }
     #list .list-space.hover {
       background-color: #F3F3F3; }
+    #list .list-space .address, #list .list-space .library {
+      margin-top: 1px; }
   #list .space-type {
     -webkit-flex-grow: 0;
     flex-grow: 0;
