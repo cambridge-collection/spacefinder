@@ -93,7 +93,6 @@ a.remove_nested_fields {
     max-width: 800px;
     background-color: #FFF;
     padding: 12px;
-    padding-bottom: 0;
     margin-bottom: 12px;
 }
 h1 {
@@ -514,20 +513,10 @@ textarea {
     }
 }
 
-.header.admin-dark {
-    margin-top: 20px;
-    background-color: #AB7171;
-    margin-bottom: 0;
-    border-bottom-color: darken(#AB7171, 20%);
-
-    a.section-collapse {
-        border-color: darken(#AB7171, 20%);
-    }
-}
-
-.btn.delete {
-    background-color: #bd4848;
-    margin: 10px 0;
+#delete-space {
+    width: 24px;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 
 .delete-space-overlay {
