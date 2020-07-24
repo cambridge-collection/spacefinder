@@ -1,4 +1,4 @@
-class AddResponseToTips < ActiveRecord::Migration
+class AddResponseToTips < ActiveRecord::Migration[4.2]
   def change
     add_column :tips, :response, :text
     add_column :tips, :responding_user_id, :integer

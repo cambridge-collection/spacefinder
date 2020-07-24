@@ -1,4 +1,4 @@
-class AddDeletedAtToTips < ActiveRecord::Migration
+class AddDeletedAtToTips < ActiveRecord::Migration[4.2]
   def change
     add_column :tips, :deleted_at, :datetime
     add_index :tips, :deleted_at

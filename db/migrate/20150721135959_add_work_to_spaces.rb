@@ -1,4 +1,4 @@
-class AddWorkToSpaces < ActiveRecord::Migration
+class AddWorkToSpaces < ActiveRecord::Migration[4.2]
   def change
     add_column :spaces, :work_private, :boolean
     add_column :spaces, :work_close, :boolean

@@ -1,4 +1,4 @@
-class CreateOpeningHours < ActiveRecord::Migration
+class CreateOpeningHours < ActiveRecord::Migration[4.2]
   def change
     create_table :opening_hours_days do |t|
       t.boolean :open

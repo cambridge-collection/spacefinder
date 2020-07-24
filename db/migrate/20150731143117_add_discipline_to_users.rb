@@ -1,4 +1,4 @@
-class AddDisciplineToUsers < ActiveRecord::Migration
+class AddDisciplineToUsers < ActiveRecord::Migration[4.2]
   def change
     add_column :users, :discipline, :string
   end

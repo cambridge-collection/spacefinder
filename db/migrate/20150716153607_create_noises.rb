@@ -1,4 +1,4 @@
-class CreateNoises < ActiveRecord::Migration
+class CreateNoises < ActiveRecord::Migration[4.2]
   def change
     create_table :noises do |t|
       t.string :title

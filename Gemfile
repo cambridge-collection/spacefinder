@@ -46,6 +46,7 @@ gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
 
+gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 
 group :development, :test do
   gem 'listen'
