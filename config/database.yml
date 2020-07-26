@@ -19,9 +19,7 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
-
+  pool: 5
 
 development:
   <<: *default
@@ -85,4 +83,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  database: spacefinder_stag
+  username: spfindstag
+  password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
+  url: postgresql://sql-postgres.ds.lib.cam.ac.uk
+

@@ -1,8 +1,8 @@
 class SpacesController < ApplicationController
   protect_from_forgery except: :add_tag
-  before_filter :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update]
+  before_filter :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update, :destroy]
   before_filter :check_user_details_set, only: :add_tag
-  before_action :set_space, only: [:show, :edit, :update, :add_tag]
+  before_action :set_space, only: [:show, :edit, :update, :add_tag, :destroy]
   after_action :jsonp_callback, only: [:index, :show, :filters]
   layout "admin"
 
@@ -19,7 +19,10 @@ class SpacesController < ApplicationController
       :persistence_id => false
     )
     
-    @spaces = @filterrific.find.page(params[:page]).per(params[:limit])
+    @spaces = @filterrific.find.order(id: :asc).page(params[:page]).per(params[:limit])
+                .includes([:access, :space_type, :library, :noise, :space_photos, :tags, :user_tags,
+                  term_time_hours: [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday], 
+                  out_of_term_hours: [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]])
   end
 
   # GET /spaces/1
@@ -44,7 +47,7 @@ class SpacesController < ApplicationController
 
   # GET /spaces/1/edit
   def edit
-    authorize! :manage, Space
+    authorize! :manage, @space
     space_photo = @space.space_photos.new
   end
 
@@ -56,6 +59,9 @@ class SpacesController < ApplicationController
 
     respond_to do |format|
       if @space.save
+        unless current_user.has_role? :admin then
+          current_user.add_role :admin, @space
+        end
         format.html { redirect_to admin_path}
         format.json { render :show, status: :created, location: @space }
       else
@@ -68,15 +74,28 @@ class SpacesController < ApplicationController
   # PATCH/PUT /spaces/1
   # PATCH/PUT /spaces/1.json
   def update
-    authorize! :manage, Space
+    authorize! :manage, @space
     respond_to do |format|
       if @space.update(space_params)
+        unless current_user.has_role? :admin then
+          current_user.add_role :admin, @space
+        end
         format.html { redirect_to admin_path}
         format.json { render :show, status: :ok, location: @space }
       else
         format.html { render :edit }
         format.json { render json: @space.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def destroy
+    authorize! :destroy, @space
+    
+    @space.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_url, notice: 'Space was successfully removed.' }
+      format.json { head :no_content }
     end
   end
   
@@ -109,7 +128,17 @@ class SpacesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def space_params
       params.require(:space).permit(
-        :name, :description, :access_id, :space_type_id, :library_id, :new_library_name, :address, :floor, :lat, :lng, :restricted, :restriction, :disabled_access, :url, :phone_number, :email_address, :twitter_screen_name, :facebook_url, :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise_id, :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets, :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list,
+        :name, :description, :access_id, :space_type_id, :library_id, :new_library_name, :address, :floor, :lat, :lng, 
+        :restricted, :restriction, :disabled_access, :url, :phone_number, :email_address, :twitter_screen_name, :facebook_url, 
+        :atmosphere_disciplined, :atmosphere_relaxed, :atmosphere_historic, :atmosphere_modern, :atmosphere_inspiring, 
+        :atmosphere_cosy, :atmosphere_social, :atmosphere_friendly, :noise_id, 
+        :facility_food_drink, :facility_daylight, :facility_views, :facility_large_desks, :facility_free_wifi, 
+        :facility_no_wifi, :facility_computers, :facility_laptops_allowed, :facility_sockets, :facility_signal, 
+        :facility_printers_copiers, :facility_whiteboards, :facility_projector, :facility_outdoor_seating, :facility_bookable, 
+        :facility_toilets, :facility_refreshments, :facility_break, :facility_wheelchair_accessible, :facility_blue_badge_parking, 
+        :facility_accessible_toilets, :facility_induction_loops, :facility_adjustable_furniture, :facility_individual_study_space, 
+        :facility_gender_neutral_toilets, :facility_bike_racks, :facility_smoking_area, :facility_baby_changing, :facility_prayer_room,
+        :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list, :editors,
         space_photos_attributes: [:id, :photo, :_destroy],
         term_time_hours_attributes: [
           Hash[OpeningHoursWeek.days.collect {|day|

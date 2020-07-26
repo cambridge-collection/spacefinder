@@ -1,5 +1,4 @@
 class TipsController < ApplicationController
-  protect_from_forgery except: :create
   before_filter :authenticate_user!, except: [:index, :new, :review, :update, :destroy]
   before_filter :check_user_details_set, only: :create
   after_action :jsonp_callback, only: [:index]
@@ -36,8 +35,9 @@ class TipsController < ApplicationController
   end
   
   def destroy
-    authorize! :manage, Tip
     @tip = Tip.find(params[:id])
+    authorize! :manage, @tip.space
+    
     @tip.destroy
     respond_to do |format|
       format.html { redirect_to admin_review_url, notice: 'Tip was successfully removed.' }
@@ -46,14 +46,20 @@ class TipsController < ApplicationController
   end
 
   def review
-    authorize! :manage, Tip
-    @tips = Tip.order('updated_at DESC').where(:response => nil)
+    authorize! :manage, Space
+    
+    if current_user.details_needed? then
+      redirect_to edit_user_path(format: :html) and return
+    end
+    
+    @tips = Tip.order('updated_at DESC').where(response: nil, space_id: Space.with_role(:admin, current_user).pluck(:id))
     render layout: "admin"
   end
   
   def update
-    authorize! :manage, Tip
     @tip = Tip.find(params[:id])
+    authorize! :manage, @tip.space
+    
     @tip.responding_user = current_user
     respond_to do |format|
       if @tip.update(response_params)

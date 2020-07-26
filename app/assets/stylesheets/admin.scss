@@ -2,21 +2,13 @@
 @import '_top-bar';
 @import '_icons';
 
-@font-face {
-    font-family: 'MyriadPro-Light';
-    src: font-url('MyriadPro-Light.eot?#iefix') format('embedded-opentype'),  font-url('MyriadPro-Light.otf')  format('opentype'),
-    font-url('MyriadPro-Light.woff') format('woff'), font-url('MyriadPro-Light.ttf')  format('truetype'), font-url('MyriadPro-Light.svg#MyriadPro-Light') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body, html {
     padding: 0;
     margin: 0;
     background: $backgroundColor;
     font-size: 14px;
-    font-family: 'MyriadPro-Light', verdana, sans-serif;
-    //font-weight: lighter;
+    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-weight: lighter;
 }
 body * {
     box-sizing: border-box;
@@ -101,6 +93,7 @@ a.remove_nested_fields {
     max-width: 800px;
     background-color: #FFF;
     padding: 12px;
+    margin-bottom: 12px;
 }
 h1 {
     font-weight: normal;
@@ -109,7 +102,7 @@ h1>small {
     display: block;
 }
 
-.btn, .btn-inline, input[type="submit"].btn-inline {
+.btn, .btn-inline {
     width: 100%;
     text-align: center;
     background: #642c73;
@@ -119,14 +112,14 @@ h1>small {
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'MyriadPro-Light';
+    font-family: 'Myriad Pro', verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;
     }
 }
 
-.btn-inline, input[type="submit"].btn-inline {
+.btn-inline {
     display: inline-block;
     width: auto;
     font-size: 1rem;
@@ -385,7 +378,7 @@ textarea {
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'MyriadPro-Light';
+    font-family: 'Myriad Pro', verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;
@@ -489,10 +482,6 @@ textarea {
                 float: right;
             }
         }
-        
-        .buttons.delete {
-          padding-top: 0;
-        }
     }
 }
 
@@ -505,7 +494,7 @@ textarea {
 
 .pre-fill.field_with_errors {
   border: 1px solid #FF6666;
-  
+
   input {
     border: none;
   }
@@ -521,5 +510,69 @@ textarea {
     ul {
         padding-left: 0;
         list-style: none;
+    }
+}
+
+#delete-space {
+    width: 18px;
+    margin-right: 20px;
+    margin-top: 8px;
+}
+
+.delete-space-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+
+    .delete-space-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .dialog-box {
+            width: 75vw;
+            max-width: 600px;
+            height: 50vh;
+            min-height: 250px;
+            max-height: 300px;
+            padding: 30px;
+            background: #FFF;
+            position: relative;
+            .space-name {
+                font-weight: bold;
+            }
+            .buttons {
+                position: absolute;
+                bottom: 30px;
+                width: calc(100% - 60px);
+                display: flex;
+                flex-direction: row;
+
+                .right {
+                    flex-grow: 1;
+                    text-align: right;
+                }
+
+                a {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    color: #FFF;
+                    background-color: #333;
+
+                    &.confirm-delete {
+                        background-color: #bd4848;
+                    }
+                }
+            }
+        }
     }
 }

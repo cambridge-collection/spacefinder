@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.2.3'
 gem 'rails', '6.0.3.2'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-# gem 'sass-rails', '~> 5.0'
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0'
+#gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -39,14 +38,14 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem "paranoia", "~> 2.0"
 gem 'paperclip'
-gem 'aws-sdk', '~> 1.6'
 gem 'nested_form'
 gem 'kaminari'
 gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
+gem 'omniauth-shibboleth'
+gem 'search_cop'
 
-gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 
 group :development, :test do
   gem 'listen'
@@ -65,6 +64,9 @@ group :development, :test do
   gem 'dotenv-rails'
   
   gem 'pry'
+  
+  gem "bullet"
+  gem "lol_dba"
 end
 
 group :production do

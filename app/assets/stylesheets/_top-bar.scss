@@ -6,12 +6,15 @@
     width: 100%;
     height: $navHeight;
     background: $barColor;
-    z-index: 1;
+    z-index: 10;
     display: -webkit-flex;
     display: flex;
     //display: none;
     border-bottom: 2px solid black;
     padding: 8px 4px 0;
+    .large-nav {
+        display: none;
+    }
     a {
         border-radius: 4px 4px 0 0;
         height: 100%;
@@ -42,9 +45,11 @@
             -webkit-transition: all 0.3s linear;
             -moz-transition: all 0.3s linear;
             -o-transition: all 0.3s linear;
-            transition: all 0.3s linear; 
-            & [class^="icon-"]:before {
+            transition: all 0.3s linear;
+
+            [class^="icon-"] {
                 font-size: 1.2rem;
+                margin-right: 0;
             }
 
             &.active {

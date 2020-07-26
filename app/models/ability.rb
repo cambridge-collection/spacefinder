@@ -33,6 +33,11 @@ class Ability
     
     if user.has_role? :admin
       can :manage, :all
+      user.add_role :admin, Space
+    elsif user.has_role? :contributor
+      can :manage, Space, :id => Space.with_role(:admin, user).pluck(:id)
+      can :write, Space
+      cannot :destroy, Space
     else
       can :read, :all
     end

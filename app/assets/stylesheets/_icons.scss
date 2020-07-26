@@ -30,6 +30,15 @@
 @-webkit-keyframes spin {  0% {-webkit-transform: rotate(0deg);} 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg);} }
 @keyframes spin {  0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);}100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+.icon-access:before {
+	content: "\e802";
+}
+.icon-disabled:before {
+	content: "\e801";
+}
+.icon-drink:before {
+	content: "\e800";
+}
 
 .icon-pencil:before {
 	content: "\e621";
@@ -87,9 +96,6 @@
 }
 .icon-desk:before {
 	content: "\e605";
-}
-.icon-drink:before {
-	content: "\e606";
 }
 .icon-laptop:before {
 	content: "\e607";
@@ -150,4 +156,37 @@
 }
 .icon-wifi:before {
 	content: "\e61a";
+}
+.icon-public:before {
+    content: "\e900";
+}
+.icon-disabled-parking:before {
+    content: "\e908";
+}
+.icon-disabled-toilet:before {
+    content: "\e909";
+}
+.icon-hearing-loop:before {
+    content: "\e90a";
+}
+.icon-adjustable-furniture:before {
+    content: "\e901";
+}
+.icon-individual-space:before {
+    content: "\e902";
+}
+.icon-neutral-toilets:before {
+    content: "\e903";
+}
+.icon-bike-rack:before {
+    content: "\e904";
+}
+.icon-baby-changing:before {
+    content: "\e906";
+}
+.icon-smoking-area:before {
+    content: "\e905";
+}
+.icon-prayer-room:before {
+    content: "\e907";
 }
