@@ -1,0 +1,17 @@
+<% unless @user.nil? then %>
+  <p>You have been signed in and will be redirected shortly. <%= link_to "Click here", @redirect_url %> if you are not redirected automatically.</p>
+<% else %>
+  <p>There was a problem logging in. Please try again</p>
+<% end %>
+
+<script>
+ <%= render 'shared/user_details' %>
+  
+  if(window.opener && !window.opener.closed) {
+    userDetails['csrftoken'] = $('meta[name="csrf-token"]').attr('content');
+    window.opener.loginCallback(userDetails);
+    window.close();
+  } else {
+    window.location.href = "<%= @redirect_url %>";
+  }
+</script>

@@ -1,0 +1,139 @@
+.new-tip-container {
+    min-height: 100vh;
+    background: #FFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 20;
+    padding-top: 50px;
+
+    .close-view, .back {
+        position: absolute;
+        left: 12px;
+        top: 16px;
+        color: #FFF;
+        text-decoration: none;
+        font-size: 1.4rem;
+    }
+
+    .title {
+        background:$barColor;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        padding: 5px 0;
+        text-align: center;
+        color: #FFF;
+        min-height: 50px;
+        h1 {
+            font-family: 'myriad pro', verdana, sans-serif;
+            font-size: 1.5rem;
+            font-weight: normal;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .space-summary {
+        margin: 12px;
+        background-color: $lightBackgroundColor;
+        padding-right: 6px;
+        h2 {
+            padding-top: 6px;
+            border-bottom: none;
+            margin-bottom: 6px;
+        }
+        p {
+            margin: 0;
+        }
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+
+        .space-image {
+            min-width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 12px;
+            justify-content: space-around;
+            align-items: stretch;
+        }
+
+    }
+
+    .parts-container {
+        position: relative;
+        margin: 12px;
+        .part-moving {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        .part-1 {
+            textarea {
+                width: 100%;
+                padding: 6px;
+                border: 1px solid $lowlight;
+                font-size: 1rem;
+            }
+        }
+
+        .questions {
+            list-style: none;
+            margin: 0 0 24px 0;
+            padding: 0;
+
+            li {
+                padding: 24px 12px;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-flex-direction: row;
+                flex-direction: row;
+
+                .control {
+                    align-self: flex-end;
+                    -webkit-align-self: flex-end;
+                    flex-grow: 1;
+                    -webkit-flex-grow:1;
+                    text-align: right;
+
+                    a {
+                        padding: 18px;
+                        background-color: $lightBackgroundColor;
+                        text-decoration: none;
+                        color: $fontColor;
+
+                        &.active {
+                            background-color: $highlightI;
+                            color: #FFF;
+                        }
+
+                        &:first-child {
+                            margin-right: 6px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .btn {
+            width: 100%;
+            font-size: 1.4rem;
+            padding: 12px;
+        }
+    }
+
+    textarea, button {
+        -webkit-appearance:none;
+        border-radius: 0;
+        border: none;
+    }
+}

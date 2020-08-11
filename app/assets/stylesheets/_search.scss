@@ -1,0 +1,165 @@
+#search {
+    background: $lightBackgroundColor;
+    padding-bottom: 60px;
+    .search-options-container {
+        width: 100%;
+    }
+    .search-text {
+        background-color: $lightBackgroundColor;
+        border-bottom: 1px solid $lowlight;
+        padding:12px;
+
+        input {
+            -webkit-appearance:none;
+            border-radius: 0;
+            border: none;
+            background-color: #bdbdbd;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+
+            &::-webkit-input-placeholder {
+                color: lighten($fontColor, 50%);
+                font-style: italic;
+                font-size: 0.9rem;
+            }
+
+            &:-moz-placeholder { /* Firefox 18- */
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
+            }
+
+            &::-moz-placeholder {  /* Firefox 19+ */
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
+            }
+
+            &:-ms-input-placeholder {
+                color: lighten($fontColor, 50%);;
+                font-style: italic;
+                font-size: 0.9rem;
+            }
+        }
+    }
+    .header {
+        background-color: $lightBackgroundColor;
+        font-weight: normal;
+        text-transform: uppercase;
+        display: -webkit-flex;
+        display: flex;
+        line-height: 1rem;
+        //border-top: 1px solid $lowlight;
+        .title {
+            padding: 12px 12px;
+            -webkit-flex-grow:1;
+            flex-grow: 1;
+        }
+        .section-collapse {
+            height: 100%;
+            padding: 12px 12px;
+            border-left: 1px solid $lowlight;
+        }
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li.expanded {
+            border-bottom: 1px solid #c4c4c4;
+        }
+        & > li {
+            border-bottom: 1px solid $lowlight;
+        }
+        li:last-child {
+            //border-bottom: 1px solid $lowlight;
+        }
+        ul {
+            li {
+                border: none;
+                padding: 0 0 0 12px;
+                margin: 0 4px;
+                //border-bottom: 1px solid $lowlight;
+                background-color: #FFF;
+                &:first-child {
+                    border-top: 1px solid lighten($lowlight, 8%);
+                }
+                &:last-child {
+                    border-bottom: none;
+
+                    div {
+                        border-bottom: none;
+                    }
+                }
+                [class^="icon-"] {
+                    font-size: 1rem;
+                    width: 1.8rem;
+                    text-align: center;
+                    margin-right: 6px;
+                    color: $lowlight;
+                }
+                &.active {
+                    color: #141212;
+                    font-weight: normal;
+                    [class^="icon-"] {
+                        color: #141212;
+                    }
+                }
+            }
+        }
+
+    }
+    .filter-option > div {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        border-bottom: 1px solid $lowlight;
+        padding: 18px 0 15px 0;
+        p {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            padding: 0;
+            margin: 0;
+        }
+        p::first-letter {
+            text-transform: uppercase;
+        }
+        cursor: pointer;
+
+
+    }
+
+    #clear-search, #near-me-btn {
+        font-size: 0.9rem;
+        margin-top: 6px;
+        i {
+            margin-right: 6px;
+        }
+        &.active {
+            color: #FFF;
+            background-color: $barColor;
+        }
+    }
+
+    .search-button {
+        cursor: pointer;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 18px;
+        font-size: 1.2rem;
+
+        [class^="icon-"] {
+            font-size: 1rem;
+            margin-right: 6px;
+        }
+
+        .icon-loading {
+            font-size: 2rem;
+        }
+
+    }
+}

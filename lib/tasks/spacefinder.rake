@@ -1,4 +1,77 @@
 namespace :spacefinder do
+  
+  desc "Grants administrator rights to a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :make_admin, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
+        id = Identity.new
+        id.provider = "shibboleth"
+        id.uid = args[:uid]
+        u = User.new
+        u.save
+        id.user = u
+        id.save
+        
+        id.user.add_role :admin
+        puts "User #{args[:uid]} has been made an admin"
+      else
+        id.user.add_role :admin
+        
+        puts "User #{args[:uid]} has been made an admin"
+      end
+    end
+  end
+  
+  desc "Grants contributor rights to a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :make_contributor, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
+        id = Identity.new
+        id.provider = "shibboleth"
+        id.uid = args[:uid]
+        u = User.new
+        u.save
+        id.user = u
+        id.save
+        
+        id.user.add_role :contributor
+        puts "User #{args[:uid]} has been made a contributor"
+      else
+        id.user.add_role :contributor
+        
+        puts "User #{args[:uid]} has been made a contributor"
+      end
+    end
+  end
+  
+  desc "Revokes contributor and admin rights from a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :revoke_rights, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found"
+      else
+        id.user.remove_role :contributor
+        id.user.remove_role :admin
+        
+        puts "User #{args[:uid]} is no longer and admin or contributor"
+      end
+    end
+  end
+  
   desc "Imports a CSV of Spaces into the db"
   task :import_csv, [:csv_path] => [:environment] do |t, args|
     

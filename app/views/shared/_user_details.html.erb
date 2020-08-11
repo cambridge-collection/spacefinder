@@ -1,0 +1,13 @@
+  var userDetails = {
+    <% if !@user.nil? then %>
+      "user" : {
+        "id" : "<%= @user.id %>",
+        "name" : "<%= @user.name %>",
+        "email" : "<%= @user.email %>",
+        "profile_image" : "<%= @user.avatar.url(:resized) %>",
+        "discipline" : "<%= @user.discipline %>"
+      },
+    <% end %>
+    "details_needed": "<%= @details_needed %>",
+    "status": "<%= @status %>"
+  };

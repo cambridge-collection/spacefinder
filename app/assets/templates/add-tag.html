@@ -1,0 +1,150 @@
+
+<div class="title">
+    <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
+    <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
+</div>
+<div class="space-summary">
+    #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+    <div>
+        <h2>#{name}</h2>
+        <p>#{description(limit="100")}</p>
+    </div>
+</div>
+
+<div class="tag-form-container">
+    <h2>Add a tag</h2>
+
+    <section class="section-tags">
+        <p>current tags</p>
+        <ul>
+            #{admin_tag_list[<li class="tag admin">#{value}</li>]}
+            #{user_tags_list[<li class="tag">#{value}</li>]}
+        </ul>
+    </section>
+
+    <section class="section-new">
+        <input type="text" id="new-tag" placeholder="tag name" /><a href="#" class="btn-inline new-tag disabled">Add</a>
+    </section>
+    <ul class="new-tags-list">
+
+    </ul>
+    <a href="#" class="btn tag-submit disabled">Add tag</a>
+</div>
+
+<script type="text/javascript">
+$tags = $('#tag-#{id}');
+if (typeof ga !== "undefined") {
+    ga('set', 'page', '/new-tag/#{id}');
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('send', 'pageview');
+}
+$space = $('#space-' + $tags.data('space-id'));
+$space.scrollTop(0);
+
+if ($tags.find('.section-tags ul li').length == 0) {
+    $tags.find('.section-tags').remove();
+    $space.find('.space').fadeIn(300);
+}
+
+$tags.find('.close-view').on('click', function(event) {
+    event.preventDefault();
+    console.log('close tags', $space);
+    $space.find('.space').css('display', 'block');
+    $tags.fadeOut('300', function() {
+        $(this).remove();
+    });
+    if (typeof ga !== "undefined") {
+        ga('set', 'page', window.location.hash.substr(1));
+        if (userDetails !== null && userDetails.id > 0) {
+            ga('set', 'userId', userDetails.id);
+        }
+        ga('send', 'pageview');
+    }
+});
+
+$tags.find('#new-tag').on('keyup', function(event) {
+    event.preventDefault();
+    console.log(event);
+    if($(this).val() !== '') {
+        $tags.find('.section-new .new-tag').removeClass('disabled');
+    } else {
+        $tags.find('.section-new .new-tag').addClass('disabled');
+    }
+
+    if (event.keyCode == 13) {
+        $tags.find('.section-new .new-tag').trigger('click');
+    }
+});
+
+$tags.find('.section-new .new-tag').on('click', function(event) {
+    event.preventDefault();
+    if(!$(this).hasClass('disabled')) {
+        $('<li />')
+        .html($tags.find('#new-tag').val())
+        .append(
+            $('<a />')
+            .attr('href', '#')
+            .addClass('icon-close')
+            .addClass('remove-tag')
+            .on('click', function(event) {
+                event.preventDefault();
+                $(this).parent('li').fadeOut(300, function() {
+                    $(this).remove();
+                    if($('.new-tags-list li').length == 0) {
+                        $tags.find('.tag-submit').addClass('disabled')
+                    }
+                })
+            })
+        )
+        .data('tag-value', $tags.find('#new-tag').val())
+        .appendTo('.new-tags-list');
+        $tags.find('#new-tag').val('');
+        if($('.new-tags-list li').length > 0) {
+            $tags.find('.tag-submit').removeClass('disabled')
+        }
+
+        $(this).addClass('disabled')
+    }
+});
+
+$tags.find('.tag-submit').on('click', function(event) {
+    event.preventDefault();
+    //prep submission
+    if(!$(this).hasClass('disabled')) {
+        $(this).addClass('disabled');
+        var data = '';
+        data += 'space=' + $tags.data('space-id');
+        data += '&' + $('meta[name="csrf-param"]').attr('content') + '=' + $('meta[name="csrf-token"]').attr('content');
+        $tags.find('.new-tags-list li').each(function(index, el) {
+            data += '&tags[]=' + $(this).data('tag-value');
+        });
+        $.post(domain + 'spaces/#{id}/tags?callback=?', data)
+        .done(function(data) {
+            $tags.find('.close-view').trigger('click');
+            $(window).trigger('event_success', {
+                type: 'tag',
+                message: 'Your tags have been successfully submitted.'
+            })
+        })
+        .error(function() {
+            $tags.find('.close-view').trigger('click');
+            $(window).trigger('event_success', {
+                type: 'tag',
+                message: 'Your tags have been successfully submitted.'
+            })
+        });
+    }
+
+});
+
+//checked logged in status
+if(userDetails == null || userDetails.details_needed == true  || userDetails.details_needed == 'true') {
+    showLoginScreen($tags);
+    console.log('show login screen');
+}
+
+
+
+</script>
