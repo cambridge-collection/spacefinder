@@ -1,0 +1,141 @@
+<div class="search-options-container">
+<div class="search-text">
+    <input type="text" id="search_query" name="filters[search_query]" placeholder="Search for a space or keyword" />
+    <a id="clear-search" class="btn secondary">Clear all</a>
+</div>
+<ul>
+    <li><div class="header"><span class="title">I want to work...</span></div>
+        <ul id="search-work">
+            #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><div><i class="icon-tick"></i><p>#{value}</p></div></li>]}
+        </ul>
+    </li>
+    <li><div class="header"><span class="title">Atmosphere</span></div>
+        <ul id="search-atmosphere">
+            #{atmosphere[<li class="filter-option atmosphere #{attr}" data-id="#{attr}"><div><i class="icon-tick"></i><p>#{value}</p></div></li>]}
+        </ul>
+    </li>
+    <li><div class="header"><span class="title">Noise levels</span></div>
+        <ul  id="search-noise">
+            #{noise[<li class="filter-option noise-level  #{title(attr="_")}" data-id="#{id}"><div><i class="#{title(icon)}"></i><p>#{title}</p></div></li>]}
+        </ul>
+    </li>
+    <li><div class="header"><span class="title">Facilities</span></div>
+        <ul id="search-facilities">
+            #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
+        </ul>
+    </li>
+    <!--li><div class="header"><span class="title">Tags</span></div>
+        <ul id="search-tags">
+            #{tags[<li class="filter-option #{name(attr="_")}" data-id="#{name}"><div><i class="icon-tick"></i><p>#{name}</p></div></li>]}
+        </ul>
+    </li-->
+</ul>
+</div>
+<a class="btn search-button"><i class="icon-search"></i>Search</a>
+
+<script type="text/javascript">
+    $('.filter-option').on('click', function(event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        if(currView == 'large') {
+            systemEvent = true;
+            $('.search-button').click();
+        }
+
+    });
+
+    $("#clear-search").on('click', function(event) {
+        event.preventDefault();
+        $('#search_query').val('');
+        $('.filter-option').removeClass('active');
+        $('.search-button').click();
+    });
+
+    $('.header').parents('li').addClass('expanded').end().append(
+        $('<a />')
+        .append($('<i />').addClass('icon-arrow-down'))
+        .addClass('section-collapse')
+        .addClass('expanded')
+        //.text('collapse')
+        .on('click', function(event) {
+            event.preventDefault();
+            if($(this).hasClass('expanded')) {
+                //collapse
+                //$(this).text('expand');
+                $(this).find('i').removeAttr('class').addClass('icon-arrow-up');
+                $(this).parents('li').find('>ul:first-of-type').stop().slideUp(300);
+            } else {
+                //expand
+                //$(this).text('collapse');
+                $(this).find('i').removeAttr('class').addClass('icon-arrow-down');
+                $(this).parents('li').find('>ul:first-of-type').stop().slideDown(300);
+            }
+            $(this).toggleClass('expanded');
+            $(this).parents('li').toggleClass('expanded');
+        })
+    );
+
+    $('#search_query').on('keyup', function(event) {
+        event.preventDefault();
+        if(event.keyCode == 13) {
+            $('.search-button').trigger('click');
+            $(this).blur();
+        }
+    });
+
+    $('.search-button').on('click', function(event) {
+        console.log(event);
+        var $search = $(this);
+        event.preventDefault();
+        $search.height($search.height());
+        $search.html('<i class="icon-loading"></i>');
+
+        console.log('prep search');
+        var searchString = prepSearch();
+        loadSpaces({
+            "queryString": searchString,
+            "reset": true,
+            "callback": function() {
+                //go back to last view
+                /*if(oldView !== undefined) {
+                    window.location.hash = oldView;
+                } else {
+                    window.location.hash = '/';
+                }*/
+
+                if (event.isTrigger == undefined) {
+                    console.log('trigger - ', event.isTrigger);
+                    window.location.hash = '/list';
+                }
+
+                $search.html('<i class="icon-search"></i>Search');
+                if(map !== null && map !== undefined) {
+                    map.setZoom(currentZoom);
+                    map.setCenter(currentLoc);
+                }
+            }
+        })
+    });
+
+    function prepSearch() {
+        var query = '';
+        $('#search-work .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-atmosphere .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-facilities .active').each(function(index, el) {
+            query += '&filters[' + $(this).data('id').replace(/-/g, '_') + '][]=true';
+        });
+        $('#search-tags .active').each(function(index, el) {
+            query += '&filters[with_tag_names][]=' + $(this).data('id');
+        });
+        $('#search-noise .active').each(function(index, el) {
+            query += '&filters[with_noise_ids][]=' + $(this).data('id');
+        });
+        query += '&filters[search_query]=' + $('#search_query').val();
+        console.log(query.substr(1));
+        return query.substr(1);
+    }
+</script>

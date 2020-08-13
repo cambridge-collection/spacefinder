@@ -1,0 +1,15 @@
+<div id="bubble-#{id}" class="multipoint">
+    <h1><span class="title">#{group_name}</span> <small>#{distance}</small></h1>
+    <ul>
+        #{spaces[<li><a href="#{link}" title="#{name}">#{name}</a></li>]}
+    </ul>
+</div>
+<script type="text/javascript">
+    $bubble = $('#bubble-#{id}');
+    console.log('loaded bubble');
+    console.log($bubble);
+
+    if($bubble.find('ul li').length > 3) {
+        $bubble.find('ul li:nth-child(3)').nextAll('li').slideUp(300);
+    }
+</script>

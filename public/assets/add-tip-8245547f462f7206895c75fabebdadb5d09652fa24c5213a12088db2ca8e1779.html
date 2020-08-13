@@ -1,0 +1,179 @@
+<div class="add-tip-container">
+    <div class="title">
+        <a href="#" class="close-view icon-close"><span class="hidden">Close</span></a>
+        <a href="#" class="back icon-arrow-left hidden"><span>Back</span></a>
+    </div>
+    <div class="space-summary">
+        #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+        <div>
+            <h2>#{name}</h2>
+            <p>#{description(limit="100")}</p>
+        </div>
+    </div>
+    <div class="parts-container">
+        <div class="part part-1">
+            <h2>Add a tip</h2>
+            <p>Give other users tips on how to use this space</p>
+            <textarea></textarea>
+            <a class="btn tip-progress disabled">Continue</a>
+        </div>
+        <div class="part part-2">
+            <h2>What kind of space is this?</h2>
+            <ul class="questions">
+                <li data-id="tip[atmosphere_disciplined]">A disciplined space?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[noise_quiet]">A quiet space?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[facility_large_desks]">A space with large desks?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[work_friends]">A space to work with friends?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[atmosphere_relaxed]">A relaxed space?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[facility_views]">A space with attractive views?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+                <li data-id="tip[atmosphere_inspiring]">An inspiring space?<div class="control"><a data-id="true" href="">Yes</a><a data-id="false" href="">No</a></div></li>
+            </ul>
+            <a class="btn tip-submit">Submit</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$tips = $('#tip-#{id}');
+if (typeof ga !== "undefined") {
+    ga('set', 'page', '/new-tip/#{id}');
+    if (userDetails !== null && userDetails.id > 0) {
+        ga('set', 'userId', userDetails.id);
+    }
+    ga('send', 'pageview');
+}
+$space = $('#space-' + $tips.data('space-id'));
+console.log($space);
+$tips.find('.part-1, .part-2').hide('0');
+$tips.find('.close-view').on('click', function(event) {
+    event.preventDefault();
+    $space.find('.space').css('display', 'block');
+    $tips.fadeOut('300', function() {
+        $(this).remove();
+    });
+    if (typeof ga !== "undefined") {
+        ga('set', 'page', window.location.hash.substr(1));
+        if (userDetails !== null && userDetails.id > 0) {
+            ga('set', 'userId', userDetails.id);
+        }
+        ga('send', 'pageview');
+    }
+});
+
+$tips.find('.tip-submit').on('click', function(event) {
+    event.preventDefault();
+    //prep submission
+    if(!$(this).hasClass('disabled')) {
+        $(this).addClass('disabled').html('<i class="icon-loading"></i>');
+        var data = {};
+        data.space = $tips.data('space-id');
+        data[$('meta[name="csrf-param"]').attr('content')] = $('meta[name="csrf-token"]').attr('content');
+        data['tip[comment]'] = $tips.find('.part-1>textarea').val();
+        $tips.find('.questions li').each(function(index, el) {
+            var value = null;
+            if ($(this).find('.active').length != 0) {
+                value = $(this).find('.active').data('id');
+            }
+            data[$(this).data('id')] = value;
+        });
+        $.post(domain + 'spaces/#{id}/tips', data)
+            .done(function(data) {
+                $tips.find('.close-view').trigger('click');
+                $(window).trigger('event_success', {
+                    type: 'tip',
+                    message: 'Your tip has been successfully submitted.'
+                })
+                loadTips();
+            }).error(function() {
+                $tips.find('.close-view').trigger('click');
+                $(window).trigger('event_success', {
+                    type: 'tip',
+                    message: 'Your tip has been successfully submitted.'
+                })
+            });
+    }
+
+});
+
+$tips.find('.part-1>.tip-progress').on('click', function(event) {
+    event.preventDefault();
+    if(!$(this).hasClass('disabled')) {
+        $tips.find('.part-1, .part-2').addClass('part-moving');
+        $tips.find('.part-1').fadeOut('300');
+        $tips.find('.part-2').fadeIn('300', function() {
+            $(this).removeClass('part-moving');
+            $tips.find('.close-view').addClass('hidden');
+            $tips.find('.back').removeClass('hidden');
+        });
+    }
+
+});
+
+$tips.find('.back').on('click', function(event) {
+    event.preventDefault();
+    $tips.find('.part-1, .part-2').addClass('part-moving');
+    $tips.find('.part-2').fadeOut('300');
+    $tips.find('.part-1').fadeIn('300', function() {
+        $(this).removeClass('part-moving');
+        $tips.find('.close-view').removeClass('hidden');
+        $tips.find('.back').addClass('hidden');
+    });
+});
+
+$tips.find('.control a').on('click', function(event) {
+    event.preventDefault();
+    if($(this).hasClass('active')) {
+        $(this).removeClass('active');
+    } else {
+        $(this).parent().find('a').removeClass('active');
+        $(this).addClass('active');
+    }
+
+});
+
+//checked logged in status
+if(userDetails == null || userDetails.details_needed == true  || userDetails.details_needed == 'true') {
+    showLoginScreen($tips);
+    $(window).on('login_success', showPart1)
+} else {
+    showPart1();
+}
+
+function showPart1() {
+    $tips.find('.part-1').fadeIn({
+        'duration' : 300,
+        'complete' : function() {
+            $tips.find('.part-1>textarea')
+                .height($(window).height() - ($tips.find('.part-1>textarea').offset().top + 80))
+                .on('focus', function(event) {
+                    event.preventDefault();
+                    if (currView == 'small') {
+                        $tips.find('.title').hide(0);
+                    }
+                    $(window).scrollTop($(this).offset().top - 12);
+                })
+                .on('keyup', function(event) {
+                    event.preventDefault();
+                    if($(this).val() !== '') {
+                        $tips.find('.part-1>.tip-progress').removeClass('disabled');
+                    } else {
+                        $tips.find('.part-1>.tip-progress').addClass('disabled');
+                    }
+                })
+                .on('blur', function(event) {
+                    event.preventDefault();
+                    if (currView == 'small') {
+                        $tips.find('.title').show(0);
+                    }
+                    $(window).scrollTop(0);
+                });
+            $(window).scrollTop(0);
+        },
+        'progress' : function() {
+            $tips.find('.part-1>textarea')
+                .height($(window).height() - ($tips.find('.part-1>textarea').offset().top + 80))
+        }
+    });
+}
+
+
+</script>

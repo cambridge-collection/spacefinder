@@ -1,0 +1,17 @@
+<div class="list-space" data-id="#{id}" data-link="#{link}">
+
+    <h1><a href="#{link}">#{name}</a></h1>
+    <h2><span class="space-type #{space_type(attr="-" transform="lowercase")}"><i class="icon-marker"></i>#{space_type} - </span><span class="library">#{library}</span><span class="address hidden">#{address}</span><small>#{distance}</small></h2>
+
+    <div class="space-details">
+        #{images[<div style="background-image:url(#{value})" class="space-image"></div>](limit="1")}
+        <div>
+            <p class="description">#{description}</p>
+
+            #{facilities[<span class="facility #{attr}" title="#{value}"><i class="#{icon}"></i><span class="hidden">#{value}</span></span>](limit="5")}
+
+        </div>
+
+    </div>
+    <div class="excluded-search">Search terms not included: <span class="exclude-array">#{excluded[<span class="excluded-value">#{value},</span> ]}</span></div>
+</div>
