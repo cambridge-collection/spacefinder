@@ -1,6 +1,6 @@
 var iconMap = [
     ["facility_food_drink", 'Food & drink allowed', 'icon-drink'],
-    ["facility_daylight", 'Natural daylight', 'icon-sun'],
+    ["facility_daylight", 'Natural DAYLIGHT-ICONMAPJS', 'icon-sun'],
     ["facility_views", 'Attractive views out of the window', 'icon-views'],
     ["facility_large_desks", 'Large desks', 'icon-desk'],
     ["facility_free_wifi", 'Free Wifi', 'icon-wifi'],
@@ -48,4 +48,9 @@ var iconMap = [
     ["atmosphere_cosy", 'cosy', ''],
     ["atmosphere_social", 'social', ''],
     ["atmosphere_friendly", 'friendly', ''],
+
+    ["opentimes_before_9am", 'Open before 9am', 'icon-sun'],
+    ["opentimes_after_7pm", 'Open after 7pm', 'icon-sun'],
+    ["opentimes_saturday", 'Open on Saturdays', 'icon-sun'],
+    ["opentimes_sunday", 'Open on Sunday', 'icon-sun']
 ];

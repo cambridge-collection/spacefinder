@@ -198,6 +198,13 @@
           <span>http://www.facebook.com/</span><%= f.text_field :facebook_url %>
         </div>
       </div>
+    <div class="field">
+      <%= f.label :booking_url, "Online booking" %>
+      <div class="pre-fill <%= @space.errors[:booking_url].any? ? "field_with_errors" : "" %>">
+        <span>https:// </span><%= f.text_field :booking_url_url %>
+      </div>
+    </div>
+
   </div>
   <div class="header"><span class="title">atmosphere</span></div>
   <div class="section">

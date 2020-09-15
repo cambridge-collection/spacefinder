@@ -21,6 +21,10 @@
 
 *.scssc
 
-public/admin/assets/img/trash.svg
+public/admin/assets/*
 
 *.scssc
+/public/system/space_photos/photos/
+/public/system/space_photos/
+/public/system/users/
+/public/system/space_photos/

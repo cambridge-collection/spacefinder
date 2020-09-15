@@ -13,8 +13,9 @@ json.results do
                           :facility_projector, :facility_outdoor_seating, :facility_bookable, :facility_toilets,
                           :facility_accessible_toilets, :facility_induction_loops, :facility_adjustable_furniture, :facility_individual_study_space, 
                           :facility_gender_neutral_toilets, :facility_bike_racks, :facility_smoking_area, :facility_baby_changing, :facility_prayer_room,
-                          :facility_refreshments, :facility_break, :work_private, :work_close, :work_friends, 
-                          :work_group, :expensive, :tags, :user_tags, :created_at, :updated_at
+                          :facility_refreshments, :facility_break,
+                          :opentimes_before_9am, :opentimes_after_7pm, :opentimes_saturday, :opentimes_sunday, :work_private, :work_close, :work_friends,
+                          :work_group, :expensive, :tags, :user_tags, :booking_url, :created_at, :updated_at
 
     json.images space.space_photos.collect{|space_photo| space_photo.photo.url(:resized)}
 

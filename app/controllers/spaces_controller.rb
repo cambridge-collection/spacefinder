@@ -1,7 +1,7 @@
 class SpacesController < ApplicationController
   protect_from_forgery except: :add_tag
-  before_filter :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update, :destroy]
-  before_filter :check_user_details_set, only: :add_tag
+  before_action :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update, :destroy]
+  before_action :check_user_details_set, only: :add_tag
   before_action :set_space, only: [:show, :edit, :update, :add_tag, :destroy]
   after_action :jsonp_callback, only: [:index, :show, :filters]
   layout "admin"
@@ -9,7 +9,7 @@ class SpacesController < ApplicationController
   # GET /spaces
   # GET /spaces.json
   def index
-    
+
     @facilities = Space.facilities
     @atmospheres = Space.atmospheres
     
@@ -30,6 +30,7 @@ class SpacesController < ApplicationController
   def show
     @facilities = Space.facilities
     @atmospheres = Space.atmospheres
+    @opentimes = Space.opentimes
   end
 
   # GET /spaces/new
@@ -104,6 +105,7 @@ class SpacesController < ApplicationController
     @atmospheres = Space.atmospheres
     @noises = Noise.all
     @facilities = Space.facilities
+    @opentimes = Space.opentimes
     @tags = ActsAsTaggableOn::Tag.all.order(taggings_count: :desc)
   end
   
@@ -117,6 +119,12 @@ class SpacesController < ApplicationController
       end
     end
     
+  end
+
+  private
+
+  def authenticate_user!
+    # code here
   end
 
   private
@@ -138,6 +146,8 @@ class SpacesController < ApplicationController
         :facility_toilets, :facility_refreshments, :facility_break, :facility_wheelchair_accessible, :facility_blue_badge_parking, 
         :facility_accessible_toilets, :facility_induction_loops, :facility_adjustable_furniture, :facility_individual_study_space, 
         :facility_gender_neutral_toilets, :facility_bike_racks, :facility_smoking_area, :facility_baby_changing, :facility_prayer_room,
+        :opentimes_before_9am, :opentimes_after_7pm, :opentimes_saturday, :opentimes_sunday,
+        :booking_url,
         :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list, :editors,
         space_photos_attributes: [:id, :photo, :_destroy],
         term_time_hours_attributes: [

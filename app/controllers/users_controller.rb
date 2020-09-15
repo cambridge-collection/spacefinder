@@ -1,7 +1,15 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  protect_from_forgery except: :add_tag
+  before_action :authenticate_user!
   before_action :set_user
   layout "admin"
+
+  def authenticate_user!
+    # code here
+  end
+
+  def add_tag
+  end
 
   def edit
   end

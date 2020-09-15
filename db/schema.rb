@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_202041) do
+ActiveRecord::Schema.define(version: 2020_09_04_201456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,11 @@ ActiveRecord::Schema.define(version: 2020_08_12_202041) do
     t.boolean "facility_smoking_area", default: false
     t.boolean "facility_baby_changing", default: false
     t.boolean "facility_prayer_room", default: false
+    t.boolean "opentimes_before_9am"
+    t.boolean "opentimes_after_7pm"
+    t.boolean "opentimes_saturday"
+    t.boolean "opentimes_sunday"
+    t.string "booking_url"
     t.index ["access_id"], name: "index_spaces_on_access_id"
     t.index ["library_id"], name: "index_spaces_on_library_id"
     t.index ["noise_id"], name: "index_spaces_on_noise_id"

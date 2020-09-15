@@ -1,8 +1,13 @@
 class TipsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index, :new, :review, :update, :destroy]
-  before_filter :check_user_details_set, only: :create
+  protect_from_forgery except: :add_tag
+  before_action :authenticate_user!, except: [:index, :new, :review, :update, :destroy]
+  before_action :check_user_details_set, only: :create
   after_action :jsonp_callback, only: [:index]
-  
+
+  def authenticate_user!
+    # code here
+  end
+
   # GET /tips
   # GET /tips.json
   def index
@@ -71,7 +76,11 @@ class TipsController < ApplicationController
       end
     end
   end
-  
+
+  def add_tag
+
+  end
+
   private
 
     def tip_params

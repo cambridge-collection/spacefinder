@@ -19,6 +19,7 @@ class Space < ActiveRecord::Base
     self.twitter_screen_name = self.twitter_screen_name.tr('@', '')
     self.twitter_screen_name = self.twitter_screen_name.strip
     self.facebook_url = self.facebook_url.strip
+    self.booking_url = self.booking_url.strip
   end
 
   belongs_to :access
@@ -38,6 +39,7 @@ class Space < ActiveRecord::Base
 
   attr_accessor :new_library_name
 
+  after_initialize :create_opentime_flags
   before_save :create_library_from_name
   after_save :add_space_to_editors
 
@@ -45,6 +47,17 @@ class Space < ActiveRecord::Base
     unless new_library_name.blank? then
       self.library = Library.find_or_create_by(:name => new_library_name)
     end
+  end
+
+  def create_opentime_flags
+    # TODO Read the opening time data and create flags for faster search filtering
+    # Scan through hours.
+    #
+    # puts self.name
+    self.opentimes_before_9am = true
+    self.opentimes_after_7pm = true
+    self.opentimes_saturday = true
+    self.opentimes_sunday = true
   end
 
   def add_space_to_editors
@@ -57,6 +70,7 @@ class Space < ActiveRecord::Base
       }
     end
 
+    # add new editors
     # add new editors
     unless self.editors.nil? then
       self.editors.split(',').each{|crsid|
@@ -85,17 +99,23 @@ class Space < ActiveRecord::Base
   end
 
   def self.atmospheres
+    debug
     self.attribute_names.select{|s| s[0, 10] == "atmosphere" }
   end
 
   def self.facilities
     self.attribute_names.select{|s| s[0, 8] == "facility" }
+
   end
 
   def self.works
     self.attribute_names.select{|s| s[0, 4] == "work" }
   end
 
+  def self.opentimes
+    # TODO convert to open times attributes
+    self.attribute_names.select{|s| s[0, 9] == "opentimes" }
+  end
 
 
   filterrific(
@@ -157,5 +177,10 @@ class Space < ActiveRecord::Base
   works.each do |work|
     scope work.to_sym, ->(check) { if(check) then where(work => true) end }
   end
+
+  #
+  # opentimes.each do |opentime|
+  #  scope opentime.to_sym, ->(check) { if (check) then where(opentime => true) end}
+  # end
 
 end
