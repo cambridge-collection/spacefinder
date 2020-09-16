@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# to satisfy the gods
+gem 'nio4r', '2.5.3'
+gem 'tzinfo-data'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.2.3'
 gem 'rails', '6.0.3.2'

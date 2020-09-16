@@ -1,41 +1,26 @@
 FROM phusion/passenger-ruby26
 ENV HOME /root
-CMD ["/sbin/my_init"]
-RUN bash -lc 'rvm --default use ruby-2.6.6'
-# RUN /pd_build/ruby-2.6.*.sh
 
 # Base Ruby ext and Rails
-RUN apt-get update -qq \
-        && apt-get install -y nodejs postgresql-client \
-        && apt-get install -y build-essential patch ruby-dev \
-        # && zlib1j-dev liblzma \
-        && apt-get install libpq-dev
+RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
+    apt-get update -qq && \
+    apt-get install -y nodejs postgresql-client build-essential patch ruby-dev libpq-dev && \
+    gem install nokogiri:1.10.10 bundler --source 'https://rubygems.org/' && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default && \
+    mkdir -p /spacefinder /home/app/webapp
 
-RUN gem install nokogiri -v '1.10.10' --source 'https://rubygems.org/'
-RUN gem install bundler -v 2.0.0
-RUN apt-get install -y rails
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Build GEMs for this project
-RUN mkdir /spacefinder
 WORKDIR /spacefinder
+COPY --chown=app:app . /home/app/webapp
+COPY entrypoint.sh /usr/bin/
 ADD Gemfile /spacefinder/
+ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+
 RUN bundle install
 
-# NGINX
-RUN rm -f /etc/service/nginx/down
-RUN rm /etc/nginx/sites-enabled/default
-ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-RUN mkdir /home/app/webapp
-COPY --chown=app:app . /home/app/webapp
-
-
-# Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
