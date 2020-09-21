@@ -8,7 +8,14 @@
     <ul>
         <li><div class="header"><span class="title">I want to work...</span></div>
             <ul id="search-work">
+                <!-- manually expand this list below to force a particular order
                 #{work[<li class="filter-option work #{attr}" data-id="#{attr}"><div><i class="icon-tick"></i><p>#{value}</p></div></li>]}
+                -->
+                <li class="filter-option work work_in_a_library" data-id="work_in_a_library"><div><i class="icon-tick"></i><p>In a library</p></div></li>
+                <li class="filter-option work work_private" data-id="work_private"><div><i class="icon-tick"></i><p>Alone, in private</p></div></li>
+                <li class="filter-option work work_close" data-id="work_close"><div><i class="icon-tick"></i><p>Where others are working</p></div></li>
+                <li class="filter-option work work_friends" data-id="work_friends"><div><i class="icon-tick"></i><p>With friends</p></div></li>
+                <li class="filter-option work work_group" data-id="work_group"><div><i class="icon-tick"></i><p>On a group project</p></div></li>
             </ul>
         </li>
         <li><div class="header"><span class="title">Atmosphere</span></div>
@@ -26,6 +33,14 @@
                 #{facilities[<li class="filter-option facility #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
             </ul>
         </li>
+        <!-- TODO Openning times need logic to check
+        <li><div class="header"><span class="title">Opening times</span></div>
+            <ul id="search-opentimes">
+                #{opentimes[<li class="filter-option opentimes #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
+            </ul>
+        </li>
+        -->
+        <!--
         <li><div class="header"><span class="title">Opening times</span></div>
 
             <ul id="search-opentimes">
@@ -33,9 +48,12 @@
                 <li class="filter-option opentimes" data-id="opentimes_after_7pm"><div><i class="icon-sun"></i><p>Open after 7pm</p></div></li>
                 <li class="filter-option opentimes" data-id="opentimes_saturday"><div><i class="icon-sun"></i><p>Open on Saturdays 9am</p></div></li>
                 <li class="filter-option opentimes" data-id="opentimes_sunday"><div><i class="icon-sun"></i><p>Open on Sundays</p></div></li>
-               <!-- #{opentimes[<li class="filter-option opentimes #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]} -->
+               <!--
+               #{opentimes[<li class="filter-option opentimes #{attr}" data-id="#{attr}"><div><i class="#{icon}"></i><p>#{value}</p></div></li>]}
+               ->
             </ul>
         </li>
+        -->
         <!--li><div class="header"><span class="title">Tags</span></div>
         <ul id="search-tags">
         #{tags[<li class="filter-option #{name(attr="_")}" data-id="#{name}"><div><i class="icon-tick"></i><p>#{name}</p></div></li>]}

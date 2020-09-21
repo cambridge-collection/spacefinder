@@ -42,13 +42,15 @@
         <div class="logo"></div>
         <div class="message">Loading <span class="current-status">spacefinder</span></div>
     </div>
+
     <script type="text/javascript">
       <% if user_signed_in? then %>
         <%= render 'shared/user_details' %>
       <% else %>
         var userDetails = null;
       <% end %>
-        var domain = 'https://spacefinder.lib.cam.ac.uk/';
+        var domain = 'http://localhost:3000/';
+
     </script>
 
   <%= javascript_include_tag 'home' %>

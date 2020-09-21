@@ -21,7 +21,6 @@
 
 *.scssc
 
-public/admin/assets/*
 
 *.scssc
 /public/system/space_photos/photos/

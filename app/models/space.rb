@@ -99,7 +99,6 @@ class Space < ActiveRecord::Base
   end
 
   def self.atmospheres
-    debug
     self.attribute_names.select{|s| s[0, 10] == "atmosphere" }
   end
 

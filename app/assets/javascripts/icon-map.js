@@ -35,6 +35,7 @@ var iconMap = [
     ["Animated discussion", 'Animated discussion', 'icon-sound-3'],
     ["Music playing", 'Music playing', 'icon-music'],
 
+    ["work_in_a_library", "In a library", ''],
     ["work_close", 'Where others are working', ''],
     ["work_private", 'Alone, in private', ''],
     ["work_friends", 'With friends', ''],
