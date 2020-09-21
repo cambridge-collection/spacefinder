@@ -263,5 +263,17 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   
-  config.omniauth :facebook, ENV['FACEBOOK_OAUTH_KEY'], ENV['FACEBOOK_OAUTH_SECRET'], :scope => 'email', info_fields: 'email, name', :display => 'popup'
+  config.omniauth :facebook, ENV['FACEBOOK_OAUTH_KEY'], ENV['FACEBOOK_OAUTH_SECRET'], :scope => 'email', info_fields: 'email, name', :display => 'popup', secure_image_url: true
+  
+  config.omniauth :shibboleth, {
+#    :request_type => :header,
+    :shib_session_id_field => "HTTP_SHIB_SESSION_ID",
+    :shib_application_id_field => "HTTP_SHIB_APPLICATION_ID",
+    :uid_field => "HTTP_EPPN",
+    :name_field => "HTTP_DISPLAYNAME",
+    :info_fields => {
+      :email => "HTTP_MAIL"
+    }
+  }
+  
 end

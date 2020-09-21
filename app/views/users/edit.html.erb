@@ -1,37 +1,44 @@
-<h1>Editing User</h1>
+<div class="container edit">
 
-<%= form_for(@user, url: user_path) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this space from being saved:</h2>
+    <%= form_for(@user, url: user_path(format: :html), html: { multipart: true }) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this space from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
+      
+      <p>Before replying to tips please fill in the following profile information.</p>
+      
+      <div class="section">
+        <div class="field">
+          <%= f.label :name %><br>
+          <%= f.text_field :name %>
+        </div>
+
+        <div class="field">
+          <%= f.label :email %><br>
+          <%= f.text_field :email %>
+        </div>  
+
+        <div class="field">
+          <%= f.label :discipline %><br>
+          <%= f.text_field :discipline %>
+        </div>
+  
+        <div class="field">
+          <%= f.label :avatar, "Profile photo" %><br>
+          <%= f.file_field :avatar %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Save your details" %>
+        </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>  
-
-  <div class="field">
-    <%= f.label :discipline %><br>
-    <%= f.text_field :discipline %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-
-<%= link_to('Logout', users_sign_out_path, :method => :delete) %>
+</div>

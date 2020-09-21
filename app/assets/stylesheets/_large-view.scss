@@ -1,0 +1,129 @@
+.large_view {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    overflow: hidden;
+    height: 100vh;
+
+    #top-bar {
+        position: absolute;
+        background-image: image-url('spacefinder-logo.svg');
+        background-position: center 12px;
+        background-repeat: no-repeat;
+        background-size: auto 60%;
+        .large-nav {
+            display: block;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            text-align: right;
+            margin-top: 6px;
+            color: #FFF;
+            a, span {
+                display: inline-block;
+                margin: 12px;
+            }
+        }
+    }
+
+    .view-container {
+        position: relative;
+        min-height: 0;
+        height: calc(100% - #{$navHeight});
+        width: 50%;
+        margin-top: $navHeight;
+        left: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #map {
+        width: 100%;
+
+        .infoBubble {
+            min-width: 0vw;
+            //max-width: 90%;
+        }
+    }
+
+    #list, #search .search-options-container, #map {
+        display: block;
+        max-height: 100vh;
+        overflow: auto;
+    }
+
+    #list {
+        background-color: #FFF;
+        max-width: 510px;
+        min-width: 425px;
+        .list-space {
+            padding: 18px 18px 24px 18px;
+        }
+    }
+
+    #search {
+        min-width: 256px;
+        max-width: 256px;
+        min-height: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+        -webkit-flex-grow:0;
+        flex-grow:0;
+        .search-button {
+            width: 256px;
+        }
+        ul ul li div {
+            padding: 12px 0 12px 0px;
+       }
+
+       .search-button {
+           position: absolute;
+       }
+
+       .search-options-container {
+           height: calc(100% - 56px);
+       }
+    }
+    .space-container {
+        min-height: 0;
+        margin-top: $navHeight;
+        height: 100%;
+        //overflow: auto;
+        width: 50%;
+        -webkit-overflow-scrolling: touch;
+        max-width: 510px;
+        min-width: 425px;
+    }
+    .space {
+        position: relative;
+        min-height: calc(100% - #{$navHeight});
+        width: auto;
+
+        z-index: 0;
+        .title {
+            position: relative;
+            background: rgba(0,0,0,0.8);
+        }
+        .gallery-container {
+            margin-top: -50px;
+        }
+        .fullscreen-btn {
+            display: none;
+        }
+        .lowlight {
+            background:$lightBackgroundColor;
+            padding: 12px;
+            margin-left: -12px;
+            margin-right: -12px;
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+    }
+    .new-tag-container, .new-tip-container {
+        position: relative;
+        padding: 0;
+        .title {
+            position: relative;
+        }
+    }
+}

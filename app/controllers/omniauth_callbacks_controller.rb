@@ -1,16 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
-    @user = User.find_for_oauth(request.env["omniauth.auth"])
-
-    sign_in @user, :event => :authentication 
-    
-    @details_needed = @user.details_needed?
-    @status = "success"
-    if current_user.has_role? :admin then
-      @redirect_url = admin_url
-    else
-      @redirect_url = root_url
-    end
+    find_and_sign_in
   end
   
   def failure
@@ -18,8 +8,32 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = nil
     @details_needed = false
     @status = "authrequired"
-    @redirect_url = spaces_url # TODO: Change this when integrated frontend
-    render :facebook
+    @redirect_url = root_url
+    render :signin
   end
+  
+  def shibboleth
+    find_and_sign_in
+  end
+  
+  private
+  
+  def find_and_sign_in
+    @user = User.find_for_oauth(request.env["omniauth.auth"])
+
+    sign_in @user, :event => :authentication 
+    
+    @details_needed = @user.details_needed?
+    @status = "success"
+    
+    if can? :write, Space then
+      @redirect_url = admin_url
+    else
+      @redirect_url = root_url
+    end
+    
+    render :signin
+  end
+  
   
 end

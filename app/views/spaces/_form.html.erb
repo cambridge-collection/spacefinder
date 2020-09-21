@@ -10,7 +10,40 @@
     </ul>
   </div>
 <% end %>
-  <div class="header"><span class="title">Basic info</span></div>
+  <div class="header"><span class="title">Basic info</span>
+    <% if can? :destroy, @space  %>
+      <% if @space.persisted? %>
+        <a href="#" id="delete-space">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        	 viewBox="0 0 126.9 156.6" style="enable-background:new 0 0 126.9 156.6;" xml:space="preserve">
+        <style type="text/css">
+        	.st0{display:none;fill:#AB3333;}
+        	.st1{fill:#AB3333;}
+        </style>
+        <g>
+        	<polygon class="st0" points="96.3,136.9 28.1,136.9 19.5,35.9 108,35.9 	"/>
+        	<path class="st1" d="M97.9,138.7H26.4L17.4,34h92.7L97.9,138.7z M29.8,135h64.8l11.3-97.2H21.5L29.8,135z"/>
+        </g>
+        <g>
+        	<path class="st0" d="M110.8,35.9H16.7c-3.8,0-6.8-3.1-6.8-6.8v0c0-3.8,3.1-6.8,6.8-6.8h94.1c3.8,0,6.8,3.1,6.8,6.8v0
+        		C117.6,32.8,114.5,35.9,110.8,35.9z"/>
+        	<path class="st1" d="M112.7,37.8H14.8c-3.8,0-6.8-3.1-6.8-6.8v-3.8c0-3.8,3.1-6.8,6.8-6.8h97.9c3.8,0,6.8,3.1,6.8,6.8v3.8
+        		C119.5,34.7,116.4,37.8,112.7,37.8z M14.8,24.1c-1.7,0-3.1,1.4-3.1,3.1v3.8c0,1.7,1.4,3.1,3.1,3.1h97.9c1.7,0,3.1-1.4,3.1-3.1v-3.8
+        		c0-1.7-1.4-3.1-3.1-3.1H14.8z"/>
+        </g>
+        <g>
+        	<path class="st0" d="M67.8,10.8h-8.1c-4.1,0-7.4,7.1-7.4,11.1h22.9C75.2,17.8,71.9,10.8,67.8,10.8z"/>
+        	<path class="st1" d="M77.1,23.8H50.4v-1.9c0-4.5,3.6-13,9.3-13h8.1c5.7,0,9.3,8.5,9.3,13V23.8z M54.4,20.1h18.8
+        		c-0.7-3.4-3.2-7.4-5.4-7.4h-8.1C57.6,12.6,55.1,16.6,54.4,20.1z"/>
+        </g>
+        <rect x="36.7" y="45.7" transform="matrix(0.9978 -6.651901e-02 6.651901e-02 0.9978 -5.4339 2.75)" class="st1" width="3.7" height="74.5"/>
+        <rect x="61.9" y="45.8" class="st1" width="3.7" height="74.9"/>
+        <rect x="51.4" y="81.4" transform="matrix(0.1068 -0.9943 0.9943 0.1068 -3.2588 162.9392)" class="st1" width="75.4" height="3.7"/>
+        </svg>
+      </a>
+    <% end %>
+  <% end %>
+  </div>
   <div class="section">
       <div class="field">
         <%= f.label :name, "Name of space (e.g. first floor west, the red bean bags or relaxed reading space)" %>
@@ -28,24 +61,24 @@
         <%= f.label :access_id, "Who can use this space?" %>
         <%= f.collection_select(:access_id, Access.all, :id, :title, @space.access_id ? {} : {selected: Access.find_by(title:"Anyone (public)").id }) %>
       </div>
-      
+
       <%= render partial: "checkbox", locals: {
         f: f,
         field: :restricted,
         label: "Access restricted"
       } %>
-      
+
       <div class="field">
         <%= f.label :restriction, "Description of access restriction  (e.g. Electronic badge entry after 18:00)" %>
         <%= f.text_field :restriction %>
       </div>
-      
+      <!--hide disabled access here as we now have a facility for it
       <%= render partial: "checkbox", locals: {
         f: f,
         field: :disabled_access,
         label: "Accessible by the disabled"
       } %>
-      
+  -->
       <div class="field">
         <%= f.label :expensive, "If this is a café, restaurant or bar how expensive is it?
         (1 = cheap, 5 = expensive)" %>
@@ -54,7 +87,7 @@
   </div>
   <div class="header"><span class="title">Photos</span></div>
   <div class="section">
-    
+
     <%= f.fields_for :space_photos, wrapper: false do |photo_form| %>
       <% if photo_form.object.new_record? %>
         <div class="fields">
@@ -73,8 +106,8 @@
           </div>
         </div>
       <% end %>
-    <% end %>  
-    
+    <% end %>
+
     <p><%= f.link_to_add "Add another photo", :space_photos, class: "btn" %></p>
   </div>
 
@@ -111,8 +144,8 @@
 
   <div class="section">
       <h2>Term-time opening hours</h2>
-      
-      
+
+
       <div class="term-times">
         <%= f.fields_for :term_time_hours do |term_time_hours_form| %>
           <% OpeningHoursWeek.days.each do |day| %>
@@ -123,7 +156,7 @@
             } %>
           <% end %>
         <% end %>
-         
+
       </div>
       <h2 class="times-label">Out-of-term opening hours</h2>
       <div class="holiday-times">
@@ -165,6 +198,13 @@
           <span>http://www.facebook.com/</span><%= f.text_field :facebook_url %>
         </div>
       </div>
+    <div class="field">
+      <%= f.label :booking_url, "Online booking" %>
+      <div class="pre-fill <%= @space.errors[:booking_url].any? ? "field_with_errors" : "" %>">
+        <span>https:// </span><%= f.text_field :booking_url_url %>
+      </div>
+    </div>
+
   </div>
   <div class="header"><span class="title">atmosphere</span></div>
   <div class="section">
@@ -218,7 +258,7 @@
         <%= f.collection_select(:noise_id, Noise.all, :id, :title) %>
       </div>
   </div>
-  
+
   <div class="header"><span class="title">Facilities</span></div>
   <div class="section">
       <%= render partial: "checkbox", locals: {
@@ -311,6 +351,61 @@
         field: :facility_break,
         label: "Close to a place to take a break"
       } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_wheelchair_accessible,
+        label: "Wheelchair accessible"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_blue_badge_parking,
+        label: "Parking for blue badge holders"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_accessible_toilets,
+        label: "Toilets accessible to disabled people"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_induction_loops,
+        label: "Induction loops"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_adjustable_furniture,
+        label: "Adjustable furniture"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_individual_study_space,
+        label: "Individual study spaces available"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_gender_neutral_toilets,
+        label: "Gender neutral toilets"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_bike_racks,
+        label: "Bike racks"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_smoking_area,
+        label: "Designated smoking area"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_baby_changing,
+        label: "Baby changing facilities"
+      } %>
+      <%= render partial: "checkbox", locals: {
+        f: f,
+        field: :facility_prayer_room,
+        label: "Prayer room"
+      } %>
   </div>
 
   <div class="header"><span class="title">Work environment</span></div>
@@ -345,6 +440,15 @@
       </div>
   </div>
 
+  <div class="header"><span class="title">Editors</span></div>
+  <div class="section">
+    <p>Who else should be allowed to edit this space?</p>
+      <div class="field">
+        <%= f.label :editors, "Please list their Raven user-ids separated by a comma. (e.g. \"ab123@cam.ac.uk, cd456@cam.ac.uk\")" %>
+        <%= f.text_field :editors %>
+      </div>
+  </div>
+
 
 
 
@@ -354,4 +458,29 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+
+  <div class="delete-space-overlay">
+      <div class="delete-space-container">
+          <div class="dialog-box">
+              <h2>You are about to delete <span class="space-name">name of space</span> from spacefinder.</h2>
+              <p>
+                   <em>This action cannot be reversed.</em>
+              </p>
+              <p>
+                  If you are sure you wish to continue please click the "delete space" button below. Otherwise click cancel to return to the edit screen.
+              </p>
+              <div class="buttons">
+                  <div class="left">
+                      <a href="#" class="cancel-delete">Cancel</a>
+                  </div>
+                  <div class="right">
+                      <% if @space.persisted? %>
+                        <%= link_to 'Delete space', space_path(@space), method: :delete, class: "confirm-delete" %>
+                      <% end %>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
 <% end %>

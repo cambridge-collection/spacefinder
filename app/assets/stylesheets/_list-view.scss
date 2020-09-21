@@ -1,0 +1,259 @@
+#list {
+    background: #FFF;
+    -webkit-flex-direction:column;
+    flex-direction:column;
+    padding-top: 50px;
+    h1 {
+        a {
+            color: $barColor;
+            text-decoration: none;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+        }
+        font-size: 2rem;
+
+        width: 100%;
+        margin-bottom: 12px;
+        margin-top: 0;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+    h2>small {
+        font-size: 1rem;
+        text-transform: capitalize;
+        //margin-top: 12px;
+    }
+    h1+h2 {
+        margin-top: -12px;
+        margin-bottom: 18px;
+    }
+    h2 {
+        border-bottom: none;
+        color: darken($lowlight, 20%);
+        font-size: 1rem;
+        text-transform: uppercase;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        span {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+        }
+    }
+
+
+    .list-space {
+        padding: 18px 12px 24px 12px;
+        border-bottom: 1px solid $lowlight;
+        position: relative;
+        &.hover {
+            background-color: $lightBackgroundColor;
+        }
+
+        .address, .library {
+            margin-top: 1px;
+        }
+    }
+
+    .space-type {
+        -webkit-flex-grow: 0;
+        flex-grow: 0;
+        margin-right: 5px;
+        &.lab, &.lecture-room, &.library-space, &.meeting-room, &.seminar-room {
+            color: #00B1C1;
+        }
+        &.bar, &.café, &.restaurant {
+            color: #EA7125;
+        }
+    }
+
+    .space-details {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .description {
+        margin-top: 0;
+        height: 5rem;
+        overflow: hidden;
+    }
+
+    .space-image {
+        min-width: 180px;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        margin-right: 12px;
+        justify-content: space-around;
+        align-items: stretch;
+    }
+
+    .facility {
+        display: inline-block;
+        padding: 0 0 10px;
+        width: 30px;
+        text-align: center;
+        color: $bodyColor;
+        //border: 1px solid;
+    }
+
+    .empty-list, .search-expanding {
+        background: $lightBackgroundColor;
+        border: 1px solid $lowlight;
+        padding: 12px;
+        margin: 12px;
+        color: darken($lowlight, 40%);
+        text-align: center;
+
+        .btn.search-button {
+            background-color: #642c73;
+            border: 1px solid darken($lowlight, 20%);
+            display: block;
+            margin: 0 auto;
+            width: 80%;
+            font-size: 1rem;
+            i {
+                font-size: 0.8rem;
+                margin-right: 0.4rem;
+            }
+        }
+    }
+
+    .more-spaces-link {
+        @extend .btn-inline;
+        //width: 100%;
+        background: $lowlight!important;
+        color: $fontColor!important;
+        padding: 16px!important;
+        float: right;
+
+    }
+
+    .list-footer {
+        text-align: right;
+        background-color: $backgroundColor;
+        padding: 24px;
+        color: #FFF;
+
+        & > span {
+            float: left;
+        }
+
+        a {
+            color: #FFF;
+            text-decoration: none;
+        }
+    }
+
+    .list-meta {
+        border-bottom: 1px solid $lowlight;
+        position:fixed;
+        z-index: 2;
+        top: 50px;
+        @extend #list;
+        padding: 0!important;
+        background-color: #FFF;
+        width: 26%;
+        &:after {
+            content: '';
+            clear: both;
+            display: block;
+            width: 100%;
+        }
+        .spaces-count {
+            padding:16px;
+            float: left;
+        }
+
+        a {
+            font-weight: normal;
+        }
+    }
+    .extended-description {
+        border-bottom: 1px solid $lowlight;
+        text-align: center;
+        padding: 16px;
+        background: $lightBackgroundColor
+    }
+
+    .list-footer {
+        text-align: right;
+        background-color: $backgroundColor;
+        padding: 24px;
+        color: #FFF;
+
+        & > span {
+            float: left;
+        }
+
+        a {
+            color: #FFF;
+            text-decoration: none;
+        }
+    }
+    .active-facility-filters {
+        list-style: none;
+        width: 80%;
+        text-align: left;
+        margin: 0 auto;
+        padding: 0;
+        .filter-option.facility {
+            width: auto;
+            display: block;
+
+            [class^="icon-"]:after, [class*=" icon-"]:after {
+                content: "";
+                width: 10px;
+                height: 7px;
+                position: absolute;
+                bottom: 4px;
+                left: -18px;
+                color: black;
+                font-size: 0.6rem;
+                border: 1px solid silver;
+                color: purple;
+                padding: 2px 1px 2px 2px;
+            }
+
+            &.active {
+                color: black;
+
+                [class^="icon-"]:after, [class*=" icon-"]:after {
+                    content: "\e61b";
+                }
+            }
+        }
+        .filter-option.facility > div {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            border-bottom: 1px solid $lowlight;
+            padding: 8px 0 13px 0;
+
+            [class^="icon-"], [class*=" icon-"] {
+                width: 30px;
+                position: relative;
+            }
+            p {
+                -webkit-flex-grow: 1;
+                flex-grow: 1;
+                padding: 0;
+                margin: 0;
+                text-align: left;
+            }
+            p::first-letter {
+                text-transform: uppercase;
+            }
+            cursor: pointer;
+
+
+        }
+    }
+
+}

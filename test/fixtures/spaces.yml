@@ -7,7 +7,7 @@ one:
   floor: MyString
   lat: 9.99
   lng: 9.99
-  opening_hours: MyText
+  # opening_hours: MyText
   restricted: false
   restriction: MyString
   disabled_access: false
@@ -50,7 +50,7 @@ two:
   floor: MyString
   lat: 9.99
   lng: 9.99
-  opening_hours: MyText
+  # opening_hours: MyText
   restricted: false
   restriction: MyString
   disabled_access: false

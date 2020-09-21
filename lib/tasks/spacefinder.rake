@@ -1,7 +1,99 @@
 namespace :spacefinder do
+  
+  desc "Grants administrator rights to a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :make_admin, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
+        id = Identity.new
+        id.provider = "shibboleth"
+        id.uid = args[:uid]
+        u = User.new
+        u.save
+        id.user = u
+        id.save
+        
+        id.user.add_role :admin
+        puts "User #{args[:uid]} has been made an admin"
+      else
+        id.user.add_role :admin
+        
+        puts "User #{args[:uid]} has been made an admin"
+      end
+    end
+  end
+  
+  desc "Grants contributor rights to a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :make_contributor, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
+        id = Identity.new
+        id.provider = "shibboleth"
+        id.uid = args[:uid]
+        u = User.new
+        u.save
+        id.user = u
+        id.save
+        
+        id.user.add_role :contributor
+        puts "User #{args[:uid]} has been made a contributor"
+      else
+        id.user.add_role :contributor
+        
+        puts "User #{args[:uid]} has been made a contributor"
+      end
+    end
+  end
+  
+  desc "Revokes contributor and admin rights from a user based on a Raven user-id eg ab123@cam.ac.uk"
+  task :revoke_rights, [:uid] => [:environment] do |t, args|
+    if args[:uid].blank? then
+      puts "Please provide a Raven user-id  eg ab123@cam.ac.uk"
+    else
+    
+      id = Identity.find_by_uid(args[:uid])
+      if id.nil? then
+        puts "No users with uid #{args[:uid]} found"
+      else
+        id.user.remove_role :contributor
+        id.user.remove_role :admin
+        
+        puts "User #{args[:uid]} is no longer and admin or contributor"
+      end
+    end
+  end
+
+  desc "Import booking URL and update spaces"
+  task :import_booking_url, [:csv_path] => [:environment] do |t, args|
+    spaces_csv = SmarterCSV.process(args[:csv_path])
+    spaces_csv.each {|space_csv|
+      space = Space.find(space_csv[:id])
+      if !space.nil? then
+        space.booking_url = space_csv[:booking_url]
+        space.save
+        puts "Updated #{space.name} with url: #{space_csv[:booking_url]}"
+      end
+    }
+  end
+
+  desc "Test load"
+  task :load_test => [:environment] do |t, args|
+    space = Space.find(1)
+    print(space.booking_url)
+#    puts space
+  end
+
   desc "Imports a CSV of Spaces into the db"
   task :import_csv, [:csv_path] => [:environment] do |t, args|
-    
     spaces_csv = SmarterCSV.process(args[:csv_path])
     
     spaces_csv.each{|space_csv|
@@ -18,8 +110,13 @@ namespace :spacefinder do
       unless st.nil? then
         space.space_type_id = st.id
       end
-      
-      space.new_library_name = space_csv[:in_library]
+
+      unless :in_library.blank? then
+        space.new_library_name= :in_library
+        space.create_library_from_name
+      end
+
+      # space.new_library_name = space_csv[:in_library]
       
       space.description = space_csv[:text_description_of_space]
       space.address = space_csv[:street_address]

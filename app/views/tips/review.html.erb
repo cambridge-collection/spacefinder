@@ -23,7 +23,7 @@
         <!--tip-->
         <div class="tip">
             <div class="meta">
-                <div class="avatar" style="background-image:url(<%= tip.user.profile_image %>)"></div>
+                <div class="avatar" style="background-image:url(<%= tip.user.avatar.url(:resized) %>)"></div>
                 <div class="user">
                     <span class="name"><%= tip.user.name %></span>
                     <span class="discipline"><%= tip.user.discipline %></span>
