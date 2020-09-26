@@ -3,19 +3,21 @@ version: '3.6'
 services:
   web:
     build: .
+
     volumes:
-      - .:/spacefinder
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+      - .:/home/app/webapp
     ports:
       - 3000:3000
     depends_on:
       - db
     environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       DATABASE_URL: postgres://postgres@db
   db:
     image: postgres:10.3-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./postgresdb:/postgresdb
 
 volumes:
   postgres_data:

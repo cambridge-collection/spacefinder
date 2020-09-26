@@ -796,7 +796,7 @@ $().ready(function () {
     $('#search-btn').on('click touchstart', function (event) {
         if (currView == 'large') {
             event.preventDefault();
-            //console.log('search clicked');
+            console.log('search clicked');
             if ($(this).hasClass('active')) {
                 $('#search').hide(0);
                 $(this).removeClass('active')

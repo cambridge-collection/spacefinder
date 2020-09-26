@@ -1,6 +1,6 @@
 var iconMap = [
     ["facility_food_drink", 'Food & drink allowed', 'icon-drink'],
-    ["facility_daylight", 'Natural DAYLIGHT-ICONMAPJS', 'icon-sun'],
+    ["facility_daylight", 'Natural daylight', 'icon-sun'],
     ["facility_views", 'Attractive views out of the window', 'icon-views'],
     ["facility_large_desks", 'Large desks', 'icon-desk'],
     ["facility_free_wifi", 'Free Wifi', 'icon-wifi'],

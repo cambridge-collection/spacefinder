@@ -73,7 +73,7 @@ test:
 # production deployment.
 #
 # On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
+# available as an environment variable. kkFor example:
 #
 #   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 #
@@ -83,8 +83,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  database: spacefinder_stag
-  username: spfindstag
+  adapter: postgresql
+  database: spacefinder
+  username: postgres
   password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
-  url: postgresql://sql-postgres.ds.lib.cam.ac.uk
+  url: localhost
 
