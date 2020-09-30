@@ -3,16 +3,17 @@ version: '3.6'
 services:
   web:
     build: .
-
+     
     volumes:
       - .:/home/app/webapp
     ports:
-      - 3000:3000
+      - 80:3000
     depends_on:
       - db
     environment:
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      APP_DB_HOST: db 
       DATABASE_URL: postgres://postgres@db
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
   db:
     image: postgres:10.3-alpine
     volumes:
