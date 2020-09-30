@@ -1207,8 +1207,9 @@ function resetViews() {
     $('#list').html('');
 
     google.maps.event.addListener(map, 'center_changed', function (e) {
+        console.log($('div[id^=space-]'));
         if (!systemEvent && $('div[id^=space-]').length == 0) {
-            //console.log('non system event fired - center');
+            console.log('non system event fired - center');
             var newCenter = map.getCenter();
             currentLoc.lat = newCenter.lat();
             currentLoc.lng = newCenter.lng();
@@ -1219,6 +1220,7 @@ function resetViews() {
         }, 300);
     });
     google.maps.event.addListener(map, 'bounds_changed', function () {
+        console.log($('div[id^=space-]'));
         if (!systemEvent && $('div[id^=space-]').length == 0 && $('.infoBubble:visible').length == 0) {
             console.log('non system event fired - bounds');
             currentZoom = map.getZoom();

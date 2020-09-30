@@ -87,5 +87,5 @@ production:
   database: spacefinder
   username: postgres
   password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
-  url: localhost
+  host: db
 

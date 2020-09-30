@@ -12,6 +12,7 @@ services:
       - db
     environment:
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      BASE_URL: ${BASE_URL}
       DATABASE_URL: postgres://postgres@db
   db:
     image: postgres:10.3-alpine
