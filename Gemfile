@@ -50,6 +50,7 @@ gem 'geokit-rails'
 gem 'omniauth-shibboleth'
 gem 'search_cop'
 gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
+gem 'gon'
 
 group :development, :test do
   gem 'listen'
