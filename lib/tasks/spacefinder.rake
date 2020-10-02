@@ -85,7 +85,6 @@ namespace :spacefinder do
     }
   end
 
-
   desc "Test load"
   task :load_test => [:environment] do |t, args|
     space = Space.find(1)
