@@ -674,6 +674,7 @@ var map,
     currentZoom = 14,
     currentLoc = loc,
     systemEvent = false,
+    loadSpacesInProgress = false,
     spacesRequest = null,
     totalSpaceCount = 0,
     queryLimit = 35,
@@ -1220,18 +1221,27 @@ function resetViews() {
         }, 300);
     });
     google.maps.event.addListener(map, 'bounds_changed', function () {
-        console.log($('div[id^=space-]'));
+
         if (!systemEvent && $('div[id^=space-]').length == 0 && $('.infoBubble:visible').length == 0) {
             console.log('non system event fired - bounds');
             currentZoom = map.getZoom();
-            var center = map.getCenter();
 
             window.setTimeout(function () {
                 exclude = {
                     'exclusions': [],
                     'total': 0
                 }
-                $('.search-button').trigger('click');
+
+                console.log('*************** firing search-button - click');
+                // $('.search-button').trigger('click');
+                loadSpaces(
+                    {
+                        queryString: search,
+                        keepData: true,
+                        expanded: exclude
+                        //clearSpaces:true
+                    }
+                )
             }, 300);
 
             pointsInView();
@@ -1245,6 +1255,12 @@ function resetViews() {
 
 function loadSpaces(options) {
     $('.current-status').html('load spaces');
+    if (loadSpacesInProgress) {
+        console.log( "############# Load Spaces aborted - already in progress");
+        return;
+    }
+    loadSpacesInProgress = true;
+    console.log( "############# Load Spaces Started");
     var defaults = {
         location: '',
         queryString: (typeof prepSearch == 'function' ? prepSearch() : ''),
@@ -1444,6 +1460,8 @@ function loadSpaces(options) {
         }
 
     });
+    console.log( "############# Load Spaces Done");
+    loadSpacesInProgress = false;
 }
 
 function cleanData(data) {
