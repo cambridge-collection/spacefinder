@@ -275,5 +275,10 @@ Devise.setup do |config|
       :email => "HTTP_MAIL"
     }
   }
-  
+  require 'saml'
+  idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
+  idp_metadata = idp_metadata_parser.parse_remote_to_hash("https://shib.raven.cam.ac.uk/shibboleth")
+  logger.debug "#{idp_metadata}"
+  config.omniauth :saml, :idp_medatada
+
 end

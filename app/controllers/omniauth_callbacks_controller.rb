@@ -16,6 +16,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     find_and_sign_in
   end
   
+  def saml
+    find_and_sign_in
+  end
+
   private
   
   def find_and_sign_in
