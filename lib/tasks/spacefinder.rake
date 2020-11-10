@@ -72,26 +72,6 @@ namespace :spacefinder do
     end
   end
 
-  desc "Import booking URL and update spaces"
-  task :import_booking_url, [:csv_path] => [:environment] do |t, args|
-    spaces_csv = SmarterCSV.process(args[:csv_path])
-    spaces_csv.each {|space_csv|
-      space = Space.find(space_csv[:id])
-      if !space.nil? then
-        space.booking_url = space_csv[:booking_url]
-        space.save
-        puts "Updated #{space.name} with url: #{space_csv[:booking_url]}"
-      end
-    }
-  end
-
-  desc "Test load"
-  task :load_test => [:environment] do |t, args|
-    space = Space.find(1)
-    print(space.booking_url)
-#    puts space
-  end
-
   desc "Imports a CSV of Spaces into the db"
   task :import_csv, [:csv_path] => [:environment] do |t, args|
     spaces_csv = SmarterCSV.process(args[:csv_path])
@@ -204,4 +184,22 @@ namespace :spacefinder do
     }
   end
 
+  desc "Import booking URL and update spaces"
+  task :import_booking_url, [:csv_path] => [:environment] do |t, args|
+    spaces_csv = SmarterCSV.process(args[:csv_path])
+    spaces_csv.each { |space_csv|
+      booking_url = space_csv[:booking_url]
+      if !booking_url.blank? then
+        space = Space.find(space_csv[:id])
+        if !space.nil? then
+          space.booking_url = booking_url
+          space.save
+          puts "Updated #{space.name} with url: #{booking_url}"
+        end
+      end
+
+    }
+  end
+
 end
+

@@ -264,6 +264,34 @@
                     }
                 }
             }
+          &.section-booking {
+            dl {
+              display: -ms-flex;
+              display: -webkit-flex;
+              display: flex;
+              -webkit-flex-flow: row wrap;
+              flex-flow: row wrap;
+              -webkit-align-content: stretch;
+              align-content: stretch;
+            }
+            dt {
+              font-style: normal;
+              color: #000;
+              text-align: right;
+              min-width: 65px;
+              width: 65px;
+              margin-right: 6px;
+
+            }
+            dd {
+              -webkit-flex-grow:1;
+              flex-grow: 1;
+              margin-left: 0;
+              width: calc(100% - 71px);
+              margin-bottom: 6px;
+              word-wrap: break-word;
+            }
+          }
             &.section-contact {
                 dl {
                     display: -ms-flex;

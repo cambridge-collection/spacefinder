@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Spacefinder</title>
+    <%= Gon::Base.render_data %>
     <meta charset="utf-8" />
     <!--scripts-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA70cwyy9WH6wgv7wrm-skrak2HCeIK2-U&libraries=geometry"></script>
@@ -42,13 +43,14 @@
         <div class="logo"></div>
         <div class="message">Loading <span class="current-status">spacefinder</span></div>
     </div>
+
     <script type="text/javascript">
       <% if user_signed_in? then %>
         <%= render 'shared/user_details' %>
       <% else %>
         var userDetails = null;
       <% end %>
-        var domain = 'https://spacefinder.lib.cam.ac.uk/';
+        var domain = gon.base_url;
     </script>
 
   <%= javascript_include_tag 'home' %>

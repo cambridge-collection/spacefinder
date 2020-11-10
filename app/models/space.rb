@@ -19,7 +19,13 @@ class Space < ActiveRecord::Base
     self.twitter_screen_name = self.twitter_screen_name.tr('@', '')
     self.twitter_screen_name = self.twitter_screen_name.strip
     self.facebook_url = self.facebook_url.strip
-    self.booking_url = self.booking_url.strip
+    if !self.booking_url.nil? then
+      self.booking_url = self.booking_url.strip
+    end
+
+    if !self.work_in_a_library and !self.library_id.nil? then
+      self.work_in_a_library = true
+    end
   end
 
   belongs_to :access
@@ -99,7 +105,6 @@ class Space < ActiveRecord::Base
   end
 
   def self.atmospheres
-    debug
     self.attribute_names.select{|s| s[0, 10] == "atmosphere" }
   end
 

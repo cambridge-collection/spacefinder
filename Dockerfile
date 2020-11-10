@@ -1,5 +1,10 @@
 FROM phusion/passenger-ruby26
-ENV HOME /root
+
+ENV RAILS_ROOT /home/app/webapp
+RUN mkdir -p $RAILS_ROOT
+WORKDIR $RAILS_ROOT
+ENV RAILS_ENV='production'
+ENV RACK_ENV='production'
 
 # Base Ruby ext and Rails
 RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
@@ -9,18 +14,22 @@ RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default && \
-    mkdir -p /spacefinder /home/app/webapp
+    mkdir -p $RAILS_ROOT
 
-WORKDIR /spacefinder
-COPY --chown=app:app . /home/app/webapp
+COPY --chown=app:app . $RAILS_ROOT
+COPY Gemfile $RAILS_ROOT
+RUN bundle install --jobs 20 --retry 5
+
+
+# NGINX
+
 COPY entrypoint.sh /usr/bin/
-ADD Gemfile /spacefinder/
 ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-
-RUN bundle install
 
 EXPOSE 3000
 
 # Start the main process.
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-e", "production"]
+CMD ["bundle", "exec", "passenger", "start"]
+

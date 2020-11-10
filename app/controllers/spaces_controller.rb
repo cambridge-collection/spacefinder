@@ -148,7 +148,7 @@ class SpacesController < ApplicationController
         :facility_gender_neutral_toilets, :facility_bike_racks, :facility_smoking_area, :facility_baby_changing, :facility_prayer_room,
         :opentimes_before_9am, :opentimes_after_7pm, :opentimes_saturday, :opentimes_sunday,
         :booking_url,
-        :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list, :editors,
+        :work_in_a_library, :work_private, :work_close, :work_friends, :work_group, :expensive, :tag_list, :editors,
         space_photos_attributes: [:id, :photo, :_destroy],
         term_time_hours_attributes: [
           Hash[OpeningHoursWeek.days.collect {|day|
