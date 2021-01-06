@@ -1256,11 +1256,11 @@ function resetViews() {
 function loadSpaces(options) {
     $('.current-status').html('load spaces');
     if (loadSpacesInProgress) {
-        console.log( "############# Load Spaces aborted - already in progress");
+//       console.log( "############# Load Spaces aborted - already in progress");
         return;
     }
     loadSpacesInProgress = true;
-    console.log( "############# Load Spaces Started");
+//    console.log( '############# Load Spaces Started");
     var defaults = {
         location: '',
         queryString: (typeof prepSearch == 'function' ? prepSearch() : ''),
@@ -1460,7 +1460,7 @@ function loadSpaces(options) {
         }
 
     });
-    console.log( "############# Load Spaces Done");
+//    console.log( "############# Load Spaces Done");
     loadSpacesInProgress = false;
 }
 
