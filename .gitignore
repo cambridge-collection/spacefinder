@@ -29,3 +29,10 @@
 /public/system/space_photos/
 .byebug_history
 /public/assets/
+
+# dumps
+*.csv
+*.sql
+
+# gem
+Gemfile.lock
