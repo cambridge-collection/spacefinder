@@ -48,6 +48,8 @@ gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
 gem 'omniauth-shibboleth'
+gem 'ruby-saml', '~> 1.9.0'
+gem 'omniauth-saml'
 gem 'search_cop'
 gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 gem 'gon'

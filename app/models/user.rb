@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   rolify
-  devise :rememberable, :trackable, :omniauthable
+  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:saml]
   
   has_many :tips, dependent: :destroy
   has_many :identities, dependent: :destroy

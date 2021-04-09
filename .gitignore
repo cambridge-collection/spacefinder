@@ -18,11 +18,7 @@
 
 *.codekit
 *.sass-cache/*
-
-*.scssc
-
-
-*.scssc
+/public/assets/scssc/
 /public/system/space_photos/photos/
 /public/system/space_photos/
 /public/system/users/

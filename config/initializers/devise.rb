@@ -263,17 +263,24 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   
-  config.omniauth :facebook, ENV['FACEBOOK_OAUTH_KEY'], ENV['FACEBOOK_OAUTH_SECRET'], :scope => 'email', info_fields: 'email, name', :display => 'popup', secure_image_url: true
-  
-  config.omniauth :shibboleth, {
-#    :request_type => :header,
-    :shib_session_id_field => "HTTP_SHIB_SESSION_ID",
-    :shib_application_id_field => "HTTP_SHIB_APPLICATION_ID",
-    :uid_field => "HTTP_EPPN",
-    :name_field => "HTTP_DISPLAYNAME",
-    :info_fields => {
-      :email => "HTTP_MAIL"
-    }
-  }
-  
+  require 'onelogin/ruby-saml/idp_metadata_parser'
+  idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
+  idp_metadata = idp_metadata_parser.parse_remote_to_hash("https://shib.raven.cam.ac.uk/shibboleth")
+  config.omniauth :saml,
+    certificate: \
+      "-----BEGIN CERTIFICATE-----
+      insert self-signed certificate file contents directly
+      or use IO.binread to read contents of a local file
+      -----END CERTIFICATE-----",
+    private_key: \
+      "-----BEGIN PRIVATE KEY-----
+      insert private key of self-signed certificate here as above
+      -----END PRIVATE KEY-----",
+    idp_cert: idp_metadata[:idp_cert],
+    idp_cert_fingerprint: idp_metadata[:idp_cert_fingerprint],
+    idp_sso_target_url: "https://shib.raven.cam.ac.uk/idp/profile/SAML2/Redirect/SSO",
+    issuer: "FQDN of host",
+    sp_entity_id: "entityID of corresponding Raven metadata registration",
+    name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+
 end
