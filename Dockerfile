@@ -9,7 +9,7 @@ ENV RACK_ENV='production'
 # Base Ruby ext and Rails
 RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
     apt-get update -qq && \
-    apt-get install -y nodejs postgresql-client build-essential patch ruby-dev libpq-dev && \
+    apt-get install -y nodejs postgresql-client build-essential patch ruby-dev libpq-dev shared-mime-info && \
     gem install nokogiri:1.10.10 bundler --source 'https://rubygems.org/' && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
