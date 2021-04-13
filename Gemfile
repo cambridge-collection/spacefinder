@@ -37,7 +37,7 @@ gem 'puma'
 gem 'smarter_csv'
 gem 'acts-as-taggable-on'
 gem 'filterrific'
-gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
+gem 'devise', git: 'https://github.com/heartcombo/devise', branch: 'master'
 gem 'omniauth'
 gem "paranoia", "~> 2.0"
 gem 'paperclip'
