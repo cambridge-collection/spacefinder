@@ -51,6 +51,7 @@ gem 'omniauth-saml'
 gem 'search_cop'
 gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 gem 'gon'
+gem 'concurrent-ruby', '1.1.8'
 
 group :development, :test do
   gem 'listen'
