@@ -14,16 +14,23 @@ RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
     rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default && \
     mkdir -p $RAILS_ROOT && chown app $RAILS_ROOT
 
-FROM base as app
+
+FROM base as bundler
 WORKDIR $RAILS_ROOT
 COPY --chown=app:app . $RAILS_ROOT
 ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 
 USER app
-RUN bundle config set --local deployment 'true' && bundle install
+RUN bundle install
+
+
+FROM bundler as web
+WORKDIR $RAILS_ROOT
+
+USER app
+RUN bundle config --local deployment true && bundle install
 EXPOSE 3000
 
+USER root
 ENTRYPOINT ["/home/app/webapp/entrypoint.sh"]
-#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-e", "production"]
 CMD ["bundle", "exec", "passenger", "start"]
-
