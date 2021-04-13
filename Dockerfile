@@ -1,8 +1,6 @@
-FROM phusion/passenger-ruby26
+FROM phusion/passenger-ruby26 as base
 
 ENV RAILS_ROOT /home/app/webapp
-RUN mkdir -p $RAILS_ROOT
-WORKDIR $RAILS_ROOT
 ENV RAILS_ENV='production'
 ENV RACK_ENV='production'
 
@@ -14,20 +12,18 @@ RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default && \
-    mkdir -p $RAILS_ROOT
+    mkdir -p $RAILS_ROOT && chown app $RAILS_ROOT
 
-# NGINX
-COPY entrypoint.sh /usr/bin/
+FROM base as app
+WORKDIR $RAILS_ROOT
+COPY --chown=app:app . $RAILS_ROOT
 ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 
 USER app
-COPY --chown=app:app . $RAILS_ROOT
-COPY Gemfile $RAILS_ROOT
-RUN bundle install
-
+RUN bundle config set --local deployment 'true' && bundle install
 EXPOSE 3000
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/home/app/webapp/entrypoint.sh"]
 #CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-e", "production"]
 CMD ["bundle", "exec", "passenger", "start"]
 
