@@ -16,19 +16,17 @@ RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
     rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default && \
     mkdir -p $RAILS_ROOT
 
-COPY --chown=app:app . $RAILS_ROOT
-COPY Gemfile $RAILS_ROOT
-RUN bundle install --jobs 20 --retry 5
-
-
 # NGINX
-
 COPY entrypoint.sh /usr/bin/
 ADD nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 
+USER app
+COPY --chown=app:app . $RAILS_ROOT
+COPY Gemfile $RAILS_ROOT
+RUN bundle install
+
 EXPOSE 3000
 
-# Start the main process.
 ENTRYPOINT ["entrypoint.sh"]
 #CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-e", "production"]
 CMD ["bundle", "exec", "passenger", "start"]
