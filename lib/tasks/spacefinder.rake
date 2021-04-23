@@ -10,7 +10,7 @@ namespace :spacefinder do
       if id.nil? then
         puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
         id = Identity.new
-        id.provider = "shibboleth"
+        id.provider = "saml"
         id.uid = args[:uid]
         u = User.new
         u.save
@@ -37,7 +37,7 @@ namespace :spacefinder do
       if id.nil? then
         puts "No users with uid #{args[:uid]} found, creating new user ready for first login"
         id = Identity.new
-        id.provider = "shibboleth"
+        id.provider = "saml"
         id.uid = args[:uid]
         u = User.new
         u.save

@@ -88,7 +88,7 @@ class Space < ActiveRecord::Base
         else
             #no user found with that id, add them as a contributor
             id = Identity.new
-            id.provider = "shibboleth"
+            id.provider = "saml"
             id.uid = crsid
             u = User.new
             u.save

@@ -1,8 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def facebook
-    find_and_sign_in
-  end
-  
+  skip_before_action :verify_authenticity_token
+
   def failure
     # oauth declined, call facebook.erb?
     @user = nil
@@ -10,10 +8,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @status = "authrequired"
     @redirect_url = root_url
     render :signin
-  end
-  
-  def shibboleth
-    find_and_sign_in
   end
   
   def saml
@@ -38,6 +32,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     
     render :signin
   end
-  
   
 end

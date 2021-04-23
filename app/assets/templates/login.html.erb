@@ -126,7 +126,7 @@ $login.find('.avatar-upload').on('change', function(event) {
 
 $('.raven-login-button').on('click', function(event) {
     event.preventDefault();
-    var url = domain + "users/auth/shibboleth";
+    var url = domain + "users/auth/saml";
     window.open(url, "Raven login", "width=980,height=600");
     //$login.find('.login').fadeOut(300);
     //$login.find('.user-details').data('from-login', 'true').fadeIn(300);
