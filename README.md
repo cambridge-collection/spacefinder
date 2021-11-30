@@ -3,7 +3,8 @@
 
 Notes:
 
-
+Install: 
+Via Docker: https://bitbucket.org/CUDL/spacefinder-ruby/src/master/docker-compose.yml
 
 
 Import file for initial upload.
