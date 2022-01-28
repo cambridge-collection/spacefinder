@@ -29,6 +29,3 @@
 # dumps
 *.csv
 *.sql
-
-# gem
-Gemfile.lock
