@@ -84,8 +84,7 @@ test:
 #
 production:
   adapter: postgresql
-  database: spacefinder
-  username: postgres
+  database: <%= ENV.fetch('SPACEFINDER_DATABASE_NAME', 'spacefinder') %>
+  username: <%= ENV.fetch('SPACEFINDER_DATABASE_USER', 'spacefinder') %>
   password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
-  host: db
-
+  host: <%= ENV.fetch('SPACEFINDER_DATABASE_HOST', 'db') %>
