@@ -11,15 +11,21 @@ services:
     depends_on:
       - db
     environment:
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-      BASE_URL: ${BASE_URL}
-      APP_DB_HOST: db 
-      DATABASE_URL: postgres://postgres@db
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-}
+      BASE_URL: ${BASE_URL:-http://localhost:3000}
+      SPACEFINDER_DATABASE_HOST: db
+      SPACEFINDER_DATABASE_NAME: &SPACEFINDER_DATABASE_NAME spacefinder
+      SPACEFINDER_DATABASE_USER: &SPACEFINDER_DATABASE_USER spacefinder
+      SPACEFINDER_DATABASE_PASSWORD: &SPACEFINDER_DATABASE_PASSWORD ${SPACEFINDER_DATABASE_PASSWORD:-spacefinder}
   db:
     image: postgres:10.3-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - ./postgresdb:/postgresdb
+    environment:
+      POSTGRES_USER: *SPACEFINDER_DATABASE_USER
+      POSTGRES_DB: *SPACEFINDER_DATABASE_NAME
+      POSTGRES_PASSWORD: *SPACEFINDER_DATABASE_PASSWORD
 
 volumes:
   postgres_data:
