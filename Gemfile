@@ -18,7 +18,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 #gem 'coffee-rails', '~> 4.1.0'
-gem 'libv8'
 gem 'railties', '6.0.3.2'
 gem 'coffee-rails', '5.0.0'
 
@@ -38,10 +37,11 @@ gem 'puma'
 gem 'smarter_csv'
 gem 'acts-as-taggable-on'
 gem 'filterrific'
-gem 'devise', git: 'https://github.com/heartcombo/devise', branch: 'master'
-gem 'omniauth'
+gem 'devise', '~> 4.8'
+gem 'omniauth', '~> 2.0'
 gem 'omniauth-rails_csrf_protection'
 gem 'ruby-saml', '~> 1.9.0'
+gem "rexml", "~> 3.2"
 gem 'omniauth-saml'
 gem "paranoia", "~> 2.0"
 gem 'paperclip'
@@ -70,8 +70,7 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   
-  #gem 'therubyracer', platforms: :ruby
-  gem 'therubyracer', '0.12.3'
+  gem 'mini_racer'
   gem 'dotenv-rails'
   
   gem 'pry'
@@ -85,5 +84,3 @@ group :production do
   gem 'rails_12factor'
   
 end
-
-
