@@ -1,4 +1,35 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.209.6/containers/ruby
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/ruby:3.0-bullseye",
-  "remoteUser": "vscode"
+    "name": "Ruby",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+        "sqltools.connections": [
+            {
+                "name": "Container database",
+                "driver": "PostgreSQL",
+                "previewLimit": 50,
+                "server": "db",
+                "port": 5432,
+                "database": "spacefinder_development",
+                "username": "spacefinder",
+                "password": "spacefinder"
+            }
+        ]
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "rebornix.Ruby",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "ruby --version",
+    // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode"
 }
