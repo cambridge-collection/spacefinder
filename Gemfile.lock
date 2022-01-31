@@ -77,7 +77,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
-    debase (0.2.5.beta1)
+    debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.14)
     devise (4.8.1)
@@ -240,7 +240,7 @@ GEM
       railties (>= 5.0)
     rexml (3.2.5)
     rolify (6.0.0)
-    ruby-debug-ide (0.7.1.beta3)
+    ruby-debug-ide (0.7.3)
       rake (>= 0.8.1)
     ruby-saml (1.9.0)
       nokogiri (>= 1.5.10)
@@ -309,7 +309,7 @@ DEPENDENCIES
   cancancan
   coffee-rails (= 5.0.0)
   concurrent-ruby (= 1.1.8)
-  debase (= 0.2.5.beta1)
+  debase
   devise (~> 4.8)
   dotenv-rails
   filterrific
@@ -338,7 +338,7 @@ DEPENDENCIES
   rake (= 13.0.3)
   rexml (~> 3.2)
   rolify
-  ruby-debug-ide (= 0.7.1.beta3)
+  ruby-debug-ide
   ruby-saml (~> 1.9.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

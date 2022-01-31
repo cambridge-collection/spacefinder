@@ -57,8 +57,8 @@ gem 'concurrent-ruby', '1.1.8'
 
 group :development, :test do
   gem 'listen'
-  gem 'ruby-debug-ide', '0.7.1.beta3'
-  gem 'debase', '0.2.5.beta1'
+  gem 'ruby-debug-ide'
+  gem 'debase'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
