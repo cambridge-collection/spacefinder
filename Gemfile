@@ -51,7 +51,6 @@ gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
 gem 'search_cop'
-gem "passenger", "~> 6", require: "phusion_passenger/rack_handler"
 gem 'gon'
 gem 'concurrent-ruby', '~> 1.1'
 
@@ -80,7 +79,6 @@ group :development, :test do
 end
 
 group :production do
-
   gem 'rails_12factor'
-  
+  gem "passenger", "~> 6", require: "phusion_passenger/rack_handler"
 end
