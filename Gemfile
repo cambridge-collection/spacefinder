@@ -51,7 +51,6 @@ gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
 gem 'search_cop'
-gem 'gon'
 gem 'concurrent-ruby', '~> 1.1'
 
 group :development, :test do
