@@ -25,6 +25,7 @@
         "rebornix.Ruby",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg",
+        "editorconfig.editorconfig",
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
