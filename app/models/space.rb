@@ -46,12 +46,12 @@ class Space < ActiveRecord::Base
   attr_accessor :new_library_name
 
   after_initialize :create_opentime_flags
-  before_save :create_library_from_name
+  after_initialize :create_library_from_name
   after_save :add_space_to_editors
 
   def create_library_from_name
     unless new_library_name.blank? then
-      self.library = Library.find_or_create_by(:name => new_library_name)
+      self.library = Library.find_or_initialize_by(:name => new_library_name)
     end
   end
 
