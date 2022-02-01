@@ -262,7 +262,10 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  
+
+  # Enable the mock development auth provider when running in development mode
+  config.omniauth :developer, fields: [:name, :email, :image] if Rails.env.development?
+
   require 'onelogin/ruby-saml/idp_metadata_parser'
   idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
   idp_metadata = idp_metadata_parser.parse_remote_to_hash("https://shib.raven.cam.ac.uk/shibboleth")
@@ -282,5 +285,4 @@ Devise.setup do |config|
     issuer: "FQDN of host",
     sp_entity_id: "entityID of corresponding Raven metadata registration",
     name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
-
 end
