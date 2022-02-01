@@ -2229,7 +2229,7 @@ function pointsInView() {
 
     }
     //console.log('points in view', ret);
-    if (ret.length > 0 && $('.loading-cover').length > 0) {
+    if ($('.loading-cover').length > 0) {
         $(window).trigger('initialLoadComplete')
     }
     return ret;
