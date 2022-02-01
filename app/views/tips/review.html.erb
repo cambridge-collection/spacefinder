@@ -12,7 +12,7 @@
     </div>
   <% end %>
   <% if @tips.empty? then %>
-  
+
     <div class="event-success">
         <i class="icon-tick"></i><p>All tips have been reviewed</p>
     </div>
@@ -23,7 +23,7 @@
         <!--tip-->
         <div class="tip">
             <div class="meta">
-                <div class="avatar" style="background-image:url(<%= tip.user.avatar.url(:resized) %>)"></div>
+                <div class="avatar" style="background-image:url(<%= tip.user.avatar.url(:resized, escape: false) %>)"></div>
                 <div class="user">
                     <span class="name"><%= tip.user.name %></span>
                     <span class="discipline"><%= tip.user.discipline %></span>
@@ -40,7 +40,7 @@
                 <%= f.text_area :response, placeholder: "your response to the tip" %>
               </div>
               <div class="buttons">
-                
+
                 <%= f.submit "Add response", class: "btn-inline respond" %>
               </div>
             <% end %>
