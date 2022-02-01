@@ -1,0 +1,22 @@
+// TODO(hwtb2) re-enable formatting/linting (I don't want huge amounts of
+//   changes while the dev environment is unstable).
+{
+    //run non-lint commands with bundle exec
+    "ruby.useBundler": true,
+    // use the internal language server (see below)
+    "ruby.useLanguageServer": true,
+    "ruby.lint": {
+        // enable rubocop via bundler
+        // "rubocop": {
+        //     "useBundler": true
+        // },
+        // enable reek via bundler
+        // "reek": {
+        //     "useBundler": true
+        // }
+    },
+    // use rubocop for formatting
+    // "ruby.format": "rubocop",
+    "ruby.format": false,
+    "javascript.format.enable": false,
+}
