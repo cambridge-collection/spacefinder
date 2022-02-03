@@ -30,7 +30,7 @@ class Space < ActiveRecord::Base
 
   belongs_to :access
   belongs_to :space_type
-  belongs_to :library
+  belongs_to :library, optional: true
   belongs_to :noise
 
   belongs_to :term_time_hours, class_name: "OpeningHoursWeek", :foreign_key => 'term_time_hours_id', dependent: :destroy
