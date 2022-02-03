@@ -1,0 +1,18 @@
+allday:
+    open: true
+    allday: true
+
+ninetofive:
+    open: true
+    allday: false
+    from: "9:00"
+    to: "17:00"
+
+tentofour:
+    open: true
+    allday: false
+    from: "10:00"
+    to: "16:00"
+
+closed:
+    open: false

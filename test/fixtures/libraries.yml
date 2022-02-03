@@ -1,7 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+ul:
+  name: Cambridge University Library
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+bgm:
+  name: Betty & Gordon Moore Library

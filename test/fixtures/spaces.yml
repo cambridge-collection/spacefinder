@@ -1,13 +1,16 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  name: MyString
+  name: Space One
+  space_type: meeting_room
+  library: ul
+  noise: music
   description: MyText
   address: MyText
   floor: MyString
   lat: 9.99
   lng: 9.99
-  # opening_hours: MyText
+  term_time_hours: weekdays
+  out_of_term_hours: closed
+  access: public
   restricted: false
   restriction: MyString
   disabled_access: false
@@ -45,12 +48,17 @@ one:
 
 two:
   name: MyString
+  space_type: library_space
+  library: bgm
+  noise: silent
   description: MyText
   address: MyText
   floor: MyString
   lat: 9.99
   lng: 9.99
-  # opening_hours: MyText
+  term_time_hours: sevendays
+  out_of_term_hours: weekdays
+  access: members
   restricted: false
   restriction: MyString
   disabled_access: false

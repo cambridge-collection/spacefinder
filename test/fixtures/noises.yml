@@ -1,7 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+silent:
+  title: Strictly Silent
 
-one:
-  title: MyString
-
-two:
-  title: MyString
+music:
+  title: "Music playing"
