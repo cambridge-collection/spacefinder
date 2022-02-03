@@ -5,8 +5,22 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspace",
+
     // Set *default* container specific settings.json values on container create.
     "settings": {
+        //run non-lint commands with bundle exec
+        "ruby.useBundler": true,
+        "solargraph.useBundler": true,
+        // Use the solargraph language server instead of the Ruby extension's
+        "ruby.useLanguageServer": false,
+        "ruby.codeCompletion": false,
+        // linting/formatting is currently disabled to avoid making
+        // non-functional code changes while the dev environment being ironed
+        // out.
+        "ruby.lint": {},
+        "ruby.format": false,
+        "javascript.format.enable": false,
+
         "sqltools.connections": [
             {
                 "name": "Container database",
