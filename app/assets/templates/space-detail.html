@@ -564,7 +564,7 @@ if(currView == 'large') {
 //load current tips
 function loadTips() {
     $.ajax({
-        url: domain + 'spaces/#{id}/tips.json?callback=?',
+        url: domain + 'spaces/#{id}/tips.json',
         cache:false,
         dataType:'json',
         method:'GET'

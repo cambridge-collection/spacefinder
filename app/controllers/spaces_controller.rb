@@ -3,7 +3,6 @@ class SpacesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :filters, :new, :edit, :create, :update, :destroy]
   before_action :check_user_details_set, only: :add_tag
   before_action :set_space, only: [:show, :edit, :update, :add_tag, :destroy]
-  after_action :jsonp_callback, only: [:index, :show, :filters]
   layout "admin"
 
   # GET /spaces
