@@ -22,10 +22,12 @@
     },
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-        "rebornix.Ruby",
-        "mtxr.sqltools",
-        "mtxr.sqltools-driver-pg",
+        "castwide.solargraph",
         "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "mtxr.sqltools-driver-pg",
+        "mtxr.sqltools",
+        "rebornix.Ruby",
     ],
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],

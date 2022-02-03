@@ -58,6 +58,9 @@ group :development, :test do
   gem 'ruby-debug-ide'
   gem 'debase'
 
+  # Ruby language server used by vscode ruby extensions
+  gem 'solargraph'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
@@ -66,12 +69,12 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  
+
   gem 'mini_racer'
   gem 'dotenv-rails'
-  
+
   gem 'pry'
-  
+
   gem "bullet"
   gem "lol_dba"
 end
