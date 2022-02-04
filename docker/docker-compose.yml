@@ -2,29 +2,42 @@ version: '3.6'
 
 services:
   web:
-    build: .
-     
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - name=value
+
     volumes:
-      - .:/home/app/webapp
+      - app_data:/home/app/webapp/public/system
     ports:
-      - 3000:3000
+      - 3000:80
     depends_on:
       - db
     environment:
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-}
+      SPACEFINDER_SECRET_KEY: ${SECRET_KEY_BASE:-placeholder}
       SPACEFINDER_DATABASE_HOST: db
       SPACEFINDER_DATABASE_NAME: &SPACEFINDER_DATABASE_NAME spacefinder
       SPACEFINDER_DATABASE_USER: &SPACEFINDER_DATABASE_USER spacefinder
       SPACEFINDER_DATABASE_PASSWORD: &SPACEFINDER_DATABASE_PASSWORD ${SPACEFINDER_DATABASE_PASSWORD:-spacefinder}
+      SPACEFINDER_SAML_CERTIFICATE: |
+        -----BEGIN CERTIFICATE-----
+        mock
+        -----END CERTIFICATE-----
+      SPACEFINDER_SAML_PRIVATE_KEY: |
+        -----BEGIN PRIVATE KEY-----
+        mock
+        -----END PRIVATE KEY-----
+      SPACEFINDER_SAML_ISSUER: mock-value.example.com
   db:
-    image: postgres:10.3-alpine
+    image: postgres:14
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./postgresdb:/postgresdb
     environment:
       POSTGRES_USER: *SPACEFINDER_DATABASE_USER
       POSTGRES_DB: *SPACEFINDER_DATABASE_NAME
       POSTGRES_PASSWORD: *SPACEFINDER_DATABASE_PASSWORD
 
 volumes:
+  app_data:
   postgres_data:
