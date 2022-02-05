@@ -1,3 +1,5 @@
 .git
-spacefinder
-public/system/space_photos
+public/system
+public/assets
+tmp
+log
