@@ -5,14 +5,34 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Rails server",
+            "name": "test: all tests",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": ["test"],
+        },
+        {
+            "name": "test: selected file",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": ["test", "--verbose", "${relativeFile}"],
+        },
+        {
+            "name": "test: selected test",
+            "type": "Ruby",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": ["test", "--verbose", "${relativeFile}:${lineNumber}"],
+        },
+        {
+            "name": "rails dev server",
             "type": "Ruby",
             "request": "launch",
             "program": "${workspaceRoot}/bin/rails",
             "args": [
                 "server"
             ],
-            "useBundler": true,
         }
     ]
 }
