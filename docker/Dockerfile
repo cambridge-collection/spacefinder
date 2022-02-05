@@ -63,6 +63,7 @@ COPY docker/environment_variables.nginx.conf \
     /etc/nginx/main.d/spacefinder_environment_variables.conf
 COPY docker/webapp.nginx.conf \
     /etc/nginx/sites-enabled/webapp.conf
+COPY docker/50_spacefinder_db_prepare.sh /etc/my_init.d/
 # Removing /etc/service/nginx/down causes nginx to start automatically
 RUN rm /etc/service/nginx/down && rm -f /etc/nginx/sites-enabled/default
 EXPOSE 80

@@ -35,8 +35,11 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       POSTGRES_USER: *SPACEFINDER_DATABASE_USER
-      POSTGRES_DB: *SPACEFINDER_DATABASE_NAME
       POSTGRES_PASSWORD: *SPACEFINDER_DATABASE_PASSWORD
+      # The app creates the database itself and initial db setup is only
+      # performed if the db doesn't exist. So the postgres container must not
+      # create it itself.
+      POSTGRES_DB: postgres
 
 volumes:
   app_data:
