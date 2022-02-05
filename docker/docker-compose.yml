@@ -2,12 +2,10 @@ version: '3.6'
 
 services:
   web:
+    image: ${SPACEFINDER_WEB_IMAGE:-spacefinder:local}
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      args:
-        - name=value
-
     volumes:
       - app_data:/home/app/webapp/public/system
     ports:
