@@ -13,5 +13,8 @@ indent_style = space
 [.git/**/*.diff]
 trim_trailing_whitespace = false
 
+[*.md]
+indent_size = 3
+
 [{*.rb,*.html,*.html.erb,*.yml}]
 indent_size = 2
