@@ -5,6 +5,7 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspace",
+    "onCreateCommand": "bin/setup",
 
     // Set *default* container specific settings.json values on container create.
     "settings": {
