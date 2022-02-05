@@ -110,6 +110,8 @@ GEM
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
+    health_check (3.1.0)
+      railties (>= 5.0)
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
@@ -357,6 +359,7 @@ DEPENDENCIES
   dotenv-rails
   filterrific
   geokit-rails
+  health_check (~> 3.1)
   jbuilder (~> 2)
   jquery-rails
   kaminari
