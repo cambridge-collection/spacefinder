@@ -81,6 +81,4 @@ group :development, :test do
 end
 
 group :production do
-  gem 'rails_12factor'
-  gem "passenger", "~> 6", require: "phusion_passenger/rack_handler"
 end
