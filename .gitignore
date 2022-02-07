@@ -27,3 +27,4 @@
 # ignore vscode settings to allow people to individually reconfigure things. The
 # devcontainer gets default settings via devcontainer.json.
 .vscode/settings.json
+.devcontainer/.env

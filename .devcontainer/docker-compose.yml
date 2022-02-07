@@ -14,6 +14,8 @@ services:
         NODE_VERSION: "lts/*"
 
     volumes:
+      # Mount the local repo directory into the devcontainer
+      - ${LOCAL_WORKSPACE_FOLDER:-/dev/null}:/workspace
       - /var/run/docker.sock:/var/run/docker-host.sock
 
     # Overrides default command so things don't shut down after the process ends.
