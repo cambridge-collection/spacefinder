@@ -30,7 +30,7 @@ class Space < ActiveRecord::Base
 
   belongs_to :access
   belongs_to :space_type
-  belongs_to :library
+  belongs_to :library, optional: true
   belongs_to :noise
 
   belongs_to :term_time_hours, class_name: "OpeningHoursWeek", :foreign_key => 'term_time_hours_id', dependent: :destroy
@@ -46,12 +46,12 @@ class Space < ActiveRecord::Base
   attr_accessor :new_library_name
 
   after_initialize :create_opentime_flags
-  before_save :create_library_from_name
+  after_initialize :create_library_from_name
   after_save :add_space_to_editors
 
   def create_library_from_name
     unless new_library_name.blank? then
-      self.library = Library.find_or_create_by(:name => new_library_name)
+      self.library = Library.find_or_initialize_by(:name => new_library_name)
     end
   end
 

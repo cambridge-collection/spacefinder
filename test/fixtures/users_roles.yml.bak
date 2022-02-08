@@ -1,0 +1,7 @@
+alex_admin:
+    user: admin
+    role: admin
+
+chris_contributor:
+    user: contributor
+    role: contributor

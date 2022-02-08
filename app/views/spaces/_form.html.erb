@@ -99,7 +99,7 @@
       <% else %>
         <div class="fields image">
           <div class="field">
-            <%= image_tag(photo_form.object.photo.url(:resized)) %>
+            <%= image_tag(photo_form.object.photo.url(:resized, escape: false)) %>
             <%= photo_form.link_to_remove do %>
               <i class="icon-close"></i>
             <% end %>

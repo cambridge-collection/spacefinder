@@ -2,7 +2,7 @@
 <% content_for :body_class, "small-page" %>
 
 <div class="container login">
-  
+
   <% if user_signed_in? then %>
     <div id="error_explanation">
       <p>Your Spacefinder account does not have the necessary permissions to administer spaces. Please contact an administrator if you believe this is incorrect.</p>
@@ -12,4 +12,8 @@
 
     <%= image_tag('raven-logo.gif', alt: 'Raven') %>
     <%= link_to 'Login', user_saml_omniauth_authorize_path, method: :post, class: 'btn' %>
+
+    <% if Rails.env.development? %>
+      <%= link_to 'Login [Development Mode]', user_developer_omniauth_authorize_path, method: :post, class: 'btn' %>
+    <% end %>
 </div>

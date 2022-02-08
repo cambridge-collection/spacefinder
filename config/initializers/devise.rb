@@ -1,3 +1,5 @@
+require 'spacefinder_envars'
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -262,25 +264,44 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  
+
+  # Enable the mock development auth provider when running in development mode
+  config.omniauth :developer, fields: [:name, :email, :image] if Rails.env.development?
+
+  # Create a default handler for get_file_envar that throws if no value is
+  # provided in production, but uses a default value in development/test.
+  default_unless_production = lambda do |default|
+    lambda do |name, err|
+      return default unless Rails.env.production?
+      raise err
+    end
+  end
+
+  saml_issuer = Spacefinder.get_file_envar('SPACEFINDER_SAML_ISSUER',
+    default_unless_production.('spacefinder.example.com'))
+
   require 'onelogin/ruby-saml/idp_metadata_parser'
   idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
   idp_metadata = idp_metadata_parser.parse_remote_to_hash("https://shib.raven.cam.ac.uk/shibboleth")
   config.omniauth :saml,
-    certificate: \
-      "-----BEGIN CERTIFICATE-----
-      insert self-signed certificate file contents directly
-      or use IO.binread to read contents of a local file
-      -----END CERTIFICATE-----",
-    private_key: \
-      "-----BEGIN PRIVATE KEY-----
-      insert private key of self-signed certificate here as above
-      -----END PRIVATE KEY-----",
+    # -----BEGIN CERTIFICATE-----
+    # This needs to be a self-signed certificate like this
+    # -----END CERTIFICATE-----
+    certificate: Spacefinder.get_file_envar('SPACEFINDER_SAML_CERTIFICATE',
+      default_unless_production.('-----BEGIN CERTIFICATE-----')),
+
+    # -----BEGIN PRIVATE KEY-----
+    # This needs to be the private key of the above self-signed certificate
+    # -----END PRIVATE KEY-----
+    private_key: Spacefinder.get_file_envar('SPACEFINDER_SAML_CERTIFICATE',
+      default_unless_production.('-----BEGIN PRIVATE KEY-----')),
     idp_cert: idp_metadata[:idp_cert],
     idp_cert_fingerprint: idp_metadata[:idp_cert_fingerprint],
     idp_sso_target_url: "https://shib.raven.cam.ac.uk/idp/profile/SAML2/Redirect/SSO",
-    issuer: "FQDN of host",
-    sp_entity_id: "entityID of corresponding Raven metadata registration",
+    # Our FQDN, e.g. spacefinder.lib.cam.ac.uk
+    issuer: saml_issuer,
+    # entityID of corresponding Raven metadata registration
+    sp_entity_id: Spacefinder.get_file_envar('SPACEFINDER_SAML_SP_ENTITY_ID',
+      -> { "https://#{saml_issuer}/shibboleth" }),
     name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
-
 end

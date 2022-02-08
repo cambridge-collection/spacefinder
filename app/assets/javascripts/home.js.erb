@@ -1315,7 +1315,7 @@ function loadSpaces(options) {
         ga('set', 'page', '/search?' + qs);
     }
     lastQuery = defaults.queryString;
-    spacesRequest = $.ajax(domain + 'spaces.json?callback=?', {
+    spacesRequest = $.ajax(domain + 'spaces.json', {
         cache: false,
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
@@ -1496,7 +1496,7 @@ function showLoginScreen(container, data) {
 }
 
 function loadSearch() {
-    $.ajax(domain + 'spaces/filters.json?callback=?', {
+    $.ajax(domain + 'spaces/filters.json', {
         cache: false,
         dataType: 'json',
         method: 'GET'
@@ -2229,7 +2229,7 @@ function pointsInView() {
 
     }
     //console.log('points in view', ret);
-    if (ret.length > 0 && $('.loading-cover').length > 0) {
+    if ($('.loading-cover').length > 0) {
         $(window).trigger('initialLoadComplete')
     }
     return ret;

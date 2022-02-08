@@ -120,7 +120,7 @@ $tags.find('.tag-submit').on('click', function(event) {
         $tags.find('.new-tags-list li').each(function(index, el) {
             data += '&tags[]=' + $(this).data('tag-value');
         });
-        $.post(domain + 'spaces/#{id}/tags?callback=?', data)
+        $.post(domain + 'spaces/#{id}/tags', data)
         .done(function(data) {
             $tags.find('.close-view').trigger('click');
             $(window).trigger('event_success', {

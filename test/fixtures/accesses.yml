@@ -1,7 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+college:
+  title: College
 
-one:
-  title: MyString
+faculty:
+  title: Faculty
 
-two:
-  title: MyString
+members:
+  title: Members of the University
+
+public:
+  title: Anyone (public)

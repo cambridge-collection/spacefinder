@@ -1,0 +1,26 @@
+weekdays:
+    monday: ninetofive
+    tuesday: ninetofive
+    wednesday: ninetofive
+    thursday: ninetofive
+    friday: ninetofive
+    saturday: closed
+    sunday: closed
+
+sevendays:
+    monday: ninetofive
+    tuesday: ninetofive
+    wednesday: allday
+    thursday: ninetofive
+    friday: ninetofive
+    saturday: tentofour
+    sunday: tentofour
+
+closed:
+    monday: closed
+    tuesday: closed
+    wednesday: closed
+    thursday: closed
+    friday: closed
+    saturday: closed
+    sunday: closed

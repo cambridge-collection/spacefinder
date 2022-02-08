@@ -17,7 +17,7 @@ json.results do
                           :opentimes_before_9am, :opentimes_after_7pm, :opentimes_saturday, :opentimes_sunday, :work_in_a_library, :work_private, :work_close, :work_friends,
                           :work_group, :expensive, :tags, :user_tags, :booking_url, :created_at, :updated_at
 
-    json.images space.space_photos.collect{|space_photo| space_photo.photo.url(:resized)}
+    json.images space.space_photos.collect{|space_photo| space_photo.photo.url(:resized, escape: false)}
 
     json.access space.try(:access).try(:title)
     json.space_type space.try(:space_type).try(:title)

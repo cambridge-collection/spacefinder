@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Spacefinder</title>
-    <%= Gon::Base.render_data %>
     <meta charset="utf-8" />
     <!--scripts-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA70cwyy9WH6wgv7wrm-skrak2HCeIK2-U&libraries=geometry"></script>
@@ -50,7 +49,7 @@
       <% else %>
         var userDetails = null;
       <% end %>
-        var domain = gon.base_url;
+        var domain = '<%== escape_javascript @js_base_url.to_s %>';
     </script>
 
   <%= javascript_include_tag 'home' %>

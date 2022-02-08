@@ -4,7 +4,7 @@
         "id" : "<%= @user.id %>",
         "name" : "<%= @user.name %>",
         "email" : "<%= @user.email %>",
-        "profile_image" : "<%= @user.avatar.url(:resized) %>",
+        "profile_image" : "<%= @user.avatar.url(:resized, escape: false) %>",
         "discipline" : "<%= @user.discipline %>"
       },
     <% end %>

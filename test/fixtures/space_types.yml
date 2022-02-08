@@ -1,7 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+library_space:
+  title: Library space
 
-one:
-  title: MyString
+meeting_room:
+  title: Meeting room
 
-two:
-  title: MyString
+other:
+  title: Other

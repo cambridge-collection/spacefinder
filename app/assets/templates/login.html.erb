@@ -6,7 +6,7 @@
     <div class="raven-login">
         <div class="raven-logo">
             <%= image_tag('raven-logo.gif', alt: 'Raven logo') %>
-            
+
         </div>
         <a href="#" class="raven-login-button btn">Login with raven</a>
     </div>
@@ -70,7 +70,7 @@ $login.find('#update-user-details').submit(function(event) {
     }
     $login.find('input[type=submit]').html('<i class="icon-loading"></i>')
     $.ajax({
-        url: domain + 'user?callback=?',
+        url: domain + 'user',
         //url: '/assets/data/login.json',
         method: 'POST',
         data: $(this).serialize()

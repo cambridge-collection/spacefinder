@@ -1,0 +1,17 @@
+# This is intended to extend docker-compose.yml, i.e.
+# $ docker compose -f docker-compose.yml -f docker-compose.test.yml <args ...>
+version: '3.6'
+
+services:
+  test:
+    image: curlimages/curl
+    depends_on:
+      - web
+    command: |
+      sh -c '
+      set -e
+      curl -o /tmp/health_check --retry 10 --max-time 30 --retry-max-time 300 \
+        --retry-connrefused --no-progress-meter http://web/health_check
+      [ "$$(cat /tmp/health_check)" = "success" ] && echo "Health check successful!" \
+      || ( echo "Health check failed:"; cat /tmp/health_check; exit 1 )
+      '

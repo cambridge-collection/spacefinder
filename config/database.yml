@@ -23,22 +23,24 @@ default: &default
 
 development:
   <<: *default
-  database: spacefinder_development
-
+  database: <%= Spacefinder.get_file_envar('SPACEFINDER_DEV_DATABASE_NAME', 'spacefinder_development') %>
+  # database: <%= ENV['SPACEFINDER_DEV_DATABASE_NAME'] or 'spacefinder_development' %>
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  username: postgres
-  password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
+  username: <%= Spacefinder.get_file_envar('SPACEFINDER_DEV_DATABASE_USER', nil) or \
+                Spacefinder.get_file_envar('SPACEFINDER_DATABASE_USER', 'spacefinder') %>
 
   # The password associated with the postgres role (username).
-  #password:
+  password: <%= Spacefinder.get_file_envar('SPACEFINDER_DEV_DATABASE_PASSWORD', nil) or \
+                Spacefinder.get_file_envar('SPACEFINDER_DATABASE_PASSWORD') %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  host: localhost
+  host: <%= Spacefinder.get_file_envar('SPACEFINDER_DEV_DATABASE_HOST', nil) or \
+            Spacefinder.get_file_envar('SPACEFINDER_DATABASE_HOST', 'db') %>
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
@@ -58,10 +60,13 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: spacefinder_test
-  username: postgres
-  password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
-  host: localhost
+  database: <%= Spacefinder.get_file_envar('SPACEFINDER_TEST_DATABASE_NAME', 'spacefinder_test') %>
+  username: <%= Spacefinder.get_file_envar('SPACEFINDER_TEST_DATABASE_USER', nil) or \
+                Spacefinder.get_file_envar('SPACEFINDER_DATABASE_USER', 'spacefinder') %>
+  password: <%= Spacefinder.get_file_envar('SPACEFINDER_TEST_DATABASE_PASSWORD', nil) or \
+                Spacefinder.get_file_envar('SPACEFINDER_DATABASE_PASSWORD') %>
+  host: <%= Spacefinder.get_file_envar('SPACEFINDER_TEST_DATABASE_HOST', nil) or \
+            Spacefinder.get_file_envar('SPACEFINDER_DATABASE_HOST', 'db') %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,9 +88,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  adapter: postgresql
-  database: spacefinder
-  username: postgres
-  password: <%= ENV['SPACEFINDER_DATABASE_PASSWORD'] %>
-  host: db
-
+  <<: *default
+  database: <%= Spacefinder.get_file_envar('SPACEFINDER_DATABASE_NAME', 'spacefinder') %>
+  username: <%= Spacefinder.get_file_envar('SPACEFINDER_DATABASE_USER', 'spacefinder') %>
+  password: <%= Spacefinder.get_file_envar('SPACEFINDER_DATABASE_PASSWORD') %>
+  host: <%= Spacefinder.get_file_envar('SPACEFINDER_DATABASE_HOST', 'db') %>
