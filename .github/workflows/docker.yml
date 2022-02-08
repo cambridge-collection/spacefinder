@@ -2,8 +2,7 @@ name: Publish Docker Images
 on:
   push:
     branches:
-      # TODO(hwtb2): use main branch once os-setup is merged
-      - os-setup
+      - main
   schedule:
     - cron: '38 6 * * TUE'
 jobs:
@@ -12,8 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # TODO(hwtb2): use main branch once os-setup is merged
-          ref: os-setup
+          ref: main
       - name: Generate image tag name
         # docker compose will tag the build of docker/Dockerfile with the value
         # of $SPACEFINDER_WEB_IMAGE, allowing us to reference it.
