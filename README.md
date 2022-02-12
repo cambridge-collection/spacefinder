@@ -102,6 +102,8 @@ The app reads configuration from environment variables:
    -  `SPACEFINDER_SAML_ISSUER`
    -  `SPACEFINDER_SAML_SP_ENTITY_ID` — Defaults to
       `https://${SPACEFINDER_SAML_ISSUER}/shibboleth`
+-  Google Maps
+   -  `SPACEFINDER_GOOGLE_MAPS_API_KEY`
 
 By default the `db:prepare` task is run at container startup, to either create
 the database or run pending migrations. Set `SPACEFINDER_DB_PREPARE` to a value
