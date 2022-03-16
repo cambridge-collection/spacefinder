@@ -1,0 +1,9 @@
+pull_request_rules:
+  - name: Automatic merge for Dependabot pull requests
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success=test
+      - check-success=test_docker_image
+    actions:
+      merge:
+        method: merge
