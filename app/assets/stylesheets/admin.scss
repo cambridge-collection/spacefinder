@@ -1,13 +1,14 @@
-@import '_variables';
-@import '_top-bar';
-@import '_icons';
+@import "partials/_variables";
+@import "partials/_top-bar";
+@import "partials/_icons";
 
-body, html {
+body,
+html {
     padding: 0;
     margin: 0;
     background: $backgroundColor;
     font-size: 14px;
-    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-family: "Myriad Pro", verdana, sans-serif;
     font-weight: lighter;
 }
 body * {
@@ -57,10 +58,9 @@ a.remove_nested_fields {
     top: 12px;
     right: 12px;
     padding: 6px 3px 3px 6px;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     text-decoration: none;
-    color: #FFF;
-
+    color: #fff;
 }
 
 .fields {
@@ -79,40 +79,40 @@ a.remove_nested_fields {
         color: green;
     }
 
-    [class^='icon-'] {
+    [class^="icon-"] {
         display: inline-block;
         color: green;
         text-align: center;
         margin-right: 6px;
     }
-
 }
 
 .container {
     width: 100%;
     max-width: 800px;
-    background-color: #FFF;
+    background-color: #fff;
     padding: 12px;
     margin-bottom: 12px;
 }
 h1 {
     font-weight: normal;
 }
-h1>small {
+h1 > small {
     display: block;
 }
 
-.btn, .btn-inline {
+.btn,
+.btn-inline {
     width: 100%;
     text-align: center;
     background: #642c73;
-    color: #FFF;
+    color: #fff;
     text-transform: uppercase;
     text-decoration: none;
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-family: "Myriad Pro", verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;
@@ -150,7 +150,6 @@ h1>small {
 $break-small: 600px;
 
 .overview {
-
     max-width: 600px;
     display: -webkit-flex;
     display: flex;
@@ -163,7 +162,7 @@ $break-small: 600px;
         font-size: 1.4rem;
         text-decoration: none;
         color: $barColor;
-        &>span {
+        & > span {
             display: block;
         }
 
@@ -177,8 +176,8 @@ $break-small: 600px;
 
         .bubble {
             display: inline-block;
-            background-color: rgba(225,0,0,1);
-            color: #FFF;
+            background-color: rgba(225, 0, 0, 1);
+            color: #fff;
             padding: 6px 12px;
             margin-top: -18px;
             border-radius: 100%;
@@ -229,7 +228,7 @@ $break-small: 600px;
 
     .title {
         padding: 12px 12px;
-        -webkit-flex-grow:1;
+        -webkit-flex-grow: 1;
         flex-grow: 1;
     }
     .section-collapse {
@@ -251,7 +250,8 @@ $break-small: 600px;
     display: none;
 }
 
-.term-times, .holiday-times {
+.term-times,
+.holiday-times {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: row;
@@ -267,9 +267,9 @@ $break-small: 600px;
         -webkit-flex-grow: 0;
         flex-grow: 0;
         width: 100px;
-
     }
-    .closed, .times {
+    .closed,
+    .times {
         background-color: $lightBackgroundColor;
         border: 1px solid $lowlight;
         text-align: center;
@@ -290,7 +290,10 @@ $break-small: 600px;
     }
 }
 
-input[type=text], input[type=password], input[type=number], textarea {
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
     -webkit-appearance: none;
     border: 1px solid $lowlight;
     border-radius: 0;
@@ -299,10 +302,10 @@ input[type=text], input[type=password], input[type=number], textarea {
     padding: 6px;
     margin: 0;
     width: 100%;
-    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-family: "Myriad Pro", verdana, sans-serif;
     font-weight: lighter;
     &:focus {
-        -webkit-outline:none;
+        -webkit-outline: none;
         outline: none;
         border-color: #00b1c1;
     }
@@ -317,7 +320,7 @@ textarea {
     display: flex;
     -webkit-flex-flow: row;
     flex-flow: row;
-    background: #FFF;
+    background: #fff;
     border: 1px solid $lowlight;
     &.focus {
         border-color: #00b1c1;
@@ -337,7 +340,6 @@ textarea {
 }
 
 .edit {
-
     select {
         display: block;
     }
@@ -350,35 +352,38 @@ textarea {
         display: block;
     }
 
-    input[type=checkbox] {
+    input[type="checkbox"] {
         display: none;
     }
-    input[type=checkbox] + [class^="icon-"] {
+    input[type="checkbox"] + [class^="icon-"] {
         border: 1px solid $lowlight;
         padding: 4px 3px;
         color: $lowlight;
         font-size: 0.8rem;
         margin-right: 6px;
     }
-    input[type=checkbox]:checked + [class^="icon-"] {
+    input[type="checkbox"]:checked + [class^="icon-"] {
         color: $highlightI;
     }
 }
 
-.btn, input[type="submit"], button, .btn-inline {
-    -webkit-appearance:none;
+.btn,
+input[type="submit"],
+button,
+.btn-inline {
+    -webkit-appearance: none;
     border-radius: 0;
-    border:none;
+    border: none;
     width: 100%;
     text-align: center;
     background: #642c73;
-    color: #FFF;
+    color: #fff;
     text-transform: uppercase;
     text-decoration: none;
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
-    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-family: "Myriad Pro", verdana, sans-serif;
     border: none;
     &.disabled {
         background: $lowlight;
@@ -421,7 +426,7 @@ textarea {
             padding-right: 12px;
         }
 
-        background-color: #FFF;
+        background-color: #fff;
         padding: 12px 0;
         border-bottom: 1px solid $lowlight;
         &:last-child {
@@ -451,7 +456,8 @@ textarea {
             -webkit-flex-grow: 0;
             margin-right: 6px;
         }
-        .user, .timestamp {
+        .user,
+        .timestamp {
             flex-grow: 1;
             -webkit-flex-grow: 1;
         }
@@ -459,7 +465,8 @@ textarea {
             display: block;
             font-size: 1.2rem;
         }
-        .discipline, .timestamp {
+        .discipline,
+        .timestamp {
             color: darken($lowlight, 30%);
         }
         .timestamp {
@@ -470,7 +477,7 @@ textarea {
         .buttons {
             padding-top: 12px;
             &:after {
-                content: '';
+                content: "";
                 width: 100%;
                 clear: both;
                 height: 1px;
@@ -487,21 +494,23 @@ textarea {
 
 .field_with_errors {
     width: 100%;
-    input, textarea, select {
-        border: 1px solid #FF6666;
+    input,
+    textarea,
+    select {
+        border: 1px solid #ff6666;
     }
 }
 
 .pre-fill.field_with_errors {
-  border: 1px solid #FF6666;
+    border: 1px solid #ff6666;
 
-  input {
-    border: none;
-  }
+    input {
+        border: none;
+    }
 }
 
 #error_explanation {
-    border: 1px solid #FF6666;
+    border: 1px solid #ff6666;
     padding: 0 12px;
     background-color: #f3f3f3;
     h2 {
@@ -543,7 +552,7 @@ textarea {
             min-height: 250px;
             max-height: 300px;
             padding: 30px;
-            background: #FFF;
+            background: #fff;
             position: relative;
             .space-name {
                 font-weight: bold;
@@ -565,7 +574,7 @@ textarea {
                     padding: 5px 10px;
                     text-decoration: none;
                     text-transform: uppercase;
-                    color: #FFF;
+                    color: #fff;
                     background-color: #333;
 
                     &.confirm-delete {
