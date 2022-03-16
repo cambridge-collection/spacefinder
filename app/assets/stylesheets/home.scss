@@ -1,32 +1,100 @@
-@import '_variables';
-@import '_top-bar';
-@import '_map';
-@import '_list-view';
-@import '_space';
-@import '_icons';
-@import '_search';
-@import '_tips';
-@import '_tags';
-@import '_login';
-.ui-helper-hidden{display:none}.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.ui-helper-reset{margin:0;padding:0;border:0;outline:0;line-height:1.3;text-decoration:none;font-size:100%;list-style:none}.ui-helper-clearfix:before,.ui-helper-clearfix:after{content:"";display:table;border-collapse:collapse}.ui-helper-clearfix:after{clear:both}.ui-helper-clearfix{min-height:0}.ui-helper-zfix{width:100%;height:100%;top:0;left:0;position:absolute;opacity:0;filter:Alpha(Opacity=0)}.ui-front{z-index:100}.ui-state-disabled{cursor:default!important}.ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat}.ui-widget-overlay{position:fixed;top:0;left:0;width:100%;height:100%}.ui-draggable-handle{-ms-touch-action:none;touch-action:none}
-body, html {
+@import "partials/_variables";
+@import "partials/_top-bar";
+@import "partials/_map";
+@import "partials/_list-view";
+@import "partials/_space";
+@import "partials/_icons";
+@import "partials/_search";
+@import "partials/_tips";
+@import "partials/_tags";
+@import "partials/_login";
+.ui-helper-hidden {
+    display: none;
+}
+.ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.ui-helper-reset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    line-height: 1.3;
+    text-decoration: none;
+    font-size: 100%;
+    list-style: none;
+}
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {
+    content: "";
+    display: table;
+    border-collapse: collapse;
+}
+.ui-helper-clearfix:after {
+    clear: both;
+}
+.ui-helper-clearfix {
+    min-height: 0;
+}
+.ui-helper-zfix {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    opacity: 0;
+    filter: Alpha(Opacity=0);
+}
+.ui-front {
+    z-index: 100;
+}
+.ui-state-disabled {
+    cursor: default !important;
+}
+.ui-icon {
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+.ui-widget-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.ui-draggable-handle {
+    -ms-touch-action: none;
+    touch-action: none;
+}
+body,
+html {
     padding: 0;
     margin: 0;
     background: $backgroundColor;
     font-size: 14px;
     height: 100vh;
-    font-family: "myriad-pro-n3", "myriad-pro", myriad, verdana, arial, sans-serif;
+    font-family: "myriad-pro-n3", "myriad-pro", myriad, verdana, arial,
+        sans-serif;
     font-weight: lighter;
 }
 * {
     box-sizing: border-box;
 }
 strong {
-    font-family: 'Myriad Pro', verdana, sans-serif;
+    font-family: "Myriad Pro", verdana, sans-serif;
     font-weight: normal;
 }
 .view-container {
-	position: absolute;
+    position: absolute;
     display: flex;
     min-height: calc(100vh - #{$navHeight});
     width: 100%;
@@ -49,27 +117,28 @@ h2 {
     margin-top: 0;
 }
 
-.btn, .btn-inline {
+.btn,
+.btn-inline {
     width: 100%;
     text-align: center;
     background: #642c73;
-    color: #FFF;
+    color: #fff;
     text-transform: uppercase;
     text-decoration: none;
     padding: 8px 6px 4px;
     font-size: 1.4rem;
     display: inline-block;
     border: none;
-	cursor: pointer;
+    cursor: pointer;
     &.disabled {
         background: $lowlight;
     }
 
-	&.secondary {
-		background: #FFF;
-		border: 1px solid $lowlight;
-		color: $fontColor;
-	}
+    &.secondary {
+        background: #fff;
+        border: 1px solid $lowlight;
+        color: $fontColor;
+    }
 }
 
 .btn-inline {
@@ -81,10 +150,10 @@ h2 {
 
 .loading-cover {
     background-color: $lightBackgroundColor;
-	background-image: image-url('cambridge-background.jpg');
-	background-size: cover;
-	background-position: center;
-    color: #FFF;
+    background-image: image-url("cambridge-background.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
     font-size: 2rem;
     text-transform: uppercase;
     position: absolute;
@@ -98,15 +167,15 @@ h2 {
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-	.logo {
-		background-image: image-url('spacefinder-logo.svg');
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-position: center;
-		width: 100%;
-		height: 50px;
-		margin-top: 5vmin;
-	}
+    .logo {
+        background-image: image-url("spacefinder-logo.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        width: 100%;
+        height: 50px;
+        margin-top: 5vmin;
+    }
     &.loaded {
         opacity: 0;
     }
@@ -116,12 +185,12 @@ h2 {
         display: block;
         font-size: 3rem;
         margin-bottom: 20px;
-		color: $barColor;
+        color: $barColor;
     }
-	.message {
-		text-transform: lowercase;
-		font-size: 1rem;
-	}
+    .message {
+        text-transform: lowercase;
+        font-size: 1rem;
+    }
     .svg-container {
         display: inline-block;
         position: relative;
@@ -139,10 +208,9 @@ h2 {
         animation-name: pulse;
         animation-iteration-count: infinite;
         animation-direction: alternate;
-
     }
     .shadow {
-        cursor:crosshair;
+        cursor: crosshair;
         -moz-box-shadow: -5px -5px 5px #888;
         -webkit-box-shadow: -5px -5px 5px #888;
         box-shadow: -5px -5px 5px #888;
@@ -158,5 +226,4 @@ h2 {
     }
 }
 
-
-@import '_large-view';
+@import "partials/_large-view";
