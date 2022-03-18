@@ -75,7 +75,7 @@ the `main` branch on every push, and weekly (the OS packages are updated on each
 build).
 
 [registry]:
-   https://gitlab.developers.cam.ac.uk/lib/dev/spacefinder/spacefinder/container_registry/
+   https://gitlab.developers.cam.ac.uk/lib/dev/spacefinder/spacefinder/container_registry/2852?orderBy=NAME&sort=desc&search%5B%5D=
 
 ### Image Tags
 
