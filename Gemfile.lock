@@ -102,7 +102,7 @@ GEM
     erubi (1.10.0)
     execjs (2.8.1)
     ffi (1.15.5)
-    filterrific (5.2.2)
+    filterrific (5.2.3)
     geokit (1.13.1)
     geokit-rails (2.3.2)
       geokit (~> 1.5)
