@@ -43,7 +43,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'ruby-saml', '~> 1.9'
 gem "rexml", "~> 3.2"
 gem 'omniauth-saml'
-gem "paranoia", "~> 2.0"
+gem "paranoia", "~> 2.6"
 gem 'paperclip'
 gem 'nested_form'
 gem 'kaminari'

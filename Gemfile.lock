@@ -188,7 +188,7 @@ GEM
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
     parallel (1.21.0)
-    paranoia (2.5.2)
+    paranoia (2.6.0)
       activerecord (>= 5.1, < 7.1)
     parser (3.1.0.0)
       ast (~> 2.4.1)
@@ -361,7 +361,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth-saml
   paperclip
-  paranoia (~> 2.0)
+  paranoia (~> 2.6)
   pg
   pry
   puma
