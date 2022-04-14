@@ -38,7 +38,7 @@ gem 'smarter_csv'
 gem 'acts-as-taggable-on'
 gem 'filterrific'
 gem 'devise', '~> 4.8'
-gem 'omniauth', '~> 2.0'
+gem 'omniauth', '~> 2.1'
 gem 'omniauth-rails_csrf_protection'
 gem 'ruby-saml', '~> 1.9'
 gem "rexml", "~> 3.2"
