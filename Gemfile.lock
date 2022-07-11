@@ -277,7 +277,7 @@ GEM
       tilt
     sdoc (2.3.2)
       rdoc (>= 5.0)
-    search_cop (1.2.0)
+    search_cop (1.2.1)
       treetop
     smarter_csv (1.7.0)
     solargraph (0.45.0)
