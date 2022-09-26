@@ -249,7 +249,7 @@ GEM
       nokogiri
     rexml (3.2.5)
     rolify (6.0.0)
-    rubocop (1.35.1)
+    rubocop (1.36.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -282,7 +282,7 @@ GEM
     search_cop (1.2.3)
       treetop
     smarter_csv (1.7.2)
-    solargraph (0.46.0)
+    solargraph (0.47.0)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)
@@ -321,7 +321,7 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (2.2.0)
+    unicode-display_width (2.3.0)
     uniform_notifier (1.16.0)
     warden (1.2.9)
       rack (>= 2.0.9)
