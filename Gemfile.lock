@@ -241,7 +241,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.4.0)
       psych (>= 4.0.0)
-    regexp_parser (2.5.0)
+    regexp_parser (2.6.0)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -282,7 +282,7 @@ GEM
     search_cop (1.2.3)
       treetop
     smarter_csv (1.7.2)
-    solargraph (0.47.0)
+    solargraph (0.47.1)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)
