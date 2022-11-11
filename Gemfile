@@ -6,7 +6,7 @@ gem 'tzinfo-data'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.2.3'
-gem 'rails', '~> 6'
+gem 'rails', '~> 7'
 gem 'rake', '~> 13'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -18,7 +18,7 @@ gem 'sass-rails', '~> 6'
 gem 'uglifier', '~> 4.2'
 # Use CoffeeScript for .coffee assets and views
 #gem 'coffee-rails', '~> 4.1.0'
-gem 'railties', '~> 6'
+gem 'railties', '~> 7'
 gem 'coffee-rails', '~> 5'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
