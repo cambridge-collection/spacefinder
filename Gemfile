@@ -40,7 +40,7 @@ gem 'filterrific'
 gem 'devise', '~> 4.8'
 gem 'omniauth', '~> 2.1'
 gem 'omniauth-rails_csrf_protection'
-gem 'ruby-saml', '~> 1.9'
+gem 'ruby-saml', '~> 1.15'
 gem "rexml", "~> 3.2"
 gem 'omniauth-saml'
 gem "paranoia", "~> 2.6"

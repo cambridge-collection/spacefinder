@@ -216,7 +216,7 @@ GEM
       stringio
     puma (6.0.2)
       nio4r (~> 2.0)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-protection (2.2.0)
       rack
@@ -278,8 +278,8 @@ GEM
     ruby-debug-ide (0.7.3)
       rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
-    ruby-saml (1.14.0)
-      nokogiri (>= 1.10.5)
+    ruby-saml (1.15.0)
+      nokogiri (>= 1.13.10)
       rexml
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -392,7 +392,7 @@ DEPENDENCIES
   rexml (~> 3.2)
   rolify
   ruby-debug-ide
-  ruby-saml (~> 1.9)
+  ruby-saml (~> 1.15)
   sass-rails (~> 6)
   sdoc (~> 2)
   search_cop
