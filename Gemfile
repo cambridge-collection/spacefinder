@@ -51,7 +51,7 @@ gem 'cancancan'
 gem 'rolify'
 gem 'geokit-rails'
 gem 'search_cop'
-gem 'concurrent-ruby', '~> 1.1'
+gem 'concurrent-ruby', '~> 1.2'
 gem "health_check", "~> 3.1"
 
 group :development, :test do
