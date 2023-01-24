@@ -88,7 +88,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     crass (1.0.6)
     date (3.3.3)
     debase (0.2.4.1)
@@ -368,7 +368,7 @@ DEPENDENCIES
   byebug
   cancancan
   coffee-rails (~> 5)
-  concurrent-ruby (~> 1.1)
+  concurrent-ruby (~> 1.2)
   debase
   devise (~> 4.8)
   dotenv-rails
