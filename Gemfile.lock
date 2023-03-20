@@ -300,7 +300,7 @@ GEM
       rdoc (>= 5.0)
     search_cop (1.2.3)
       treetop
-    smarter_csv (1.7.4)
+    smarter_csv (1.8.1)
     solargraph (0.48.0)
       backport (~> 1.2)
       benchmark
