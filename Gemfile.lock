@@ -70,7 +70,7 @@ GEM
       activerecord (>= 6.0, < 7.1)
     ast (2.4.2)
     backport (1.2.0)
-    bcrypt (3.1.18)
+    bcrypt (3.1.19)
     benchmark (0.2.1)
     bindex (0.8.1)
     builder (3.2.4)
@@ -94,7 +94,7 @@ GEM
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.14)
-    devise (4.9.2)
+    devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -155,7 +155,7 @@ GEM
       actionpack
       activerecord
       railties
-    loofah (2.21.3)
+    loofah (2.21.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -222,7 +222,7 @@ GEM
     puma (6.4.0)
       nio4r (~> 2.0)
     racc (1.7.1)
-    rack (2.2.7)
+    rack (2.2.8)
     rack-protection (3.0.5)
       rack
     rack-test (2.1.0)
@@ -241,8 +241,9 @@ GEM
       activesupport (= 7.0.6)
       bundler (>= 1.15.0)
       railties (= 7.0.6)
-    rails-dom-testing (2.0.3)
-      activesupport (>= 4.2.0)
+    rails-dom-testing (2.2.0)
+      activesupport (>= 5.0.0)
+      minitest
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
@@ -263,7 +264,7 @@ GEM
     rdoc (6.4.0)
       psych (>= 4.0.0)
     regexp_parser (2.7.0)
-    responders (3.1.0)
+    responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
     reverse_markdown (2.1.1)
@@ -357,7 +358,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     yard (0.9.32)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   aarch64-linux
